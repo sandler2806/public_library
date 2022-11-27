@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_back"
+    tools:context=".LibrarianHomeActivity">
+
+    <TextView
+        android:id="@+id/LibrarianWelcomeSentence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="Welcome Librarian"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/AddBookButton"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/LibrarianWelcomeSentence"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="Add Book" />
+
+    <Button
+        android:id="@+id/RemoveBookButton"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/AddBookButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="Remove Book" />
+
+    <Button
+        android:id="@+id/BurrowedListButton"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/RemoveBookButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="View Burrowed List" />
+
+    <Button
+        android:id="@+id/EditLibraryInformationButton2"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/BurrowedListButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="Edit Library Information" />
+
+    <Button
+        android:id="@+id/EditLibraryInformationButton"
+        android:layout_width="215dp"
+        android:layout_below="@id/BurrowedListButton"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="657dp"
+        android:layout_marginEnd="178dp"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="Edit Library Information" />
+</RelativeLayout>

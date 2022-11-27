@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        TextView username =(TextView) findViewById(R.id.username);
-        TextView password =(TextView) findViewById(R.id.password);
-
-        MaterialButton loginbtn = (MaterialButton) findViewById(R.id.loginbtn);
-        MaterialButton registerbtn = (MaterialButton) findViewById(R.id.registerbtn);
+//
+//
+//        TextView username =(TextView) findViewById(R.id.username);
+//        TextView password =(TextView) findViewById(R.id.password);
+//
+//        MaterialButton loginbtn = (MaterialButton) findViewById(R.id.loginbtn);
+//        MaterialButton registerbtn = (MaterialButton) findViewById(R.id.registerbtn);
 
         //admin and admin
 //
@@ -39,23 +39,25 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this,"LOGIN FAILED !!!",Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        loginbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
-                    //correct
-                    Toast.makeText(MainActivity.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                }else
-                    //incorrect
-                    Toast.makeText(MainActivity.this,"LOGIN FAILED !!!",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        loginbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
+//                    //correct
+//                    Toast.makeText(MainActivity.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+//                }else
+//                    //incorrect
+//                    Toast.makeText(MainActivity.this,"LOGIN FAILED !!!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
     }
-    public void openSignUp(View view){
-        startActivity(new Intent(this, signUpActivity.class));
-
+    public void openSignInLibrarian(View view){
+        startActivity(new Intent(this, SignInLibrarian.class));
+    }
+    public void openSignInCustomer(View view){
+        startActivity(new Intent(this, SignInCustomer.class));
     }
 
 }
