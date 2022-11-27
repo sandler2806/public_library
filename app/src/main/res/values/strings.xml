@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">mylib</string>
+    <string name="return_a_book">Return a book</string>
+    <string name="borrow_a_book">Borrow a book</string>
+    <string name="profile">Profile</string>
+    <string name="general_info">General info</string>
 </resources>

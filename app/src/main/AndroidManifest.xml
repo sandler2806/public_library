@@ -13,6 +13,20 @@
         android:theme="@style/Theme.Mylib"
         tools:targetApi="31">
         <activity
+            android:name=".BorrowBook"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ClientHomeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".signUpActivity"
             android:exported="false">
             <meta-data
