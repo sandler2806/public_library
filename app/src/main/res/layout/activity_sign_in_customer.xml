@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:backgroundTint="@color/design_default_color_secondary"
-            android:onClick="openHomePage"
+            android:onClick="openClientHome"
             android:text="LOGIN" />
 
         <com.google.android.material.button.MaterialButton

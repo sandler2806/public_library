@@ -7,10 +7,26 @@
     android:background="@drawable/login_back"
     tools:context=".ClientHomeActivity">
 
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="Welcom Customer"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="65dp" />
+
     <Button
         android:id="@+id/goToBorrow"
         android:layout_width="216dp"
         android:layout_height="67dp"
+
         android:layout_marginBottom="292dp"
         android:backgroundTint="@color/design_default_color_secondary"
         android:onClick="goToReturn"
