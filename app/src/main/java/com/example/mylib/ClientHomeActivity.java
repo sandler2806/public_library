@@ -13,8 +13,12 @@ public class ClientHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_home);
     }
+    public void goBack(View view){
 
+        startActivity(new Intent(this, SignInCustomer.class));
+    }
     public void goToBorrow(View view) {
+
         startActivity(new Intent(this, BorrowBook.class));
     }
 
