@@ -13,6 +13,9 @@ public class LibrarianHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_librarian_home);
     }
+    public void GoToAddBookLibrarian(View view){
+        startActivity(new Intent(this, AddBookLibrarian.class));
+    }
     public void goBack(View view){
 
         startActivity(new Intent(this, SignInLibrarian.class));
