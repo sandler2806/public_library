@@ -11,6 +11,9 @@ public class BorrowBook extends AppCompatActivity {
 
     ListView bookList;
     String[] books;
+    String[] authors;
+    int[] noOfCopies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +22,11 @@ public class BorrowBook extends AppCompatActivity {
         Resources res = getResources();
         bookList = (ListView) findViewById(R.id.bookList);
         books = res.getStringArray(R.array.books);
+        authors = res.getStringArray(R.array.authors);
+        noOfCopies = res.getIntArray(R.array.numberOfCopies);
 
-        bookList.setAdapter(new ArrayAdapter<String>(this, R.layout.book_list_detail,books));
+        ItemAdapter adapter = new ItemAdapter(this,books, authors, noOfCopies);
+        bookList.setAdapter(adapter);
     }
 
 }

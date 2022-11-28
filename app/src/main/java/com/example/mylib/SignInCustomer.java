@@ -20,4 +20,7 @@ public class SignInCustomer extends AppCompatActivity {
         startActivity(new Intent(this, SignUpActivity.class));
     }
 
+    public void openHomePage(View view) {
+        startActivity(new Intent(this, ClientHomeActivity.class));
+    }
 }
