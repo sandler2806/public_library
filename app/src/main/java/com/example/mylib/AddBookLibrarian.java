@@ -3,7 +3,9 @@ package com.example.mylib;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,6 +13,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import android.view.View;
+import android.widget.TextView;
 
 public class AddBookLibrarian extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://public-library-8027f-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().getDatabase();
@@ -42,5 +47,22 @@ public class AddBookLibrarian extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void goBack(View view){
+        startActivity(new Intent(this, LibrarianHomeActivity.class));
+    }
+    public void addBook(View view){
+
+        TextView bookNameText = findViewById(R.id.BookNameInsert);
+        TextView authorText = findViewById(R.id.BookAuthorInsert);
+        TextView genreText = findViewById(R.id.BookGenreInsert);
+        TextView amountText = findViewById(R.id.BookAmountsInsert);
+        TextView publishingYearText = findViewById(R.id.BookYearPublishedInsert);
+        String bookName=bookNameText.getText().toString();
+        String author=authorText.getText().toString();
+        String genre=genreText.getText().toString();
+        String amount=amountText.getText().toString();
+        String publishingYear=publishingYearText.getText().toString();
+        //add book
     }
 }

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:gravity="center"
-        android:text="Welcom Customer"
+        android:text="Welcome Customer"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         tools:layout_editor_absoluteY="65dp" />
 
     <Button
-        android:id="@+id/goToBorrow"
+        android:id="@+id/goToReturn"
         android:layout_width="216dp"
         android:layout_height="67dp"
 
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow4"
+        android:id="@+id/goToBorrow"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="180dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow2"
+        android:id="@+id/goToProfile"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="412dp"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow3"
+        android:id="@+id/goToLibInfo"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="512dp"

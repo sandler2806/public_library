@@ -38,7 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
     public void goBack(View view){
-
         startActivity(new Intent(this, SignInCustomer.class));
     }
 }
