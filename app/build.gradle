@@ -1,16 +1,17 @@
+
+
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
 }
-
 android {
     namespace 'com.example.mylib'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.mylib"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -30,7 +31,15 @@ android {
 }
 
 dependencies {
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
 
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // See https://firebase.google.com/docs/android/setup#available-libraries
+    // For example, add the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

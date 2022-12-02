@@ -69,8 +69,15 @@
         android:text="SIGN UP"
         android:backgroundTint="@color/design_default_color_secondary"
         android:layout_centerHorizontal="true"
+        android:onClick="openClientHome"
         android:layout_margin="20dp"
         />
-
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="goBack"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
 </RelativeLayout>

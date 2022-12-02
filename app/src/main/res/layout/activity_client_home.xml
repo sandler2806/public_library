@@ -7,10 +7,26 @@
     android:background="@drawable/login_back"
     tools:context=".ClientHomeActivity">
 
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="Welcome Customer"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="65dp" />
+
     <Button
-        android:id="@+id/goToBorrow"
+        android:id="@+id/goToReturn"
         android:layout_width="216dp"
         android:layout_height="67dp"
+
         android:layout_marginBottom="292dp"
         android:backgroundTint="@color/design_default_color_secondary"
         android:onClick="goToReturn"
@@ -22,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow4"
+        android:id="@+id/goToBorrow"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="180dp"
@@ -36,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow2"
+        android:id="@+id/goToProfile"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="412dp"
@@ -50,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/goToBorrow3"
+        android:id="@+id/goToLibInfo"
         android:layout_width="216dp"
         android:layout_height="67dp"
         android:layout_marginBottom="512dp"
@@ -62,4 +78,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="goBack"
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

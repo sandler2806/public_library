@@ -34,7 +34,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/design_default_color_secondary"
-        android:text="Add Book" />
+        android:text="Add Book"
+        android:onClick="GoToAddBookLibrarian"/>
 
     <Button
         android:id="@+id/RemoveBookButton"
@@ -46,6 +47,7 @@
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
+        android:onClick="GoToRemoveBookLibrarian"
         android:backgroundTint="@color/design_default_color_secondary"
         android:text="Remove Book" />
 
@@ -59,6 +61,7 @@
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
+        android:onClick="openBookTracking"
         android:backgroundTint="@color/design_default_color_secondary"
         android:text="View Burrowed List" />
 
@@ -75,19 +78,13 @@
         android:backgroundTint="@color/design_default_color_secondary"
         android:text="Edit Library Information" />
 
-    <Button
-        android:id="@+id/EditLibraryInformationButton"
-        android:layout_width="215dp"
-        android:layout_below="@id/BurrowedListButton"
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="657dp"
-        android:layout_marginEnd="178dp"
-        android:layout_marginBottom="17dp"
         android:backgroundTint="@color/design_default_color_secondary"
-        android:text="Edit Library Information" />
+        android:onClick="goBack"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+
 </RelativeLayout>
