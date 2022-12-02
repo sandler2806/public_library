@@ -23,11 +23,16 @@ public class ClientHomeActivity extends AppCompatActivity {
     }
 
     public void goToReturn(View view) {
+
+        startActivity(new Intent(this, ReturnBook.class));
     }
 
     public void gotToProfile(View view) {
+
+        startActivity(new Intent(this, ProfileClient.class));
     }
 
     public void goToLibInfo(View view) {
+        startActivity(new Intent(this, LibInfoClient.class));
     }
 }
