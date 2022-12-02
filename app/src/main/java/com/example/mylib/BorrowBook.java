@@ -67,7 +67,7 @@ public class BorrowBook extends AppCompatActivity {
     }
 
     public void borrow(View view){
-        // implement borrowing 
+        // implement borrowing
     }
 
 }
