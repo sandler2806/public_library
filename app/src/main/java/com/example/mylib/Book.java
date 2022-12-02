@@ -14,8 +14,7 @@ public class Book {
     public Book(){
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-    public Book(String name, String author, String genre, String publishing_year,int amount,int id) {
-        this.id=id;
+    public Book(String name, String author, String genre, String publishing_year,int amount) {
         this.amount=amount;
         owner=null;
         this.name = name;
@@ -56,13 +55,6 @@ public class Book {
         this.publishing_year = publishing_year;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public User getOwner() {
         return owner;

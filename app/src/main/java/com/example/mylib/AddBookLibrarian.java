@@ -29,8 +29,13 @@ public class AddBookLibrarian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_librarian);
         ReadBook("1");
+        addBook();
     }
-
+    private void addBook(){
+        setMyRef(database.getReference("books"));
+        Book book = new Book("cheese","sandler","horror","1999",2);
+        myRef.child("55").setValue(book);
+    }
     private void ReadBook(String Id){
         setMyRef(database.getReference("books"));
         this.myRef.child(Id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -38,8 +43,8 @@ public class AddBookLibrarian extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     DataSnapshot snapshot = task.getResult();
-                    String bookName = String.valueOf(snapshot.child("name").getValue());
-                    Toast.makeText(AddBookLibrarian.this, bookName, Toast.LENGTH_SHORT).show();
+                    Book book = snapshot.getValue(Book.class);
+                    Toast.makeText(AddBookLibrarian.this, "ho", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
@@ -61,8 +66,9 @@ public class AddBookLibrarian extends AppCompatActivity {
         String bookName=bookNameText.getText().toString();
         String author=authorText.getText().toString();
         String genre=genreText.getText().toString();
-        String amount=amountText.getText().toString();
+        int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
+        FireBaseBook.addBook(bookName,author,genre, amount,publishingYear);
         //add book
     }
 }
