@@ -2,18 +2,32 @@ package com.example.mylib;
 
 import java.util.ArrayList;
 
+import kotlin.collections.UArraySortingKt;
+
 public class User {
     private String username;
     private String password;
+    private String name;
+    private String phone;
     private ArrayList<Book> favorites = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
 
     public User(){
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-    public User(String username,String password){
-        this.username=username;
-        this.password=password;
+    public User(User user){
+        username=user.username;
+        password=user.password;
+        name=user.name;
+        phone=user.phone;
+        favorites.addAll(user.favorites);
+        books.addAll(user.books);
+    }
+    public User(String username, String password, String name, String phone) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
     }
 
     public String getUsername() {
@@ -43,6 +57,23 @@ public class User {
     public void removeFavorite(Book book){
         favorites.remove(book);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public ArrayList<Book> getFavorites() {
         return favorites;
     }

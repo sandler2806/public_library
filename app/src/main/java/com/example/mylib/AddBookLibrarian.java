@@ -48,11 +48,10 @@ public class AddBookLibrarian extends AppCompatActivity {
             }
         });
     }
-    public void goBack(View view){
+    public void goBack(){
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
-    public void addBook(View view){
-
+    public void addBook(){
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView authorText = findViewById(R.id.BookAuthorInsert);
         TextView genreText = findViewById(R.id.BookGenreInsert);

@@ -33,6 +33,8 @@ public class SignInCustomer extends AppCompatActivity {
         TextView passwordText = findViewById(R.id.password);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
+//        User a=FireBaseUser.getUser(username);
+
 
         if(username.equals("notExist")){
             Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();

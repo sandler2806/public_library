@@ -22,9 +22,13 @@ public class SignUpActivity extends AppCompatActivity {
         TextView usernameText = findViewById(R.id.username);
         TextView passwordText = findViewById(R.id.password);
         TextView verifyPasswordText = findViewById(R.id.verify_password);
+        TextView nameText = findViewById(R.id.name);
+        TextView phoneText = findViewById(R.id.phone);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
         String verifyPassword=verifyPasswordText.getText().toString();
+        String name=nameText.getText().toString();
+        String phone=phoneText.getText().toString();
 
         if(username.equals("exist")){
             Toast.makeText(SignUpActivity.this,"username already exist",Toast.LENGTH_SHORT).show();
@@ -33,7 +37,11 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this,"verify password does not match to password",Toast.LENGTH_SHORT).show();
         }
         else{
+            FireBaseUser.addUser(username,password,name,phone);
             Toast.makeText(SignUpActivity.this,"sign up successfully",Toast.LENGTH_SHORT).show();
+//            User a=FireBaseUser.getUser(username);
+//            System.out.println(a.getName());
+//            System.out.println(a.getPhone());
             startActivity(new Intent(this, ClientHomeActivity.class));
         }
     }
