@@ -7,28 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class AddBookLibrarian extends AppCompatActivity {
+public class RemoveBookActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book_librarian);
+        setContentView(R.layout.activity_remove_book);
     }
+
     public void goBack(View view){
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
-    public void addBook(View view){
+    public void removeBook(View view){
 
         TextView bookNameText = findViewById(R.id.BookNameInsert);
-        TextView authorText = findViewById(R.id.BookAuthorInsert);
-        TextView genreText = findViewById(R.id.BookGenreInsert);
         TextView amountText = findViewById(R.id.BookAmountsInsert);
-        TextView publishingYearText = findViewById(R.id.BookYearPublishedInsert);
         String bookName=bookNameText.getText().toString();
-        String author=authorText.getText().toString();
-        String genre=genreText.getText().toString();
         String amount=amountText.getText().toString();
-        String publishingYear=publishingYearText.getText().toString();
-        //add book
+        //remove book
     }
 }

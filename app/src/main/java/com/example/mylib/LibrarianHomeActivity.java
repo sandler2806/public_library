@@ -16,8 +16,13 @@ public class LibrarianHomeActivity extends AppCompatActivity {
     public void GoToAddBookLibrarian(View view){
         startActivity(new Intent(this, AddBookLibrarian.class));
     }
+    public void GoToRemoveBookLibrarian(View view){
+        startActivity(new Intent(this, RemoveBookActivity.class));
+    }
     public void goBack(View view){
-
         startActivity(new Intent(this, SignInLibrarian.class));
+    }
+    public void openBookTracking(View view){
+        startActivity(new Intent(this, BookTrackingActivity.class));
     }
 }
