@@ -43,9 +43,9 @@ public class BookAdapter extends BaseAdapter {
         TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
 
 
-        bookNameTextView.setText(books[i].name);
-        authorTextView.setText("Author: " + books[i].Author);
-        noOfCopiesTextView.setText("Number of copies: " + books[i].copies);
+        bookNameTextView.setText(books[i].getName());
+        authorTextView.setText("Author: " + books[i].getAuthor());
+        noOfCopiesTextView.setText("Number of copies: " + books[i].getAmount());
 
         return v;
     }
