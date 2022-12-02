@@ -28,13 +28,6 @@ public class AddBookLibrarian extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_librarian);
-        ReadBook("1");
-        addBook();
-    }
-    private void addBook(){
-        setMyRef(database.getReference("books"));
-        Book book = new Book("cheese","sandler","horror","1999",2);
-        myRef.child("55").setValue(book);
     }
     private void ReadBook(String Id){
         setMyRef(database.getReference("books"));
