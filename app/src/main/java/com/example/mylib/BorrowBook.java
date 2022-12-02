@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.mylib.adapters.BookAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -44,35 +46,28 @@ public class BorrowBook extends AppCompatActivity {
 
 
 //        Resources res = getResources();
-//        bookList = (ListView) findViewById(R.id.bookList);
+        bookList = (ListView) findViewById(R.id.bookList);
 //        books = res.getStringArray(R.array.books);
 //        authors = res.getStringArray(R.array.authors);
 //        noOfCopies = res.getIntArray(R.array.numberOfCopies);
 
-        //ItemAdapter adapter = new ItemAdapter(this,books, authors, noOfCopies);
-        //bookList.setAdapter(adapter);
+        Book[] books = new Book[7];
+        books[0] = new Book("Harry potter 1", "J.K rolling");
+        books[1] = new Book("Harry potter 2", "J.K rolling");
+        books[2] = new Book("Harry potter 3", "J.K rolling");
+        books[3] = new Book("Harry potter 4", "J.K rolling");
+        books[4] = new Book("Harry potter 5", "J.K rolling");
+        books[5] = new Book("Harry potter 6", "J.K rolling");
+        books[6] = new Book("Harry potter 7", "J.K rolling");
+        BookAdapter adapter = new BookAdapter(this, books);
+        bookList.setAdapter(adapter);
 
-        listView = findViewById(R.id.bookList);
-        ArrayList<String> list = new ArrayList<>();
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.book_list_detail, list);
 
-        setMyRef(database.getReference("books"));
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for(DataSnapshot ss: snapshot.getChildren())
-                {
-                    list.add(ss.getValue().toString());
-                }
-                adapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+    }
 
-            }
-        });
+    public void borrow(View view){
+        // implement borrowing 
     }
 
 }

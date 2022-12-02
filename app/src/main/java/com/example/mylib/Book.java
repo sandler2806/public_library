@@ -4,14 +4,15 @@ public class Book {
 
     public String name;
     public String Author;
+    public int copies;
 
     public Book() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Book(String username, String email) {
-        this.name = username;
-        this.Author = email;
+    public Book(String name, String author) {
+        this.name = name;
+        this.Author = author;
+        this.copies = 3;
     }
 
 }
