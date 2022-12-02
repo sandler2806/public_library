@@ -48,4 +48,7 @@ public class SignInCustomer extends AppCompatActivity {
         }
     }
 
+    public void openHomePage(View view) {
+        startActivity(new Intent(this, ClientHomeActivity.class));
+    }
 }
