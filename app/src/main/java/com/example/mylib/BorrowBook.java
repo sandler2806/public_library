@@ -2,7 +2,7 @@ package com.example.mylib;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +23,9 @@ import java.util.ArrayList;
 
 
 public class BorrowBook extends AppCompatActivity {
+//    Client a=new Client();
 
+//    Client.name="sdfsd";
     ListView bookList;
     String[] books;
     String[] authors;
@@ -35,6 +37,10 @@ public class BorrowBook extends AppCompatActivity {
 
     public void setMyRef(DatabaseReference myRef) {
         this.myRef = myRef;
+    }
+    public void goBack(View view){
+
+        startActivity(new Intent(this, ClientHomeActivity.class));
     }
 
     @Override
