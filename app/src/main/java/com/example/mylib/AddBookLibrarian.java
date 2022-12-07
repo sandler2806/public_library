@@ -46,10 +46,12 @@ public class AddBookLibrarian extends AppCompatActivity {
             }
         });
     }
-    public void goBack(){
+    public void goBack(View view){
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
-    public void addBook(){
+    public void addBook(View view){
+        Toast.makeText(AddBookLibrarian.this, "hfjfisif", Toast.LENGTH_SHORT).show();
+
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView authorText = findViewById(R.id.BookAuthorInsert);
         TextView genreText = findViewById(R.id.BookGenreInsert);
@@ -60,7 +62,8 @@ public class AddBookLibrarian extends AppCompatActivity {
         String genre=genreText.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
-        FireBaseBook.addBook(bookName,author,genre, amount,publishingYear);
-        //add book
+        Book book = new Book(bookName,author,genre,publishingYear,amount);
+        setMyRef(database.getReference("books"));
+        myRef.child(bookName).setValue(book);
     }
 }
