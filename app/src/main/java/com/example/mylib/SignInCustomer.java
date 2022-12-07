@@ -40,15 +40,21 @@ public class SignInCustomer extends AppCompatActivity {
         TextView passwordText = findViewById(R.id.password);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
-        fu.getUserFromDB("username").addListenerForSingleValueEvent(new ValueEventListener() {
+        fu.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue()==null){
-                    Toast.makeText(SignInCustomer.this,"null",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     User user = dataSnapshot.getValue(User.class);
-                    Toast.makeText(SignInCustomer.this,user.getPassword(),Toast.LENGTH_SHORT).show();
+                    if(!user.getPassword().equals(password)){
+                        Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignInCustomer.this, ClientHomeActivity.class));
+                    }
                 }
             }
             @Override
