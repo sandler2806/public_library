@@ -9,12 +9,11 @@
 
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/titleClientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:gravity="center"
-        android:text="Welcome Customer"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"

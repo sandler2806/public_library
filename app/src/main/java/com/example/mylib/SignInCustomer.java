@@ -34,7 +34,7 @@ public class SignInCustomer extends AppCompatActivity {
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
 //        User a=FireBaseUser.getUser(username);
-
+        GlobalUserInfo.global_user_name = username;
 
         if(username.equals("notExist")){
             Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();
@@ -46,6 +46,11 @@ public class SignInCustomer extends AppCompatActivity {
             Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, ClientHomeActivity.class));
         }
+
+        Intent intent = new Intent(getBaseContext(), ClientHomeActivity.class);
+        intent.putExtra("USERNAME", username);
+        startActivity(intent);
+
     }
 
     public void openHomePage(View view) {
