@@ -37,8 +37,8 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this,"verify password does not match to password",Toast.LENGTH_SHORT).show();
         }
         else{
-            FireBaseUser.addUser(username,password,name,phone);
-            Toast.makeText(SignUpActivity.this,"sign up successfully",Toast.LENGTH_SHORT).show();
+//            FireBaseUser.addUser(username,password,name,phone);
+//            Toast.makeText(SignUpActivity.this,"sign up successfully",Toast.LENGTH_SHORT).show();
 //            User a=FireBaseUser.getUser(username);
 //            System.out.println(a.getName());
 //            System.out.println(a.getPhone());
