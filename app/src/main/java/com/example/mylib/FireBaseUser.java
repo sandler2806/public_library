@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
-    public void addUserToDBrd(String username, String password, String name, String phone){
+    public void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }
 //public void addUser(String username, String password, String name, String phone){//, ArrayList<Book> books,ArrayList<Book> favorites
