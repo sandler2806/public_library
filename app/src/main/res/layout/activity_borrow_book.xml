@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="#607D8B"
     tools:context=".BorrowBook">
 
 
@@ -12,6 +12,7 @@
         android:id="@+id/bookList"
         android:layout_width="369dp"
         android:layout_height="681dp"
+        android:background="#CFD8DC"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.38"
@@ -23,6 +24,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#2196F3"
         android:backgroundTint="@color/design_default_color_secondary"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert"
