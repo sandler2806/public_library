@@ -10,7 +10,7 @@ public class User {
     private String name;
     private String phone;
     private ArrayList<Book> favorites = new ArrayList<>();
-    private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<String> books = new ArrayList<>();
 
     public User(){
         // Default constructor for DataSnapshot.getValue(User.class)
@@ -28,6 +28,8 @@ public class User {
         this.password = password;
         this.name = name;
         this.phone = phone;
+        this.books = new ArrayList<>();
+
     }
 
     public String getUsername() {
@@ -46,7 +48,7 @@ public class User {
         this.password = password;
     }
     public void addBook(Book book){
-        books.add(book);
+        books.add(book.getName());
     }
     public void removeBook(Book book){
         books.remove(book);
@@ -77,7 +79,7 @@ public class User {
     public ArrayList<Book> getFavorites() {
         return favorites;
     }
-    public ArrayList<Book> getBooks() {
+    public ArrayList<String> getBooks() {
         return books;
     }
 

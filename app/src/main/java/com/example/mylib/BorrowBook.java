@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mylib.adapters.BookAdapter;
@@ -44,6 +45,10 @@ public class BorrowBook extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    if(book.getAmount()==0){
+                        continue;
+                    }
                     books.add(snapshot.getValue(Book.class));
                 }
                 adapter = new BookAdapter(BorrowBook.this, books);
@@ -73,7 +78,17 @@ public class BorrowBook extends AppCompatActivity {
     }
 
     public void borrow(View view){
+        View parentView = (View)view.getParent();
 
+        // Access the data associated with the list item, such as the book name and author
+        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
+        TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
+        String bookName = bookNameView.getText().toString();
+        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
+        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
+        booksRef.child("amount").setValue(amount-1);
+        FireBaseUser fu = new FireBaseUser();
+        fu.addToBorrowed(bookName);
         finish();
         overridePendingTransition(0, 0);
         startActivity(getIntent());

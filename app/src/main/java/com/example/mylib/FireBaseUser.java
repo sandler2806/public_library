@@ -34,16 +34,19 @@ public class FireBaseUser extends FireBaseModel {
         return myRef.child("users");
     }
 
-    public void addToFavorites(String bookID){
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        System.out.println("*******************"+userID);
-        getUserFromDB(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void addBookToBooks(String bookName){
+        myRef.child("users").child("noam").child("phone").child("0000000");
+    }
+    public void addToBorrowed(String bookName){
+        getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                ArrayList<String> books = user.getBooks();
+                books.add(bookName);
+                getUserFromDB(GlobalUserInfo.global_user_name).child("books").setValue(books);
 //                ArrayList<String> favorites=user.getFavorites();
 //                favorites.add(bookID);
-//                System.out.println("*******************"+favorites.toString());
 //                getUserFromDB(userID).child("favorites").setValue(favorites);
 
             }

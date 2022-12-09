@@ -7,6 +7,6 @@ public class FireBaseModel  {
     DatabaseReference myRef;
 
     public FireBaseModel(){
-        myRef= FirebaseDatabase.getInstance().getReference();
+        myRef= FirebaseDatabase.getInstance("https://public-library-8027f-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
     }
 }
