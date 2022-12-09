@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.DataBase;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
