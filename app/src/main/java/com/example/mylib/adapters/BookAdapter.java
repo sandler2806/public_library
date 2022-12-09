@@ -10,23 +10,25 @@ import android.widget.TextView;
 import com.example.mylib.Book;
 import com.example.mylib.R;
 
+import java.util.ArrayList;
+
 public class BookAdapter extends BaseAdapter {
 
     LayoutInflater mInflater;
-    Book[] books;
-    public BookAdapter(Context c, Book[] books)
+    ArrayList<Book> books;
+    public BookAdapter(Context c, ArrayList<Book> books)
     {
         this.books = books;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return books.length;
+        return books.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return books[i];
+        return books.get(i);
     }
 
     @Override
@@ -43,9 +45,9 @@ public class BookAdapter extends BaseAdapter {
         TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
 
 
-        bookNameTextView.setText(books[i].getName());
-        authorTextView.setText("Author: " + books[i].getAuthor());
-        noOfCopiesTextView.setText("Number of copies: " + books[i].getAmount());
+        bookNameTextView.setText(books.get(i).getName());
+        authorTextView.setText("Author: " + books.get(i).getAuthor());
+        noOfCopiesTextView.setText("Number of copies: " + books.get(i).getAmount());
 
         return v;
     }
