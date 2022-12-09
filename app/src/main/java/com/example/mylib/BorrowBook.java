@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.mylib.DataBase.Book;
 import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.adapters.BookAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
