@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.mylib.Book;
+import com.example.mylib.DataBase.Book;
 import com.example.mylib.R;
 
 public class ReturnBookAdapter extends BaseAdapter {

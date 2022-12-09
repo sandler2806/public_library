@@ -3,22 +3,19 @@ package com.example.mylib;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mylib.DataBase.Book;
+import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.adapters.BookAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -44,6 +41,10 @@ public class BorrowBook extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    if(book.getAmount()==0){
+                        continue;
+                    }
                     books.add(snapshot.getValue(Book.class));
                 }
                 adapter = new BookAdapter(BorrowBook.this, books);
@@ -73,7 +74,17 @@ public class BorrowBook extends AppCompatActivity {
     }
 
     public void borrow(View view){
+        View parentView = (View)view.getParent();
 
+        // Access the data associated with the list item, such as the book name and author
+        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
+        TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
+        String bookName = bookNameView.getText().toString();
+        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
+        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
+        booksRef.child("amount").setValue(amount-1);
+        FireBaseUser fu = new FireBaseUser();
+        fu.addToBorrowed(bookName);
         finish();
         overridePendingTransition(0, 0);
         startActivity(getIntent());

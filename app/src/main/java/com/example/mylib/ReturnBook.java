@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.mylib.DataBase.Book;
 import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
 
