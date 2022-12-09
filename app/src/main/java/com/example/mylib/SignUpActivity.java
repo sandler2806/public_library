@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mylib.DataBase.FireBaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -55,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        GlobalUserInfo.global_user_name = username;
     }
     public void goBack(View view){
         startActivity(new Intent(this, SignInCustomer.class));

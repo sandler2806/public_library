@@ -1,8 +1,6 @@
-package com.example.mylib;
+package com.example.mylib.DataBase;
 
 import java.util.ArrayList;
-
-import kotlin.collections.UArraySortingKt;
 
 public class User {
     private String username;
