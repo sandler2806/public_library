@@ -49,8 +49,6 @@ public class BorrowBook extends AppCompatActivity {
                 }
                 adapter = new BookAdapter(BorrowBook.this, books);
                 bookList.setAdapter(adapter);
-
-//                book = dataSnapshot.getValue(Book.class);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -58,18 +56,6 @@ public class BorrowBook extends AppCompatActivity {
             }
 
         });
-
-//        Book[] books = new Book[7];
-//        books[0] = new Book("Harry potter 1", "J.K rolling","", "",1 );
-//        books[1] = new Book("Harry potter 2", "J.K rolling","", "",1 );
-//        books[2] = new Book("Harry potter 3", "J.K rolling","", "",1 );
-//        books[3] = new Book("Harry potter 4", "J.K rolling","", "",1 );
-//        books[4] = new Book("Harry potter 5", "J.K rolling","", "",1 );
-//        books[5] = new Book("Harry potter 6", "J.K rolling","", "",1 );
-//        books[6] = new Book("Harry potter 7", "J.K rolling","", "",1 );
-//        adapter = new BookAdapter(this, books);
-//        bookList.setAdapter(adapter);
-//        String bookSize =
 
     }
 
@@ -82,13 +68,19 @@ public class BorrowBook extends AppCompatActivity {
         String bookName = bookNameView.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString().substring(18));
         DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-        booksRef.child("amount").setValue(amount-1);
         FireBaseUser fu = new FireBaseUser();
-        fu.addToBorrowed(bookName);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
+        if(fu.addToBorrowed(bookName)) {
+            booksRef.child("amount").setValue(amount - 1);
+            Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(getIntent());
+            overridePendingTransition(0, 0);
+        }
+        else{
+            Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
