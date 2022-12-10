@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mylib.DataBase.FireBaseUser;
+import com.example.mylib.DataBase.User;
 import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.BookTrackAdapter;
 import com.example.mylib.DataBase.Book;
@@ -28,12 +29,33 @@ public class BookTrackingActivity extends AppCompatActivity {
     ListView bookList;
     BookTrackAdapter adapter;
     ArrayList<Book> books = new ArrayList<>();
-//    HashMap<String<ArrayList<String>>> borrowed=new HashMap<>();
-    static Book book;
+    HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_tracking);
+
+        DatabaseReference usersRef = new FireBaseUser().getUsersListRef();
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user= snapshot.getValue(User.class);
+                    assert user != null;
+                    for(String book: user.getBooks()){
+                        if(!borrowed.containsKey(book)){
+                            borrowed.put(book,new ArrayList<>());
+                        }
+                        borrowed.get(book).add(user.getUsername());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         DatabaseReference booksRef = new FireBaseBook().getBookListRef();
         bookList = (ListView) findViewById(R.id.borrowedBookList);
@@ -41,8 +63,13 @@ public class BookTrackingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    books.add(snapshot.getValue(Book.class));
+                    Book book=snapshot.getValue(Book.class);
+                    if(borrowed.containsKey(book.getName())){
+                        books.add(book);
+                    }
                 }
+                adapter = new BookTrackAdapter(BookTrackingActivity.this, books,borrowed);
+                bookList.setAdapter(adapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -50,23 +77,9 @@ public class BookTrackingActivity extends AppCompatActivity {
             }
 
         });
-        DatabaseReference usersRef = new FireBaseUser().getUsersListRef();
-        bookList = (ListView) findViewById(R.id.borrowedBookList);
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    books.add(snapshot.getValue(Book.class));
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
 
-        });
-        adapter = new BookTrackAdapter(BookTrackingActivity.this, books);
-        bookList.setAdapter(adapter);
+
     }
 
 

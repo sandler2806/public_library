@@ -46,15 +46,28 @@ public class FireBaseUser extends FireBaseModel {
                 ArrayList<String> books = user.getBooks();
                 books.add(bookName);
                 getUserFromDB(GlobalUserInfo.global_user_name).child("books").setValue(books);
-//                ArrayList<String> favorites=user.getFavorites();
-//                favorites.add(bookID);
-//                getUserFromDB(userID).child("favorites").setValue(favorites);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("sdsdf");
+
+            }
+
+        });
+    }
+    public void removeFromBorrowed(String bookName){
+        getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                ArrayList<String> books = user.getBooks();
+                books.remove(bookName);
+                getUserFromDB(GlobalUserInfo.global_user_name).child("books").setValue(books);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
 
         });

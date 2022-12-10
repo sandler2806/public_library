@@ -1,19 +1,31 @@
 package com.example.mylib;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mylib.DataBase.Book;
+import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.DataBase.FireBaseUser;
+import com.example.mylib.DataBase.User;
 import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ReturnBook extends AppCompatActivity {
     ListView bookList;
-    String[] books;
+    ArrayList<String> books;
     String[] authors;
     int[] noOfCopies;
     ListView listView;
@@ -23,18 +35,38 @@ public class ReturnBook extends AppCompatActivity {
         setContentView(R.layout.activity_return_book);
 
         bookList = (ListView) findViewById(R.id.bookList);
-        Book[] books = new Book[7];
-        books[0] = new Book("Harry potter 1", "J.K rolling","", "",1 );
-        books[1] = new Book("Harry potter 2", "J.K rolling","", "",1 );
-        books[2] = new Book("Harry potter 3", "J.K rolling","", "",1 );
-        books[3] = new Book("Harry potter 4", "J.K rolling","", "",1 );
-        books[4] = new Book("Harry potter 5", "J.K rolling","", "",1 );
-        books[5] = new Book("Harry potter 6", "J.K rolling","", "",1 );
-        books[6] = new Book("Harry potter 7", "J.K rolling","", "",1 );
-        ReturnBookAdapter adapter = new ReturnBookAdapter(this, books);
-        bookList.setAdapter(adapter);
+        FireBaseUser fu=new FireBaseUser();
+        fu.getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                books=user.getBooks();
+                ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
+                bookList.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
+
     public void returnBook(View view){
+//        View parentView = (View)view.getParent();
+//
+//        // Access the data associated with the list item, such as the book name and author
+//        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
+//        TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
+//        String bookName = bookNameView.getText().toString();
+//        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
+//        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
+//        booksRef.child("amount").setValue(amount+1);
+//        FireBaseUser fu = new FireBaseUser();
+//        fu.removeFromBorrowed(bookName);
+//        finish();
+//        overridePendingTransition(0, 0);
+//        startActivity(getIntent());
+//        overridePendingTransition(0, 0);
 
     }
     public void goBack(View view){

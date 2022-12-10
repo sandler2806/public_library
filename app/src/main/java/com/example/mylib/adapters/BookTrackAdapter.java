@@ -10,14 +10,17 @@ import com.example.mylib.DataBase.Book;
 import com.example.mylib.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BookTrackAdapter extends BaseAdapter {
 
     LayoutInflater mInflater;
     ArrayList<Book> books;
-    public BookTrackAdapter(Context c, ArrayList<Book> books)
+    HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
+    public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String,ArrayList<String>> borrowed)
     {
         this.books = books;
+        this.borrowed=borrowed;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
@@ -41,12 +44,22 @@ public class BookTrackAdapter extends BaseAdapter {
         View v = mInflater.inflate(R.layout.book_tracking,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         TextView authorTextView = (TextView) v.findViewById(R.id.authorTextView);
-        TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
-
-
+        TextView noOfAvailableCopiesTextView = (TextView) v.findViewById(R.id.noOfAvailableCopiesTextView);
+        TextView noOfBorrowedCopiesTextView = (TextView) v.findViewById(R.id.noOfBorrowedCopiesTextView);
+        TextView borrowedByTextView = (TextView) v.findViewById(R.id.borrowedByTextView);
+//        int borrowedNum=0;
+//        if (borrowed.containsKey(books.get(i).getName())){
+//            borrowedNum=borrowed.get(books.get(i).getName()).size();
+//        }
+        StringBuilder borrowedBy= new StringBuilder("\n");
+        for(String name :borrowed.get(books.get(i).getName())){
+            borrowedBy.append(name).append("\n");
+        }
         bookNameTextView.setText(books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
-        noOfCopiesTextView.setText("Number of copies: " + books.get(i).getAmount());
+        noOfAvailableCopiesTextView.setText("Number of available copies: " + books.get(i).getAmount());
+        noOfBorrowedCopiesTextView.setText("Number of borrowed copies: " + borrowed.get(books.get(i).getName()).size());
+        borrowedByTextView.setText("borrowed by:: " + borrowedBy.toString());
 
         return v;
     }
