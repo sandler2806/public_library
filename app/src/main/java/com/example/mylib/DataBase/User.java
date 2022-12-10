@@ -1,6 +1,12 @@
 package com.example.mylib.DataBase;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -12,6 +18,17 @@ public class User {
 
     public User(){
         // Default constructor for DataSnapshot.getValue(User.class)
+    }
+    public User(String username) {
+        FireBaseUser fu = new FireBaseUser();
+        Task<DataSnapshot> task = fu.getUserFromDB(username).get();
+        Map<String, Object> USERdATA= (Map<String, Object>)task.getResult().getValue();
+        this.books = (ArrayList<String>) USERdATA.get("books");
+        this.name = (String) USERdATA.get("name");
+        this.username = (String) USERdATA.get("username");
+        this.password = (String) USERdATA.get("password");
+        this.phone = (String) USERdATA.get("phone");
+        this.favorites = (ArrayList<Book>) USERdATA.get("favorites");
     }
     public User(User user){
         username=user.username;
