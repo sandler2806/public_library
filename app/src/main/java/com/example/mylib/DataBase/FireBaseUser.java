@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
+    static boolean borrowed;
     public void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }
@@ -38,14 +39,23 @@ public class FireBaseUser extends FireBaseModel {
     public void addBookToBooks(String bookName){
         myRef.child("users").child("noam").child("phone").child("0000000");
     }
-    public void addToBorrowed(String bookName){
+    public boolean addToBorrowed(String bookName){
+        borrowed = false;
         getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 ArrayList<String> books = user.getBooks();
-                books.add(bookName);
+                if(!books.contains(bookName)){
+                    books.add(bookName);
+                    borrowed = true;
+                }
                 getUserFromDB(GlobalUserInfo.global_user_name).child("books").setValue(books);
+
+//                ArrayList<String> favorites=user.getFavorites();
+//                favorites.add(bookID);
+//                getUserFromDB(userID).child("favorites").setValue(favorites);
+
             }
 
             @Override
@@ -54,6 +64,7 @@ public class FireBaseUser extends FireBaseModel {
             }
 
         });
+        return borrowed;
     }
     public void removeFromBorrowed(String bookName){
         getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,6 +82,7 @@ public class FireBaseUser extends FireBaseModel {
             }
 
         });
+
     }
 
     public void removeFromFavorites(String bookID){
