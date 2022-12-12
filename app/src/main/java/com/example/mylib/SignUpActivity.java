@@ -40,8 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         GlobalUserInfo.global_name = name;
         GlobalUserInfo.global_phone_number = phone;
 
-        User user=new User("a");
-        Toast.makeText(SignUpActivity.this,"got user",Toast.LENGTH_SHORT).show();
+        User user=new User(username);
         if (user.getUsername()!=null){
             Toast.makeText(SignUpActivity.this,"username already exist",Toast.LENGTH_SHORT).show();
         }
@@ -54,26 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this,"sign up successfully",Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SignUpActivity.this, ClientHomeActivity.class));
         }
-//        FireBaseUser fu = new FireBaseUser();
-//        fu.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.getValue()!=null){
-//                    Toast.makeText(SignUpActivity.this,"username already exist",Toast.LENGTH_SHORT).show();
-//                }
-//                else if(!password.equals(verifyPassword)){
-//                    Toast.makeText(SignUpActivity.this,"verify password does not match to password",Toast.LENGTH_SHORT).show();
-//                }
-//                else{
-//                    fu.addUserToDB(username,password,name,phone);
-//                    Toast.makeText(SignUpActivity.this,"sign up successfully",Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(SignUpActivity.this, ClientHomeActivity.class));
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
 
     }
     public void goBack(View view){

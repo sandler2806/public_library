@@ -18,6 +18,15 @@ import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
     static boolean borrowed;
+    static public void Await(Task<DataSnapshot> task){
+        try {
+            while (!task.isComplete()){
+                Thread.sleep(10);
+            }
+        } catch (Exception e) {
+            // handle the exception
+        }
+    }
     public void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }

@@ -20,21 +20,20 @@ public class User {
         // Default constructor for DataSnapshot.getValue(User.class)
     }
     public User(String username) {
-        System.out.println("in user");
         FireBaseUser fu = new FireBaseUser();
         Task<DataSnapshot> task = fu.getUserFromDB(username).get();
-        System.out.println("after task");
-//        if(task.getResult().getValue()!=null){
-        Map<String, Object> USERdATA= (Map<String, Object>)task.getResult().getValue();
-        System.out.println("after task result");
-        this.books = (ArrayList<String>) USERdATA.get("books");
-        this.name = (String) USERdATA.get("name");
-        this.username = (String) USERdATA.get("username");
-        this.password = (String) USERdATA.get("password");
-        this.phone = (String) USERdATA.get("phone");
-        this.favorites = (ArrayList<Book>) USERdATA.get("favorites");
+        FireBaseUser.Await(task);
+        if(task.getResult().getValue()!=null){
+
+            Map<String, Object> USERdATA= (Map<String, Object>)task.getResult().getValue();
+            this.books = (ArrayList<String>) USERdATA.get("books");
+            this.name = (String) USERdATA.get("name");
+            this.username = (String) USERdATA.get("username");
+            this.password = (String) USERdATA.get("password");
+            this.phone = (String) USERdATA.get("phone");
+            this.favorites = (ArrayList<Book>) USERdATA.get("favorites");
         }
-//    }
+    }
 
     public User(String username, String password, String name, String phone) {
         this.username = username;
