@@ -13,7 +13,7 @@ public class ClientHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_home);
-        String username_entry = "Welcome " + GlobalUserInfo.global_user_name;
+        String username_entry = "Welcome " + GlobalUserInfo.global_name;
         final TextView textViewToChange = (TextView) findViewById(R.id.titleClientName);
         textViewToChange.setText(username_entry);
     }

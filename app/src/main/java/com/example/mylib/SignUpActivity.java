@@ -57,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
         GlobalUserInfo.global_user_name = username;
+        GlobalUserInfo.global_name = name;
+        GlobalUserInfo.global_phone_number = phone;
     }
     public void goBack(View view){
         startActivity(new Intent(this, SignInCustomer.class));
