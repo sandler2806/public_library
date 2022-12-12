@@ -7,12 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.DataBase.User;
-import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.BookTrackAdapter;
 import com.example.mylib.DataBase.Book;
 import com.example.mylib.DataBase.FireBaseBook;
@@ -78,29 +74,8 @@ public class BookTrackingActivity extends AppCompatActivity {
 
         });
 
-
-
     }
 
-
-//    public void searchBook(View view){
-//        TextView bookNameText = findViewById(R.id.bookNameTextView);
-//        String bookName=bookNameText.getText().toString();
-//        FireBaseBook fireBaseBook = new FireBaseBook();
-//        DatabaseReference bookRef = new FireBaseBook().getBookFromDB(bookName);
-//        bookRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                book = dataSnapshot.getValue(Book.class);
-//                Toast.makeText(BookTrackingActivity.this,book.getAuthor(),Toast.LENGTH_SHORT).show();
-//                }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//        });
-//    }
 
     public void goBack(View view){
         startActivity(new Intent(this, LibrarianHomeActivity.class));

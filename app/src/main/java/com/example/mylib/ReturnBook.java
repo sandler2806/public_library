@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mylib.DataBase.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.DataBase.User;
-import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,9 +24,6 @@ import java.util.ArrayList;
 public class ReturnBook extends AppCompatActivity {
     ListView bookList;
     ArrayList<String> books;
-    String[] authors;
-    int[] noOfCopies;
-    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +61,10 @@ public class ReturnBook extends AppCompatActivity {
                 booksRef.child("amount").setValue(amount+1);
                 FireBaseUser fu = new FireBaseUser();
                 fu.removeFromBorrowed(bookName);
-//                finish();
-//                overridePendingTransition(0, 0);
-//                startActivity(getIntent());
-//                overridePendingTransition(0, 0); dosent
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
 
             }
             @Override
@@ -78,18 +73,6 @@ public class ReturnBook extends AppCompatActivity {
             }
 
         });
-//        View parentView = (View)view.getParent();
-//
-//        // Access the data associated with the list item, such as the book name and author
-//        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
-//        TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
-//        String bookName = bookNameView.getText().toString();
-
-//        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
-//        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-//        booksRef.child("amount").setValue(amount+1);
-//        FireBaseUser fu = new FireBaseUser();
-//        fu.removeFromBorrowed(bookName);
         finish();
         overridePendingTransition(0, 0);
         startActivity(getIntent());

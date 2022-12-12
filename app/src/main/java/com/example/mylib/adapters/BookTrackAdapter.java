@@ -47,10 +47,7 @@ public class BookTrackAdapter extends BaseAdapter {
         TextView noOfAvailableCopiesTextView = (TextView) v.findViewById(R.id.noOfAvailableCopiesTextView);
         TextView noOfBorrowedCopiesTextView = (TextView) v.findViewById(R.id.noOfBorrowedCopiesTextView);
         TextView borrowedByTextView = (TextView) v.findViewById(R.id.borrowedByTextView);
-//        int borrowedNum=0;
-//        if (borrowed.containsKey(books.get(i).getName())){
-//            borrowedNum=borrowed.get(books.get(i).getName()).size();
-//        }
+
         StringBuilder borrowedBy= new StringBuilder("\n");
         for(String name :borrowed.get(books.get(i).getName())){
             borrowedBy.append(name).append("\n");

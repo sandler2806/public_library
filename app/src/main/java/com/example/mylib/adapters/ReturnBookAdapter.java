@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.mylib.DataBase.Book;
 import com.example.mylib.R;
 
 import java.util.ArrayList;
@@ -40,13 +39,8 @@ public class ReturnBookAdapter extends BaseAdapter {
 
         View v = mInflater.inflate(R.layout.return_book_list,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
-//        TextView authorTextView = (TextView) v.findViewById(R.id.authorTextView);
-//        TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
-
-
         bookNameTextView.setText(books.get(i));
-//        authorTextView.setText("Author: " + books[i].getAuthor());
-//        noOfCopiesTextView.setText("Number of copies: " + books[i].getAmount());
+
 
         return v;
     }

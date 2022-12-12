@@ -21,10 +21,7 @@ public class FireBaseUser extends FireBaseModel {
     public void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }
-//public void addUser(String username, String password, String name, String phone){//, ArrayList<Book> books,ArrayList<Book> favorites
-//    User user=new User(username,password,name,phone);
     public void writeNewUser(String username, String password, String name, String phone){
-//        User user = new User(u)
         User user=new User(username,password,name,phone);
         myRef.child("users").child(username).setValue(user);
 
@@ -36,9 +33,7 @@ public class FireBaseUser extends FireBaseModel {
         return myRef.child("users");
     }
 
-    public void addBookToBooks(String bookName){
-        myRef.child("users").child("noam").child("phone").child("0000000");
-    }
+
     public boolean addToBorrowed(String bookName){
         borrowed = false;
         getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -51,11 +46,6 @@ public class FireBaseUser extends FireBaseModel {
                     borrowed = true;
                 }
                 getUserFromDB(GlobalUserInfo.global_user_name).child("books").setValue(books);
-
-//                ArrayList<String> favorites=user.getFavorites();
-//                favorites.add(bookID);
-//                getUserFromDB(userID).child("favorites").setValue(favorites);
-
             }
 
             @Override
@@ -102,24 +92,3 @@ public class FireBaseUser extends FireBaseModel {
         });
     }
 }
-//public class FireBaseUser{
-//    static User user;
-//    static DatabaseReference myRef= FirebaseDatabase.getInstance("https://public-library-8027f-default-rtdb.asia-southeast1.firebasedatabase.app").getReference();
-//    static public void addUser(String username, String password, String name, String phone){//, ArrayList<Book> books,ArrayList<Book> favorites
-//        User user=new User(username,password,name,phone);
-//        user.addFavorite(new Book());
-//        myRef.child("users").child(username).setValue(user);
-//    }
-//    static public User getUser(String username) {
-//        myRef.child("users").child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DataSnapshot snapshot = task.getResult();
-//                    user = snapshot.getValue(User.class);
-//                }
-//            }
-//        });
-//        return new User(user);
-//    }
-//}

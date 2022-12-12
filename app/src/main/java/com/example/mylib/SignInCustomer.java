@@ -65,33 +65,7 @@ public class SignInCustomer extends AppCompatActivity {
         });
 
 
-//        if(username.equals("notExist")){
-//            Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();
-//        }
-//        else if(!password.equals("correct")){
-//            Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(this, ClientHomeActivity.class));
-//        }
-//        User a=FireBaseUser.getUser(username);
         GlobalUserInfo.global_user_name = username;
-
-//        if(username.equals("notExist")){
-//            Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();
-//        }
-//        else if(!password.equals("correct")){
-//            Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(this, ClientHomeActivity.class));
-//        }
-//
-//        Intent intent = new Intent(getBaseContext(), ClientHomeActivity.class);
-//        intent.putExtra("USERNAME", username);
-//        startActivity(intent);
 
     }
 
