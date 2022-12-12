@@ -52,21 +52,48 @@ public class ReturnBook extends AppCompatActivity {
     }
 
     public void returnBook(View view){
+
+        View parentView = (View)view.getParent();
+        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
+        String bookName = bookNameView.getText().toString();
+        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
+        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Book book = dataSnapshot.getValue(Book.class);
+
+                int amount=book.getAmount();
+                booksRef.child("amount").setValue(amount+1);
+                FireBaseUser fu = new FireBaseUser();
+                fu.removeFromBorrowed(bookName);
+//                finish();
+//                overridePendingTransition(0, 0);
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0); dosent
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
 //        View parentView = (View)view.getParent();
 //
 //        // Access the data associated with the list item, such as the book name and author
 //        TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
 //        TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
 //        String bookName = bookNameView.getText().toString();
+
 //        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
 //        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
 //        booksRef.child("amount").setValue(amount+1);
 //        FireBaseUser fu = new FireBaseUser();
 //        fu.removeFromBorrowed(bookName);
-//        finish();
-//        overridePendingTransition(0, 0);
-//        startActivity(getIntent());
-//        overridePendingTransition(0, 0);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
 
     }
     public void goBack(View view){
