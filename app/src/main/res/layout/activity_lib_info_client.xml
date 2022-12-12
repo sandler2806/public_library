@@ -7,48 +7,7 @@
     android:background="@drawable/login_back"
     tools:context=".LibInfoClient">
 
-    <TextView
-        android:id="@+id/titleClientNameInInfoPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="49dp"
-        tools:layout_editor_absoluteY="65dp" />
 
-    <TextView
-        android:id="@+id/ClientuserNameInInfoPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="158dp" />
-
-    <TextView
-        android:id="@+id/ClientPhoneNumberInInfoPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.373"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="258dp" />
 
     <ImageButton
         android:id="@+id/imageButton4"
