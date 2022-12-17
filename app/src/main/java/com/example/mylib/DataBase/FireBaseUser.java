@@ -3,6 +3,7 @@ package com.example.mylib.DataBase;
 import androidx.annotation.NonNull;
 
 import com.example.mylib.GlobalUserInfo;
+import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
     public static boolean borrowed;
-    static public void Await(Task<DataSnapshot> task){
+    public static void Await(Task<DataSnapshot> task){
         try {
             while (!task.isComplete()){
                 Thread.sleep(10);
@@ -24,23 +25,24 @@ public class FireBaseUser extends FireBaseModel {
             // handle the exception
         }
     }
-    public void addUserToDB(String username, String password, String name, String phone){
+    public static void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }
-    public void writeNewUser(String username, String password, String name, String phone){
+    public static void writeNewUser(String username, String password, String name, String phone){
         User user=new User(username,password,name,phone);
         myRef.child("users").child(username).setValue(user);
 
     }
-    public DatabaseReference getUserFromDB(String userID){
+    public static DatabaseReference getUserFromDB(String userID){
         return myRef.child("users").child(userID);
     }
-    public DatabaseReference getUsersListRef(){
+    public static DatabaseReference getUsersListRef(){
         return myRef.child("users");
     }
-    public boolean addToBorrowed(String bookName){
+    public static boolean addToBorrowed(String bookName){
         borrowed = false;
         User user = new User(GlobalUserInfo.global_user_name);
+//        Book book = new Book(bookName);
         if(!user.getBooks().contains(bookName)){
             user.getBooks().add(bookName);
             borrowed = true;
@@ -67,7 +69,7 @@ public class FireBaseUser extends FireBaseModel {
 //        });
 //        return borrowed;
     }
-    public void removeFromBorrowed(String bookName){
+    public static void removeFromBorrowed(String bookName){
         User user = new User(GlobalUserInfo.global_user_name);
         user.getBooks().remove(bookName);
         getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);
@@ -89,7 +91,7 @@ public class FireBaseUser extends FireBaseModel {
 //        });
 
     }
-    public void removeFromFavorites(String bookName){
+    public static void removeFromFavorites(String bookName){
         User user = new User(GlobalUserInfo.global_user_name);
         user.getFavorites().remove(bookName);
         getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);

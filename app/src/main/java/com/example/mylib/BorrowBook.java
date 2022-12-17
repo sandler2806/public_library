@@ -67,8 +67,7 @@ public class BorrowBook extends AppCompatActivity {
         String bookName = bookNameView.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString().substring(18));
         DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-        FireBaseUser fireBaseUser = new FireBaseUser();
-        if(fireBaseUser.addToBorrowed(bookName)) {
+        if(FireBaseUser.addToBorrowed(bookName)) {
             booksRef.child("amount").setValue(amount - 1);
             Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
             finish();

@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class FireBaseBook extends FireBaseModel {
-    static public void Await(Task<DataSnapshot> task){
+    public static void Await(Task<DataSnapshot> task){
         try {
             while (!task.isComplete()){
                 Thread.sleep(10);
@@ -24,14 +24,14 @@ public class FireBaseBook extends FireBaseModel {
             // handle the exception
         }
     }
-    public void addBook(String name, String author, String genre, int amount, String publishYear) {
+    public static void addBook(String name, String author, String genre, int amount, String publishYear) {
         Book book = new Book(name, author, genre, publishYear, amount);
         myRef.child("books").child(name).setValue(book);
     }
-    public DatabaseReference getBookFromDB(String bookID) {
+    public static DatabaseReference getBookFromDB(String bookID) {
         return myRef.child("books").child(bookID);
     }
-    public void removeBook(Activity activity,String bookName, int amount){
+    public static void removeBook(Activity activity,String bookName, int amount){
         Book book = new Book(bookName);
         int bookAmount = 0;
         // get the amount of the book in order to prevent multiple getAmount calls
