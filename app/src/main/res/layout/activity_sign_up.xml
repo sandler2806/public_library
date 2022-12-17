@@ -79,6 +79,7 @@
         android:layout_below="@id/name"
         android:background="#30ffffff"
         android:hint="Phone"
+        android:inputType="phone"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_margin="10dp"

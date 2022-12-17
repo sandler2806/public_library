@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mylib.DataBase.FireBaseUser;
-import com.example.mylib.DataBase.User;
+import com.example.mylib.Objects.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;

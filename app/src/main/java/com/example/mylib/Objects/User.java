@@ -1,9 +1,9 @@
-package com.example.mylib.DataBase;
+package com.example.mylib.Objects;
 
+import com.example.mylib.DataBase.FireBaseUser;
+import com.example.mylib.Objects.Book;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,18 +20,17 @@ public class User {
         // Default constructor for DataSnapshot.getValue(User.class)
     }
     public User(String username) {
-        FireBaseUser fu = new FireBaseUser();
-        Task<DataSnapshot> task = fu.getUserFromDB(username).get();
+        FireBaseUser fireBaseUser = new FireBaseUser();
+        Task<DataSnapshot> task = fireBaseUser.getUserFromDB(username).get();
         FireBaseUser.Await(task);
         if(task.getResult().getValue()!=null){
-
-            Map<String, Object> USERdATA= (Map<String, Object>)task.getResult().getValue();
-            this.books = (ArrayList<String>) USERdATA.get("books");
-            this.name = (String) USERdATA.get("name");
-            this.username = (String) USERdATA.get("username");
-            this.password = (String) USERdATA.get("password");
-            this.phone = (String) USERdATA.get("phone");
-            this.favorites = (ArrayList<Book>) USERdATA.get("favorites");
+            Map<String, Object> userData= (Map<String, Object>)task.getResult().getValue();
+            this.books = (ArrayList<String>) userData.get("books");
+            this.name = (String) userData.get("name");
+            this.username = (String) userData.get("username");
+            this.password = (String) userData.get("password");
+            this.phone = (String) userData.get("phone");
+            this.favorites = (ArrayList<Book>) userData.get("favorites");
         }
     }
 
