@@ -55,6 +55,9 @@ public class User {
         return password;
     }
 
+    public void setBooks(ArrayList<String> books){
+        this.books = books;
+    }
     public void setPassword(String password) {
         this.password = password;
     }

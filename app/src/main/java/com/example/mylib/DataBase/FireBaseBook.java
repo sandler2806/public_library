@@ -28,8 +28,8 @@ public class FireBaseBook extends FireBaseModel {
         Book book = new Book(name, author, genre, publishYear, amount);
         myRef.child("books").child(name).setValue(book);
     }
-    public static DatabaseReference getBookFromDB(String bookID) {
-        return myRef.child("books").child(bookID);
+    public static DatabaseReference getBookFromDB(String bookName) {
+        return myRef.child("books").child(bookName);
     }
     public static void removeBook(Activity activity,String bookName, int amount){
         Book book = new Book(bookName);

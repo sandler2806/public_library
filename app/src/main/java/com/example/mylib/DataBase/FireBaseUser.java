@@ -43,7 +43,10 @@ public class FireBaseUser extends FireBaseModel {
         borrowed = false;
         User user = new User(GlobalUserInfo.global_user_name);
 //        Book book = new Book(bookName);
-        if(!user.getBooks().contains(bookName)){
+        if(user.getBooks()==null){
+            user.setBooks(new ArrayList<>());
+        }
+        if(user.getBooks()!=null && !user.getBooks().contains(bookName)){
             user.getBooks().add(bookName);
             borrowed = true;
         }
