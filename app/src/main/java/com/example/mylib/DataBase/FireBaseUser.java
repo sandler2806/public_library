@@ -3,6 +3,7 @@ package com.example.mylib.DataBase;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.ListView;
+import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.example.mylib.Objects.User;
 import com.example.mylib.ReturnBook;
 import com.example.mylib.SignInCustomer;
 import com.example.mylib.adapters.ReturnBookAdapter;
+import com.example.mylib.SignUpActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +34,29 @@ public class FireBaseUser extends FireBaseModel {
 //            // handle the exception
 //        }
 //    }
-    public static void addUserToDB(String username, String password, String name, String phone){
-        writeNewUser(username,password,name,phone);
-    }
-    public static void writeNewUser(String username, String password, String name, String phone){
+
+    public static void addUser(Activity activity,String username, String password, String verifyPassword,String name, String phone){
         User user=new User(username,password,name,phone);
-        myRef.child("users").child(username).setValue(user);
+        FireBaseUser.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    Toast.makeText(activity,"username already exist",Toast.LENGTH_SHORT).show();
+                }
+                else if(!password.equals(verifyPassword)){
+                    Toast.makeText(activity,"verify password does not match to password",Toast.LENGTH_SHORT).show();
+                }
+                else{
+//                    FireBaseUser.addUserToDB(username,password,name,phone);
+                    myRef.child("users").child(username).setValue(user);
+                    Toast.makeText(activity,"sign up successfully",Toast.LENGTH_SHORT).show();
+                    activity.startActivity(new Intent(activity, ClientHomeActivity.class));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
     }
     public static DatabaseReference getUserFromDB(String userName){
@@ -98,7 +117,9 @@ public class FireBaseUser extends FireBaseModel {
     public static DatabaseReference getUsersListRef(){
         return myRef.child("users");
     }
-    public static void addToBorrowed(String bookName,int amount, Activity activity){
+
+
+        public static void addToBorrowed(String bookName,int amount, Activity activity){
 //        borrowed = false;
 //        User user = new User(GlobalUserInfo.global_user_name);
 ////        Book book = new Book(bookName);

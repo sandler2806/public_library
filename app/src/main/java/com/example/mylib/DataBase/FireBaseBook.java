@@ -1,21 +1,33 @@
 package com.example.mylib.DataBase;
 
+
+
 import android.app.Activity;
+import android.widget.ListView;
 import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mylib.BookTrackingActivity;
+import com.example.mylib.BorrowBook;
 import com.example.mylib.AddBookLibrarian;
 import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.Objects.Book;
+import com.example.mylib.Objects.User;
+import com.example.mylib.R;
+import com.example.mylib.adapters.BookAdapter;
+import com.example.mylib.adapters.BookTrackAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class FireBaseBook extends FireBaseModel {
-    
+
     public static void addBook(String name, String author, String genre, int amount, String publishYear,
                                Activity activity) {
         getBookFromDB(name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -43,6 +55,77 @@ public class FireBaseBook extends FireBaseModel {
     }
     public static DatabaseReference getBookFromDB(String bookName) {
         return myRef.child("books").child(bookName);
+    }
+    public static void showBorrowedBooks(Activity activity,ListView bookList){
+        HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
+
+        DatabaseReference usersRef = FireBaseUser.getUsersListRef();
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user= snapshot.getValue(User.class);
+                    assert user != null;
+                    for(String book: user.getBooks()){
+                        if(!borrowed.containsKey(book)){
+                            borrowed.put(book,new ArrayList<>());
+                        }
+                        borrowed.get(book).add(user.getUsername());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        DatabaseReference booksRef = FireBaseBook.getBookListRef();
+        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Book> books = new ArrayList<>();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Book book=snapshot.getValue(Book.class);
+                    if(borrowed.containsKey(book.getName())){
+                        books.add(book);
+                    }
+                }
+                BookTrackAdapter adapter = new BookTrackAdapter(activity, books,borrowed);
+                bookList.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }
+
+        public static void showAvailableBooks(Activity activity,ListView bookList){
+        ArrayList<Book> books = new ArrayList<>();
+
+        FireBaseBook.getBookListRef().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    if(book.getAmount()==0){
+                        continue;
+                    }
+                    books.add(snapshot.getValue(Book.class));
+                }
+                BookAdapter adapter = new BookAdapter(activity, books);
+                bookList.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
     public static void removeBook(Activity activity,String bookName, int amount){
         System.out.println("before book");

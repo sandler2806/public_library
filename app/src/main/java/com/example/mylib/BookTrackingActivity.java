@@ -23,56 +23,58 @@ import java.util.HashMap;
 public class BookTrackingActivity extends AppCompatActivity {
 
     ListView bookList;
-    BookTrackAdapter adapter;
-    ArrayList<Book> books = new ArrayList<>();
-    HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
+//    BookTrackAdapter adapter;
+//    ArrayList<Book> books = new ArrayList<>();
+//    HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_tracking);
 
-        DatabaseReference usersRef = FireBaseUser.getUsersListRef();
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user= snapshot.getValue(User.class);
-                    assert user != null;
-                    for(String book: user.getBooks()){
-                        if(!borrowed.containsKey(book)){
-                            borrowed.put(book,new ArrayList<>());
-                        }
-                        borrowed.get(book).add(user.getUsername());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        DatabaseReference booksRef = FireBaseBook.getBookListRef();
         bookList = (ListView) findViewById(R.id.borrowedBookList);
-        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Book book=snapshot.getValue(Book.class);
-                    if(borrowed.containsKey(book.getName())){
-                        books.add(book);
-                    }
-                }
-                adapter = new BookTrackAdapter(BookTrackingActivity.this, books,borrowed);
-                bookList.setAdapter(adapter);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        FireBaseBook.showBorrowedBooks(this,bookList);
 
-            }
-
-        });
+//        DatabaseReference usersRef = FireBaseUser.getUsersListRef();
+//        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    User user= snapshot.getValue(User.class);
+//                    assert user != null;
+//                    for(String book: user.getBooks()){
+//                        if(!borrowed.containsKey(book)){
+//                            borrowed.put(book,new ArrayList<>());
+//                        }
+//                        borrowed.get(book).add(user.getUsername());
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//
+//        DatabaseReference booksRef = FireBaseBook.getBookListRef();
+//        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Book book=snapshot.getValue(Book.class);
+//                    if(borrowed.containsKey(book.getName())){
+//                        books.add(book);
+//                    }
+//                }
+//                adapter = new BookTrackAdapter(BookTrackingActivity.this, books,borrowed);
+//                bookList.setAdapter(adapter);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//        });
 
     }
 
