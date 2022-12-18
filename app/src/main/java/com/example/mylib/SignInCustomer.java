@@ -42,6 +42,8 @@ public class SignInCustomer extends AppCompatActivity {
         TextView passwordText = findViewById(R.id.password);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
+        System.out.println(username);
+
         fu.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -54,6 +56,7 @@ public class SignInCustomer extends AppCompatActivity {
                         Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        GlobalUserInfo.global_name = user.getName();
                         Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInCustomer.this, ClientHomeActivity.class));
                     }
@@ -65,7 +68,6 @@ public class SignInCustomer extends AppCompatActivity {
         });
 
 
-        GlobalUserInfo.global_user_name = username;
 
     }
 
