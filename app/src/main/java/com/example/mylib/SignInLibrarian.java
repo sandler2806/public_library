@@ -17,13 +17,15 @@ public class SignInLibrarian extends AppCompatActivity {
     }
     public void openLibrarianHomeActivity(View view){
 
+//        get data from text views
         TextView usernameText = findViewById(R.id.username);
         TextView passwordText = findViewById(R.id.password);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
 
+//        Allows access only to admin
         if(!username.equals("admin")){
-            Toast.makeText(SignInLibrarian.this,"username does not exist",Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInLibrarian.this,"wrong username",Toast.LENGTH_SHORT).show();
         }
         else if(!password.equals("admin")){
             Toast.makeText(SignInLibrarian.this,"wrong password",Toast.LENGTH_SHORT).show();
