@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AddBookLibrarian extends AppCompatActivity {
-
+    FireBaseBook fireBaseBook=new FireBaseBook();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +18,6 @@ public class AddBookLibrarian extends AppCompatActivity {
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
     public void addBook(View view){
-        FireBaseBook fu=new FireBaseBook();
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView authorText = findViewById(R.id.BookAuthorInsert);
         TextView genreText = findViewById(R.id.BookGenreInsert);
@@ -29,7 +28,8 @@ public class AddBookLibrarian extends AppCompatActivity {
         String genre=genreText.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
-        fu.addBook(bookName,author,genre,amount,publishingYear);
+        //add the book with the given fields
+        fireBaseBook.addBook(bookName,author,genre,amount,publishingYear);
         Toast.makeText(AddBookLibrarian.this,"book added successfully", Toast.LENGTH_SHORT).show();
         finish();
         overridePendingTransition(0, 0);
