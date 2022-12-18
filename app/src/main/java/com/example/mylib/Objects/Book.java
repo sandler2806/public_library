@@ -7,56 +7,17 @@ public class Book {
     private String name;
     private String author;
     private String genre;
-    private String publishing_year;
-    private int id;
-    private User owner;
+    private String publishingYear;
 
-//    public Book(String bookName) {
-//        System.out.println("in constructor");
-//        System.out.println(bookName);
-//        Task<DataSnapshot> task = FireBaseBook.getBookFromDB(bookName).get();
-//        System.out.println("after constructor");
-//
-////        try {
-////            DataSnapshot result = task.getResult();
-////            // do something with the result
-////            if(result.getValue()!=null){
-////                Map<String, Object> bookData= (Map<String, Object>)result.getValue();
-////                Long bookAmount = (Long) bookData.get("amount");
-////                this.amount = bookAmount.intValue();
-////                this.name = (String) bookData.get("name");
-////                this.author = (String) bookData.get("author");
-////                this.genre = (String) bookData.get("genre");
-////                this.publishing_year = (String) bookData.get("publishing_year");
-////            }
-////        } catch (Exception e) {
-////            // handle the exception
-////        }
-//
-//        FireBaseBook.Await(task);
-//        System.out.println("after await");
-//
-//        if(task.getResult().getValue()!=null){
-//            System.out.println("after if");
-//
-//            Map<String, Object> bookData= (Map<String, Object>)task.getResult().getValue();
-//            Long bookAmount = (Long) bookData.get("amount");
-//            this.amount = bookAmount.intValue();
-//            this.name = (String) bookData.get("name");
-//            this.author = (String) bookData.get("author");
-//            this.genre = (String) bookData.get("genre");
-//            this.publishing_year = (String) bookData.get("publishing_year");
-//        }
-//    }
     public Book(){
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-    public Book(String name, String author, String genre, String publishing_year,int amount) {
+    public Book(String name, String author, String genre, String publishingYear,int amount) {
         this.amount=amount;
         this.name = name;
         this.author = author;
         this.genre = genre;
-        this.publishing_year = publishing_year;
+        this.publishingYear = publishingYear;
     }
 
     public String getName() {
@@ -83,12 +44,12 @@ public class Book {
         this.genre = genre;
     }
 
-    public String getPublishing_year() {
-        return publishing_year;
+    public String getPublishingYear() {
+        return publishingYear;
     }
 
-    public void setPublishing_year(String publishing_year) {
-        this.publishing_year = publishing_year;
+    public void setPublishingYear(String publishingYear) {
+        this.publishingYear = publishingYear;
     }
 
     public int getAmount() {
