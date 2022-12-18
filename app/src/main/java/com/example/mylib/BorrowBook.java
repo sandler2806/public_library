@@ -1,6 +1,5 @@
 package com.example.mylib;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +11,6 @@ import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.adapters.BookAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,28 +32,6 @@ public class BorrowBook extends AppCompatActivity {
         bookList = (ListView) findViewById(R.id.bookList);
 
         FireBaseBook.showAvailableBooks(this,bookList);
-
-//        DatabaseReference booksRef = FireBaseBook.getBookListRef();
-//        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    Book book = snapshot.getValue(Book.class);
-//                    if(book.getAmount()==0){
-//                        continue;
-//                    }
-//                    books.add(snapshot.getValue(Book.class));
-//                }
-//                adapter = new BookAdapter(BorrowBook.this, books);
-//                bookList.setAdapter(adapter);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//
-//        });
-
     }
 
     public void borrow(View view){
@@ -68,19 +41,6 @@ public class BorrowBook extends AppCompatActivity {
         TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
         String bookName = bookNameView.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString().substring(18));
-//        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-//        if(FireBaseUser.addToBorrowed(bookName,amount,BorrowBook.this)) {
-//            booksRef.child("amount").setValue(amount - 1);
-//            Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
-//            finish();
-//            overridePendingTransition(0, 0);
-//            startActivity(getIntent());
-//            overridePendingTransition(0, 0);
-//        }
-//        else{
-//            Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
-//        }
         FireBaseUser.addToBorrowed(bookName,amount,BorrowBook.this);
-
     }
 }

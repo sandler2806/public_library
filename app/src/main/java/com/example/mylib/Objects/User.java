@@ -13,20 +13,6 @@ public class User {
     public User(){
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-//    public User(String username) {
-////        FireBaseUser fireBaseUser = new FireBaseUser();
-//        Task<DataSnapshot> task = FireBaseUser.getUserFromDB(username).get();
-//        FireBaseUser.Await(task);
-//        if(task.getResult().getValue()!=null){
-//            Map<String, Object> userData= (Map<String, Object>)task.getResult().getValue();
-//            this.books = (ArrayList<String>) userData.get("books");
-//            this.name = (String) userData.get("name");
-//            this.username = (String) userData.get("username");
-//            this.password = (String) userData.get("password");
-//            this.phone = (String) userData.get("phone");
-//            this.favorites = (ArrayList<Book>) userData.get("favorites");
-//        }
-//    }
 
     public User(String username, String password, String name, String phone) {
         this.username = username;
@@ -34,7 +20,6 @@ public class User {
         this.name = name;
         this.phone = phone;
         this.books = new ArrayList<>();
-
     }
 
     public String getUsername() {
@@ -90,8 +75,6 @@ public class User {
     public ArrayList<String> getBooks() {
         return books;
     }
-
-
 
 }
 

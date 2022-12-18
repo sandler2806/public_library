@@ -1,20 +1,14 @@
 package com.example.mylib;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 import com.example.mylib.DataBase.FireBaseBook;
-import com.example.mylib.DataBase.FireBaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+
 
 import android.view.View;
 import android.widget.TextView;
 
 public class AddBookLibrarian extends AppCompatActivity {
-//    FireBaseBook fireBaseBook=new FireBaseBook();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
