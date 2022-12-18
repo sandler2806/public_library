@@ -51,8 +51,6 @@ public class AddBookLibrarian extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        FireBaseBook.addBook(bookName,author,genre,amount,publishingYear);
-        Toast.makeText(AddBookLibrarian.this,"book added successfully", Toast.LENGTH_SHORT).show();
         finish();
         overridePendingTransition(0, 0);
         startActivity(getIntent());

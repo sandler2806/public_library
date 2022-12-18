@@ -62,7 +62,6 @@ public class Book {
     }
     public Book(String name, String author, String genre, String publishing_year,int amount) {
         this.amount=amount;
-        owner=null;
         this.name = name;
         this.author = author;
         this.genre = genre;
@@ -99,15 +98,6 @@ public class Book {
 
     public void setPublishing_year(String publishing_year) {
         this.publishing_year = publishing_year;
-    }
-
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public int getAmount() {

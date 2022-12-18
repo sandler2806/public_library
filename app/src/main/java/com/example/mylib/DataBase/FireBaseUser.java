@@ -37,8 +37,8 @@ public class FireBaseUser extends FireBaseModel {
         myRef.child("users").child(username).setValue(user);
 
     }
-    public static DatabaseReference getUserFromDB(String userID){
-        return myRef.child("users").child(userID);
+    public static DatabaseReference getUserFromDB(String userName){
+        return myRef.child("users").child(userName);
     }
     public static DatabaseReference getUsersListRef(){
         return myRef.child("users");
@@ -107,25 +107,5 @@ public class FireBaseUser extends FireBaseModel {
 
         });
 
-    }
-    public static void removeFromFavorites(String bookName){
-//        User user = new User(GlobalUserInfo.global_user_name);
-//        user.getFavorites().remove(bookName);
-//        getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);
-
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        getUserFromDB(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-//                ArrayList<String> favorites=user.getFavorites();
-//                if(!favorites.contains(bookID)) return;
-//                favorites.remove(bookID);
-//                getUserFromDB(userID).child("favorites").setValue(favorites);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
 }
