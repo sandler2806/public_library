@@ -11,7 +11,8 @@ import com.example.mylib.R;
 import java.util.ArrayList;
 
 public class ReturnBookAdapter extends BaseAdapter {
-
+    //This adapter is used in BorrowBook, to list
+    //a collection of books within a ListView
     LayoutInflater mInflater;
     ArrayList<String> books;
     public ReturnBookAdapter(Context c, ArrayList<String> books)
@@ -36,7 +37,7 @@ public class ReturnBookAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
+        //Set the views
         View v = mInflater.inflate(R.layout.return_book_list,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         bookNameTextView.setText(books.get(i));

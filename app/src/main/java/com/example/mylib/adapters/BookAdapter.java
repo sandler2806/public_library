@@ -13,7 +13,8 @@ import com.example.mylib.R;
 import java.util.ArrayList;
 
 public class BookAdapter extends BaseAdapter {
-
+    //This adapter is used in BorrowBook, to list
+    //a collection of books within a ListView
     LayoutInflater mInflater;
     ArrayList<Book> books;
     public BookAdapter(Context c, ArrayList<Book> books)
@@ -37,14 +38,14 @@ public class BookAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
+    public View getView(int i, View view, ViewGroup viewGroup) {//called for each items
+        //Get handle for the text views
         View v = mInflater.inflate(R.layout.book_list_detail,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         TextView authorTextView = (TextView) v.findViewById(R.id.authorTextView);
         TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
 
-
+        //set the text of each field
         bookNameTextView.setText(books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfCopiesTextView.setText("Number of copies: " + books.get(i).getAmount());
