@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 public class ReturnBook extends AppCompatActivity {
     ListView bookList;
-    ArrayList<String> books;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,26 +34,7 @@ public class ReturnBook extends AppCompatActivity {
 //        ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
 //        bookList.setAdapter(adapter);
 //        getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);
-
-
-        FireBaseUser.getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user=dataSnapshot.getValue(User.class);
-                books=user.getBooks();
-                if(!books.isEmpty()) {
-                    ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
-                    bookList.setAdapter(adapter);
-                }
-                else{
-                    Toast.makeText(ReturnBook.this,"No books to return",Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
+        FireBaseUser.createBookListForReturn(bookList,ReturnBook.this);
     }
 
     public void returnBook(View view){
@@ -63,9 +43,7 @@ public class ReturnBook extends AppCompatActivity {
         TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
         String bookName = bookNameView.getText().toString();
         // take the reference to the book and set the amount by amount + 1 for return logic
-        DatabaseReference booksRef =  FireBaseBook.getBookFromDB(bookName);
         //fix this
-
 //        Book book = new Book(bookName);
 //        int amount=book.getAmount();
 //        booksRef.child("amount").setValue(amount+1);
@@ -77,25 +55,7 @@ public class ReturnBook extends AppCompatActivity {
 //        overridePendingTransition(0, 0);
 
         FireBaseUser.removeFromBorrowed(bookName);
-
-        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Book book = dataSnapshot.getValue(Book.class);
-                int amount=book.getAmount();
-                booksRef.child("amount").setValue(amount+1);
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-
+        FireBaseBook.returnBook(bookName,ReturnBook.this);
     }
     public void goBack(View view){
 

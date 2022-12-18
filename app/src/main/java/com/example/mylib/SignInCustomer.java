@@ -41,33 +41,7 @@ public class SignInCustomer extends AppCompatActivity {
         TextView passwordText = findViewById(R.id.password);
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
-        System.out.println(username);
-        FireBaseUser.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()==null){
-                    Toast.makeText(SignInCustomer.this,"username does not exist",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    User user = dataSnapshot.getValue(User.class);
-                    if(user!=null && !user.getPassword().equals(password)){
-                        Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        GlobalUserInfo.global_name = user.getName();
-                        GlobalUserInfo.global_user_name = username;
-                        Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SignInCustomer.this, ClientHomeActivity.class));
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-
-
+        FireBaseUser.signInCustomer(username, password, SignInCustomer.this);
     }
 
     public void openHomePage(View view) {

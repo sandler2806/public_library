@@ -1,12 +1,18 @@
 package com.example.mylib.DataBase;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.User;
+import com.example.mylib.ReturnBook;
+import com.example.mylib.SignInCustomer;
+import com.example.mylib.adapters.ReturnBookAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +43,58 @@ public class FireBaseUser extends FireBaseModel {
     public static DatabaseReference getUserFromDB(String userName){
         return myRef.child("users").child(userName);
     }
+
+    //function to sign in customer
+    public static void signInCustomer(String username, String password,Activity activity){
+        getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //check if the user exists
+                if(dataSnapshot.getValue()==null){
+                    Toast.makeText(activity,"username does not exist",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    User user = dataSnapshot.getValue(User.class);
+                    if(user!=null && !user.getPassword().equals(password)){
+                        Toast.makeText(activity,"wrong password",Toast.LENGTH_SHORT).show();
+                    }
+                    //case for matching passwords
+                    else{
+                        GlobalUserInfo.global_name = user.getName();
+                        GlobalUserInfo.global_user_name = username;
+                        Toast.makeText(activity,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                        activity.startActivity(new Intent(activity, ClientHomeActivity.class));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    public static void createBookListForReturn(ListView bookList, Activity activity){
+        getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                if(user!=null) {
+                    ArrayList<String> books = user.getBooks();
+                    if (!books.isEmpty()) {
+                        ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
+                        bookList.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     public static DatabaseReference getUsersListRef(){
         return myRef.child("users");
     }

@@ -1,12 +1,13 @@
 package com.example.mylib.DataBase;
 
-
-
 import android.app.Activity;
+import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mylib.AddBookLibrarian;
+import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.Objects.Book;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,21 +15,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class FireBaseBook extends FireBaseModel {
-//    public static void Await(Task<DataSnapshot> task){
-//        try {
-//            while (!task.isComplete()){
-//                System.out.println("sleeping");
-//                Thread.sleep(100);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.toString());
-//            System.out.println("catch");
-//            // handle the exception
-//        }
-//    }
-    public static void addBook(String name, String author, String genre, int amount, String publishYear) {
-        Book book = new Book(name, author, genre, publishYear, amount);
-        myRef.child("books").child(name).setValue(book);
+    
+    public static void addBook(String name, String author, String genre, int amount, String publishYear,
+                               Activity activity) {
+        getBookFromDB(name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null){
+                    Toast.makeText(activity,"Book already exist",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Book book = new Book(name, author, genre, publishYear, amount);
+                    getBookFromDB(name).setValue(book);
+                    Toast.makeText(activity,"Added book successfully",Toast.LENGTH_SHORT).show();
+                    activity.finish();
+                    activity.overridePendingTransition(0, 0);
+                    activity.startActivity(activity.getIntent());
+                    activity. overridePendingTransition(0, 0);
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
     public static DatabaseReference getBookFromDB(String bookName) {
         return myRef.child("books").child(bookName);
@@ -100,6 +111,26 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+    public static void returnBook(String bookName, Activity activity){
+        getBookFromDB(bookName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Book book = dataSnapshot.getValue(Book.class);
+                if(book!=null) {
+                    int amount = book.getAmount();
+                    getBookFromDB(bookName).child("amount").setValue(amount + 1);
+                    activity.finish();
+                    activity.overridePendingTransition(0, 0);
+                    activity.startActivity(activity.getIntent());
+                    activity.overridePendingTransition(0, 0);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }

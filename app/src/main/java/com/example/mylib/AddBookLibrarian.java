@@ -35,26 +35,7 @@ public class AddBookLibrarian extends AppCompatActivity {
         int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
         //add the book with the given fields
-        FireBaseBook.getBookFromDB(bookName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null){
-                    Toast.makeText(AddBookLibrarian.this,"Book already exist",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    FireBaseBook.addBook(bookName,author,genre,amount,publishingYear);
-                    Toast.makeText(AddBookLibrarian.this,"Added book successfully",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AddBookLibrarian.this, ClientHomeActivity.class));
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
+        FireBaseBook.addBook(bookName,author,genre,amount,publishingYear,this);
 
 
     }
