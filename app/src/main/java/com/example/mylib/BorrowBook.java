@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mylib.DataBase.Book;
+import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
 import com.example.mylib.adapters.BookAdapter;
@@ -61,15 +61,13 @@ public class BorrowBook extends AppCompatActivity {
 
     public void borrow(View view){
         View parentView = (View)view.getParent();
-
         // Access the data associated with the list item, such as the book name and author
         TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
         TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
         String bookName = bookNameView.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString().substring(18));
         DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-        FireBaseUser fu = new FireBaseUser();
-        if(fu.addToBorrowed(bookName)) {
+        if(FireBaseUser.addToBorrowed(bookName)) {
             booksRef.child("amount").setValue(amount - 1);
             Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
             finish();
@@ -80,8 +78,5 @@ public class BorrowBook extends AppCompatActivity {
         else{
             Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
         }
-
-
     }
-
 }
