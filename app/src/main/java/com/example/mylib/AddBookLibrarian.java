@@ -14,9 +14,18 @@ public class AddBookLibrarian extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_librarian);
     }
+    //general goBack button to return to librarian home
     public void goBack(View view){
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
+
+    /**
+     * Main function- adding book to library
+     * First we receive input from librarian of all needed fields for books.
+     * Then cast it to string
+     * And finally add the book with received casted details to the firebase using the addBook method.
+     * @param view
+     */
     public void addBook(View view){
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView authorText = findViewById(R.id.BookAuthorInsert);
