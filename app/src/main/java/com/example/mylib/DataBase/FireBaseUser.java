@@ -21,17 +21,20 @@ import java.util.ArrayList;
 public class FireBaseUser extends FireBaseModel {
 
     public static void addUser(Activity activity,String username, String password, String verifyPassword,String name, String phone){
-        User user=new User(username,password,name,phone);
         FireBaseUser.getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                check if the username already exist
                 if(dataSnapshot.getValue()!=null){
                     Toast.makeText(activity,"username already exist",Toast.LENGTH_SHORT).show();
                 }
+//                check if the passwords match
                 else if(!password.equals(verifyPassword)){
                     Toast.makeText(activity,"verify password does not match to password",Toast.LENGTH_SHORT).show();
                 }
                 else{
+//                    create new user in the database
+                    User user=new User(username,password,name,phone);
                     myRef.child("users").child(username).setValue(user);
                     Toast.makeText(activity,"sign up successfully",Toast.LENGTH_SHORT).show();
                     activity.startActivity(new Intent(activity, ClientHomeActivity.class));
@@ -57,12 +60,13 @@ public class FireBaseUser extends FireBaseModel {
                 if(dataSnapshot.getValue()==null){
                     Toast.makeText(activity,"username does not exist",Toast.LENGTH_SHORT).show();
                 }
+                //check if the passwords match
                 else{
                     User user = dataSnapshot.getValue(User.class);
                     if(user!=null && !user.getPassword().equals(password)){
                         Toast.makeText(activity,"wrong password",Toast.LENGTH_SHORT).show();
                     }
-                    //case for matching passwords
+                    //Save the user's data
                     else{
                         GlobalUserInfo.global_name = user.getName();
                         GlobalUserInfo.global_user_name = username;
@@ -138,9 +142,11 @@ public class FireBaseUser extends FireBaseModel {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 ArrayList<String> books = user.getBooks();
+//                remove the book from the list
                 if(books!=null) {
                     books.remove(bookName);
                 }
+//                update the user's books list
                 getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
             }
 

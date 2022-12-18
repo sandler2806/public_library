@@ -17,6 +17,7 @@ public class BookTrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_tracking);
         bookList = (ListView) findViewById(R.id.borrowedBookList);
+//        show list of all borrowed books
         FireBaseBook.showBorrowedBooks(this,bookList);
     }
 

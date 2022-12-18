@@ -20,11 +20,12 @@ public class RemoveBookActivity extends AppCompatActivity {
     }
     public void removeBook(View view){
 
+//        get data from text views
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView amountText = findViewById(R.id.BookAmountsInsert);
         String bookName=bookNameText.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString());
-        System.out.println("before remove");
+//        remove book from database
         FireBaseBook.removeBook(RemoveBookActivity.this,bookName,amount);
     }
 }
