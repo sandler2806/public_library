@@ -16,7 +16,7 @@ public class BookTrackAdapter extends BaseAdapter {
 
     LayoutInflater mInflater;
     ArrayList<Book> books;
-    HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
+    HashMap<String,ArrayList<String>> borrowed;
     public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String,ArrayList<String>> borrowed)
     {
         this.books = books;

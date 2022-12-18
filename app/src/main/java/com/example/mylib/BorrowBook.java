@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class BorrowBook extends AppCompatActivity {
 
     ListView bookList;
-    BookAdapter adapter;
-    ArrayList<Book> books = new ArrayList<>();
     public void goBack(View view){
 
         startActivity(new Intent(this, ClientHomeActivity.class));
@@ -30,7 +28,6 @@ public class BorrowBook extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book);
         bookList = (ListView) findViewById(R.id.bookList);
-
         FireBaseBook.showAvailableBooks(this,bookList);
     }
 

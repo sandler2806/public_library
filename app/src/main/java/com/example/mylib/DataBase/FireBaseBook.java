@@ -55,6 +55,8 @@ public class FireBaseBook extends FireBaseModel {
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                iterate all the users in the database and create hashmap
+//                so each book has a list of the users that borrowed it
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user= snapshot.getValue(User.class);
                     assert user != null;
@@ -78,6 +80,7 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Book> books = new ArrayList<>();
+//                add all the books that borrowed by a user
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Book book=snapshot.getValue(Book.class);
                     if(borrowed.containsKey(book.getName())){
@@ -165,9 +168,11 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
+//                increase the amount of the book by 1
                 if(book!=null) {
                     int amount = book.getAmount();
                     getBook(bookName).child("amount").setValue(amount + 1);
+//                    refresh the activity
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                     activity.startActivity(activity.getIntent());
