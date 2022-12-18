@@ -34,27 +34,30 @@ public class BorrowBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book);
-        DatabaseReference booksRef = FireBaseBook.getBookListRef();
         bookList = (ListView) findViewById(R.id.bookList);
-        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Book book = snapshot.getValue(Book.class);
-                    if(book.getAmount()==0){
-                        continue;
-                    }
-                    books.add(snapshot.getValue(Book.class));
-                }
-                adapter = new BookAdapter(BorrowBook.this, books);
-                bookList.setAdapter(adapter);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
+        FireBaseBook.showAvailableBooks(this,bookList);
 
-        });
+//        DatabaseReference booksRef = FireBaseBook.getBookListRef();
+//        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    Book book = snapshot.getValue(Book.class);
+//                    if(book.getAmount()==0){
+//                        continue;
+//                    }
+//                    books.add(snapshot.getValue(Book.class));
+//                }
+//                adapter = new BookAdapter(BorrowBook.this, books);
+//                bookList.setAdapter(adapter);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//
+//        });
 
     }
 
