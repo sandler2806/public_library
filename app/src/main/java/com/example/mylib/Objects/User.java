@@ -20,8 +20,8 @@ public class User {
         // Default constructor for DataSnapshot.getValue(User.class)
     }
     public User(String username) {
-        FireBaseUser fireBaseUser = new FireBaseUser();
-        Task<DataSnapshot> task = fireBaseUser.getUserFromDB(username).get();
+//        FireBaseUser fireBaseUser = new FireBaseUser();
+        Task<DataSnapshot> task = FireBaseUser.getUserFromDB(username).get();
         FireBaseUser.Await(task);
         if(task.getResult().getValue()!=null){
             Map<String, Object> userData= (Map<String, Object>)task.getResult().getValue();
