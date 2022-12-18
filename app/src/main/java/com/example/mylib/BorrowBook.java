@@ -66,17 +66,22 @@ public class BorrowBook extends AppCompatActivity {
         TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
         String bookName = bookNameView.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString().substring(18));
-        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-        if(FireBaseUser.addToBorrowed(bookName)) {
-            booksRef.child("amount").setValue(amount - 1);
-            Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
-            finish();
-            overridePendingTransition(0, 0);
-            startActivity(getIntent());
-            overridePendingTransition(0, 0);
-        }
-        else{
-            Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
-        }
+//        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
+//        if(FireBaseUser.addToBorrowed(bookName,amount,BorrowBook.this)) {
+//            booksRef.child("amount").setValue(amount - 1);
+//            Toast.makeText(BorrowBook.this,"Borrowed",Toast.LENGTH_SHORT).show();
+//            finish();
+//            overridePendingTransition(0, 0);
+//            startActivity(getIntent());
+//            overridePendingTransition(0, 0);
+//        }
+//        else{
+//            Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
+//        }
+        FireBaseUser.addToBorrowed(bookName,amount,BorrowBook.this);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 }

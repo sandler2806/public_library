@@ -58,8 +58,7 @@ public class ReturnBook extends AppCompatActivity {
         TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
         String bookName = bookNameView.getText().toString();
         // take the reference to the book and set the amount by amount + 1 for return logic
-        DatabaseReference booksRef = new FireBaseBook().getBookFromDB(bookName);
-
+        DatabaseReference booksRef =  FireBaseBook.getBookFromDB(bookName);
         //fix this
 
 //        Book book = new Book(bookName);
@@ -76,11 +75,10 @@ public class ReturnBook extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
-
                 int amount=book.getAmount();
                 booksRef.child("amount").setValue(amount+1);
-                FireBaseUser fireBaseUser = new FireBaseUser();
-                fireBaseUser.removeFromBorrowed(bookName);
+//                FireBaseUser fireBaseUser = new FireBaseUser();
+                FireBaseUser.removeFromBorrowed(bookName);
                 finish();
                 overridePendingTransition(0, 0);
                 startActivity(getIntent());
@@ -89,9 +87,7 @@ public class ReturnBook extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
-
         });
         finish();
         overridePendingTransition(0, 0);

@@ -43,8 +43,7 @@ public class SignInCustomer extends AppCompatActivity {
         String username=usernameText.getText().toString();
         String password=passwordText.getText().toString();
         System.out.println(username);
-
-        fu.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
+        FireBaseUser.getUserFromDB(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue()==null){
@@ -52,11 +51,12 @@ public class SignInCustomer extends AppCompatActivity {
                 }
                 else{
                     User user = dataSnapshot.getValue(User.class);
-                    if(!user.getPassword().equals(password)){
+                    if(user!=null && !user.getPassword().equals(password)){
                         Toast.makeText(SignInCustomer.this,"wrong password",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         GlobalUserInfo.global_name = user.getName();
+                        GlobalUserInfo.global_user_name = username;
                         Toast.makeText(SignInCustomer.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignInCustomer.this, ClientHomeActivity.class));
                     }
