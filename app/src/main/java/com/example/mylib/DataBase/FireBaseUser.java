@@ -34,8 +34,8 @@ public class FireBaseUser extends FireBaseModel {
         myRef.child("users").child(username).setValue(user);
 
     }
-    public static DatabaseReference getUserFromDB(String userID){
-        return myRef.child("users").child(userID);
+    public static DatabaseReference getUserFromDB(String userName){
+        return myRef.child("users").child(userName);
     }
     public static DatabaseReference getUsersListRef(){
         return myRef.child("users");
