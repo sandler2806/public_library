@@ -14,14 +14,14 @@ import com.example.mylib.adapters.BookAdapter;
 
 import java.util.ArrayList;
 
-
+//This class represents the Borrowing act
+//The class using 2 layouts file to represent the data to the use
+//1) activity_borrow_book: contain a single ListView each represent a book
+//2) book_list_detail: contain the design of each item on the list
 public class BorrowBook extends AppCompatActivity {
 
     ListView bookList;
-    BookAdapter adapter;
-    ArrayList<Book> books = new ArrayList<>();
     public void goBack(View view){
-
         startActivity(new Intent(this, ClientHomeActivity.class));
     }
 
@@ -30,7 +30,7 @@ public class BorrowBook extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book);
         bookList = (ListView) findViewById(R.id.bookList);
-
+        //Fill the ListView with the available books
         FireBaseBook.showAvailableBooks(this,bookList);
     }
 

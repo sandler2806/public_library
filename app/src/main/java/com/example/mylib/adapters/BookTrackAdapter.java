@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BookTrackAdapter extends BaseAdapter {
-
+    //This is adapter is used in BookTrackingActivity, to list
+    //a collection of borrowed books within a ListView
     LayoutInflater mInflater;
     ArrayList<Book> books;
     HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
@@ -40,7 +41,7 @@ public class BookTrackAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
+        //Get handle for the text views
         View v = mInflater.inflate(R.layout.book_tracking,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         TextView authorTextView = (TextView) v.findViewById(R.id.authorTextView);
@@ -52,6 +53,7 @@ public class BookTrackAdapter extends BaseAdapter {
         for(String name :borrowed.get(books.get(i).getName())){
             borrowedBy.append(name).append("\n");
         }
+        //set the text of each field
         bookNameTextView.setText(books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfAvailableCopiesTextView.setText("Number of available copies: " + books.get(i).getAmount());

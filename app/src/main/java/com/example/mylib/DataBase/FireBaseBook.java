@@ -97,7 +97,7 @@ public class FireBaseBook extends FireBaseModel {
 
     public static void showAvailableBooks(Activity activity,ListView bookList){
         ArrayList<Book> books = new ArrayList<>();
-
+        //Fill ListView in the given activity with the available books
         FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
