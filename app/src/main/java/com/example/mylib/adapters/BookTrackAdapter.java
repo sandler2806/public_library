@@ -58,7 +58,7 @@ public class BookTrackAdapter extends BaseAdapter {
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfAvailableCopiesTextView.setText("Number of available copies: " + books.get(i).getAmount());
         noOfBorrowedCopiesTextView.setText("Number of borrowed copies: " + borrowed.get(books.get(i).getName()).size());
-        borrowedByTextView.setText("borrowed by:: " + borrowedBy.toString());
+        borrowedByTextView.setText("Borrowed by: " + borrowedBy);
 
         return v;
     }

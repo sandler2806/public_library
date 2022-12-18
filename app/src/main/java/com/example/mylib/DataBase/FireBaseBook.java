@@ -49,6 +49,7 @@ public class FireBaseBook extends FireBaseModel {
         return myRef.child("books").child(bookName);
     }
     public static void showBorrowedBooks(Activity activity,ListView bookList){
+//        the key is the name of a book and the value is a list of the users who borrowed it
         HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
 
         DatabaseReference usersRef = FireBaseUser.getAllUsers();

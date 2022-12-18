@@ -12,7 +12,8 @@ public class ProfileClient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_client);
-        String nameEntry = "Welcome " + GlobalUserInfo.global_name;
+        String nameEntry = "Coming soon";
+//        String nameEntry = "Welcome " + GlobalUserInfo.global_name;
         final TextView textViewToChange = (TextView) findViewById(R.id.titleClientNameInInfoPage);
         textViewToChange.setText(nameEntry);
         //show user name
