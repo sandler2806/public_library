@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.mylib.Objects.Book;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -104,19 +103,11 @@ public class FireBaseBook extends FireBaseModel {
             }
         });
     }
-    public DatabaseReference getBookListRef() {
+    public static DatabaseReference getBookListRef() {
         return myRef.child("books");
     }
 
     public void setAmount(String bookID, int amount) {
         myRef.child("books").child(bookID).child("amount").setValue(amount);
-    }
-
-    public void setbookRating(String bookID, double bookRating) {
-        myRef.child("books").child(bookID).child("bookRating").setValue(bookRating);
-    }
-
-    public void setdiv(String bookID, double div) {
-        myRef.child("books").child(bookID).child("div").setValue(div);
     }
 }

@@ -17,7 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignInCustomer extends AppCompatActivity {
 
-    FireBaseUser fu=new FireBaseUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

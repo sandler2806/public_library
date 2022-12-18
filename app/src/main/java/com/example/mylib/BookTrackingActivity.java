@@ -31,7 +31,7 @@ public class BookTrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_tracking);
 
-        DatabaseReference usersRef = new FireBaseUser().getUsersListRef();
+        DatabaseReference usersRef = FireBaseUser.getUsersListRef();
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,7 +53,7 @@ public class BookTrackingActivity extends AppCompatActivity {
         });
 
 
-        DatabaseReference booksRef = new FireBaseBook().getBookListRef();
+        DatabaseReference booksRef = FireBaseBook.getBookListRef();
         bookList = (ListView) findViewById(R.id.borrowedBookList);
         booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

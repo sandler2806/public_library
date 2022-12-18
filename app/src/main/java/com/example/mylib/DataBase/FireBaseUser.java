@@ -5,11 +5,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.mylib.BorrowBook;
 import com.example.mylib.GlobalUserInfo;
-import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.User;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,15 +17,15 @@ import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
     public static boolean borrowed;
-    public static void Await(Task<DataSnapshot> task){
-        try {
-            while (!task.isComplete()){
-                Thread.sleep(10);
-            }
-        } catch (Exception e) {
-            // handle the exception
-        }
-    }
+//    public static void Await(Task<DataSnapshot> task){
+//        try {
+//            while (!task.isComplete()){
+//                Thread.sleep(10);
+//            }
+//        } catch (Exception e) {
+//            // handle the exception
+//        }
+//    }
     public static void addUserToDB(String username, String password, String name, String phone){
         writeNewUser(username,password,name,phone);
     }
@@ -66,11 +63,11 @@ public class FireBaseUser extends FireBaseModel {
                     books.add(bookName);
                     FireBaseBook.getBookFromDB(bookName).child("amount").setValue(amount - 1);
                     Toast.makeText(activity,"Borrowed",Toast.LENGTH_SHORT).show();
-//                    finish();
-//                    overridePendingTransition(0, 0);
-//                    startActivity(getIntent());
-//                    overridePendingTransition(0, 0);
-//                    borrowed = true;
+                    activity.finish();
+                    activity.overridePendingTransition(0, 0);
+                    activity.startActivity(activity.getIntent());
+                    activity.overridePendingTransition(0, 0);
+
                 }
                 else{
                     Toast.makeText(activity,"Already borrowed",Toast.LENGTH_SHORT).show();
@@ -107,25 +104,5 @@ public class FireBaseUser extends FireBaseModel {
 
         });
 
-    }
-    public static void removeFromFavorites(String bookName){
-//        User user = new User(GlobalUserInfo.global_user_name);
-//        user.getFavorites().remove(bookName);
-//        getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);
-
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        getUserFromDB(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-//                ArrayList<String> favorites=user.getFavorites();
-//                if(!favorites.contains(bookID)) return;
-//                favorites.remove(bookID);
-//                getUserFromDB(userID).child("favorites").setValue(favorites);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
 }

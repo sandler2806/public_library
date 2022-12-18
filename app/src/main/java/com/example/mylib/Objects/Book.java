@@ -1,14 +1,5 @@
 package com.example.mylib.Objects;
 
-import com.example.mylib.DataBase.FireBaseBook;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
 public class Book {
 
 

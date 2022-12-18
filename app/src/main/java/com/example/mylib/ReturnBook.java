@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
@@ -29,26 +30,30 @@ public class ReturnBook extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return_book);
         bookList = (ListView) findViewById(R.id.bookList);
-        User user = new User(GlobalUserInfo.global_user_name);
-        books=user.getBooks();
-        ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
-        bookList.setAdapter(adapter);
-
-
+//        User user = new User(GlobalUserInfo.global_user_name);
+//        books=user.getBooks();
+//        ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
+//        bookList.setAdapter(adapter);
 //        getUserFromDB(GlobalUserInfo.global_user_name).setValue(user);
-//        FireBaseUser fireBaseUser=new FireBaseUser();
-//        fireBaseUser.getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                User user=dataSnapshot.getValue(User.class);
-//                books=user.getBooks();
-//                ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
-//                bookList.setAdapter(adapter);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
+
+
+        FireBaseUser.getUserFromDB(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                books=user.getBooks();
+                if(!books.isEmpty()) {
+                    ReturnBookAdapter adapter = new ReturnBookAdapter(ReturnBook.this, books);
+                    bookList.setAdapter(adapter);
+                }
+                else{
+                    Toast.makeText(ReturnBook.this,"No books to return",Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
     }
 
@@ -71,14 +76,14 @@ public class ReturnBook extends AppCompatActivity {
 //        startActivity(getIntent());
 //        overridePendingTransition(0, 0);
 
+        FireBaseUser.removeFromBorrowed(bookName);
+
         booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
                 int amount=book.getAmount();
                 booksRef.child("amount").setValue(amount+1);
-//                FireBaseUser fireBaseUser = new FireBaseUser();
-                FireBaseUser.removeFromBorrowed(bookName);
                 finish();
                 overridePendingTransition(0, 0);
                 startActivity(getIntent());
@@ -89,10 +94,7 @@ public class ReturnBook extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
+
 
     }
     public void goBack(View view){

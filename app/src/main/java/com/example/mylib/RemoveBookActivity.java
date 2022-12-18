@@ -24,7 +24,6 @@ public class RemoveBookActivity extends AppCompatActivity {
         TextView amountText = findViewById(R.id.BookAmountsInsert);
         String bookName=bookNameText.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString());
-//        FireBaseBook fireBaseBook = new FireBaseBook();
         System.out.println("before remove");
         FireBaseBook.removeBook(RemoveBookActivity.this,bookName,amount);
     }

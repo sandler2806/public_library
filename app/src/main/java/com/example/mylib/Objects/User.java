@@ -1,12 +1,6 @@
 package com.example.mylib.Objects;
 
-import com.example.mylib.DataBase.FireBaseUser;
-import com.example.mylib.Objects.Book;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-
 import java.util.ArrayList;
-import java.util.Map;
 
 public class User {
     private String username;
@@ -19,20 +13,20 @@ public class User {
     public User(){
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-    public User(String username) {
-//        FireBaseUser fireBaseUser = new FireBaseUser();
-        Task<DataSnapshot> task = FireBaseUser.getUserFromDB(username).get();
-        FireBaseUser.Await(task);
-        if(task.getResult().getValue()!=null){
-            Map<String, Object> userData= (Map<String, Object>)task.getResult().getValue();
-            this.books = (ArrayList<String>) userData.get("books");
-            this.name = (String) userData.get("name");
-            this.username = (String) userData.get("username");
-            this.password = (String) userData.get("password");
-            this.phone = (String) userData.get("phone");
-            this.favorites = (ArrayList<Book>) userData.get("favorites");
-        }
-    }
+//    public User(String username) {
+////        FireBaseUser fireBaseUser = new FireBaseUser();
+//        Task<DataSnapshot> task = FireBaseUser.getUserFromDB(username).get();
+//        FireBaseUser.Await(task);
+//        if(task.getResult().getValue()!=null){
+//            Map<String, Object> userData= (Map<String, Object>)task.getResult().getValue();
+//            this.books = (ArrayList<String>) userData.get("books");
+//            this.name = (String) userData.get("name");
+//            this.username = (String) userData.get("username");
+//            this.password = (String) userData.get("password");
+//            this.phone = (String) userData.get("phone");
+//            this.favorites = (ArrayList<Book>) userData.get("favorites");
+//        }
+//    }
 
     public User(String username, String password, String name, String phone) {
         this.username = username;

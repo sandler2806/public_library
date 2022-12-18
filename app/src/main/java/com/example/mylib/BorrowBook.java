@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
@@ -35,7 +34,7 @@ public class BorrowBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book);
-        DatabaseReference booksRef = new FireBaseBook().getBookListRef();
+        DatabaseReference booksRef = FireBaseBook.getBookListRef();
         bookList = (ListView) findViewById(R.id.bookList);
         booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -79,9 +78,6 @@ public class BorrowBook extends AppCompatActivity {
 //            Toast.makeText(BorrowBook.this,"Already borrowed",Toast.LENGTH_SHORT).show();
 //        }
         FireBaseUser.addToBorrowed(bookName,amount,BorrowBook.this);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
+
     }
 }
