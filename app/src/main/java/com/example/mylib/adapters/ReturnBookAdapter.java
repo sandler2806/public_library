@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.R;
@@ -42,7 +44,16 @@ public class ReturnBookAdapter extends BaseAdapter {
         View v = mInflater.inflate(R.layout.return_book_list,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         bookNameTextView.setText(books.get(i).getName());
+        TextView returnDate = (TextView) v.findViewById(R.id.ReturnDateTview);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date = LocalDate.parse(books.get(i).getBorrow_date(), formatter);
+
+        // Add 14 days to the date
+        LocalDate newDate = date.plusDays(14);
+
+        // Format the new date and print it
+        returnDate.setText("Return date: " + formatter.format(newDate));
 
         return v;
     }
