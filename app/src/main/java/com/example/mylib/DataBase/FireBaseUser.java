@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FireBaseUser extends FireBaseModel {
 
@@ -140,14 +141,15 @@ public class FireBaseUser extends FireBaseModel {
                 boolean contain = false;
                 for(BorrowedBook book: books)
                 {
-                    if(book.getName() == bookName)
+                    if(Objects.equals(book.getName(), bookName))
                     {
                         contain = true;
                         break;
                     }
                 }
                 if (!contain) {
-                    books.add(new BorrowedBook(bookName));
+                    BorrowedBook borrowedBook = new BorrowedBook(bookName);
+                    books.add(borrowedBook);
                     FireBaseBook.getBook(bookName).child("amount").setValue(amount - 1);
                     Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
                     activity.finish();
@@ -177,7 +179,12 @@ public class FireBaseUser extends FireBaseModel {
                 ArrayList<BorrowedBook> books = user.getBooks();
 //                remove the book from the list
                 if(books!=null) {
-                    books.remove(bookName);
+                    for(BorrowedBook borrowedBook : books) {
+                        if(borrowedBook.getName().equals(bookName)) {
+                            books.remove(borrowedBook);
+                            break;
+                        }
+                    }
                 }
 //                update the user's books list
                 getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
