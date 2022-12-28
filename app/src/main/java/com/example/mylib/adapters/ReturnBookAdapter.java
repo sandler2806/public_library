@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.R;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class ReturnBookAdapter extends BaseAdapter {
     //This adapter is used in BorrowBook, to list
     //a collection of books within a ListView
     LayoutInflater mInflater;
-    ArrayList<String> books;
-    public ReturnBookAdapter(Context c, ArrayList<String> books)
+    ArrayList<BorrowedBook> books;
+    public ReturnBookAdapter(Context c, ArrayList<BorrowedBook> books)
     {
         this.books = books;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,7 +41,7 @@ public class ReturnBookAdapter extends BaseAdapter {
         //Set the views
         View v = mInflater.inflate(R.layout.return_book_list,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
-        bookNameTextView.setText(books.get(i));
+        bookNameTextView.setText(books.get(i).getName());
 
 
         return v;
