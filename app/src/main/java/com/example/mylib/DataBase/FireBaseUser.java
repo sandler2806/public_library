@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.User;
+import com.example.mylib.adapters.BookListProfileAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -94,6 +95,27 @@ public class FireBaseUser extends FireBaseModel {
                         bookList.setAdapter(adapter);
                     } else {
                         Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public static void createBookListForProfileClient(ListView bookList, Activity activity){
+        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user=dataSnapshot.getValue(User.class);
+                if(user!=null) {
+                    ArrayList<String> books = user.getBooks();
+                    if (!books.isEmpty()) {
+                        BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books);
+                        bookList.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
