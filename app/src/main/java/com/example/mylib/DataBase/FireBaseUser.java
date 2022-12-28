@@ -7,8 +7,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mylib.BorrowBook;
 import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
+import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
 import com.example.mylib.adapters.BookListProfileAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
@@ -89,7 +91,7 @@ public class FireBaseUser extends FireBaseModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
-                    ArrayList<String> books = user.getBooks();
+                    ArrayList<BorrowedBook> books = user.getBooks();
                     if (!books.isEmpty()) {
                         ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
                         bookList.setAdapter(adapter);
@@ -110,7 +112,7 @@ public class FireBaseUser extends FireBaseModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
-                    ArrayList<String> books = user.getBooks();
+                    ArrayList<BorrowedBook> books = user.getBooks();
                     if (!books.isEmpty()) {
                         BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books);
                         bookList.setAdapter(adapter);
@@ -134,9 +136,18 @@ public class FireBaseUser extends FireBaseModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                ArrayList<String> books = user.getBooks();
-                if (!books.contains(bookName)) {
-                    books.add(bookName);
+                ArrayList<BorrowedBook> books = user.getBooks();
+                boolean contain = false;
+                for(BorrowedBook book: books)
+                {
+                    if(book.getName() == bookName)
+                    {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain) {
+                    books.add(new BorrowedBook(bookName));
                     FireBaseBook.getBook(bookName).child("amount").setValue(amount - 1);
                     Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
                     activity.finish();
@@ -163,7 +174,7 @@ public class FireBaseUser extends FireBaseModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                ArrayList<String> books = user.getBooks();
+                ArrayList<BorrowedBook> books = user.getBooks();
 //                remove the book from the list
                 if(books!=null) {
                     books.remove(bookName);

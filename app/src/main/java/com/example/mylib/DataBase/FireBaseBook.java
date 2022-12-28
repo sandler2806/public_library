@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.mylib.Objects.Book;
+import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
 import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.BookTrackAdapter;
@@ -61,9 +62,9 @@ public class FireBaseBook extends FireBaseModel {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user= snapshot.getValue(User.class);
                     assert user != null;
-                    for(String book: user.getBooks()){
-                        if(!borrowed.containsKey(book)){
-                            borrowed.put(book,new ArrayList<>());
+                    for(BorrowedBook book: user.getBooks()){
+                        if(!borrowed.containsKey(book.getName())){
+                            borrowed.put(book.getName(),new ArrayList<>());
                         }
                         borrowed.get(book).add(user.getUsername());
                     }
