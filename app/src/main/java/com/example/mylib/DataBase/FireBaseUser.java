@@ -20,6 +20,13 @@ import java.util.ArrayList;
 
 public class FireBaseUser extends FireBaseModel {
 
+    static void searchBooks(ArrayList<String> books, String key){
+        for (int i = books.size()-1; i >=0 ; i--) {
+            if (!books.get(i).toLowerCase().startsWith(key.toLowerCase())){
+                books.remove(i);
+            }
+        }
+    }
     public static void addUser(Activity activity,String username, String password, String verifyPassword,String name, String phone){
         FireBaseUser.getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -82,17 +89,18 @@ public class FireBaseUser extends FireBaseModel {
 
     }
 
-    public static void createBookListForReturn(ListView bookList, Activity activity){
+    public static void createBookListForReturn(ListView bookList, Activity activity,String key){
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
                     ArrayList<String> books = user.getBooks();
-                    if (!books.isEmpty()) {
-                        ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
-                        bookList.setAdapter(adapter);
-                    } else {
+                    searchBooks(books,key);
+
+                    ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
+                    bookList.setAdapter(adapter);
+                    if (books.isEmpty()) {
                         Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
                     }
                 }

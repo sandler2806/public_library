@@ -18,8 +18,15 @@ public class ReturnBook extends AppCompatActivity {
         setContentView(R.layout.activity_return_book);
 //        show all the user's books
         bookList = (ListView) findViewById(R.id.bookList);
-        FireBaseUser.createBookListForReturn(bookList,ReturnBook.this);
+        FireBaseUser.createBookListForReturn(bookList,ReturnBook.this,"");
     }
+
+    public void search(View view){
+        TextView bookNameText = findViewById(R.id.bookName);
+        String bookName=bookNameText.getText().toString();
+        FireBaseUser.createBookListForReturn(bookList,ReturnBook.this,bookName);
+    }
+
 
     public void returnBook(View view){
 

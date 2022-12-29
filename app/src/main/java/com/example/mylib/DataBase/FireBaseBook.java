@@ -20,6 +20,14 @@ import java.util.HashMap;
 
 public class FireBaseBook extends FireBaseModel {
 
+    static void searchBooks(ArrayList<Book> books,String key){
+        for (int i = books.size()-1; i >0 ; i--) {
+            if (!books.get(i).getName().startsWith(key)){
+                books.remove(i);
+            }
+        }
+    }
+
     public static void addBook(String name, String author, String genre, int amount, String publishYear,
                                Activity activity) {
         getBook(name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -48,7 +56,7 @@ public class FireBaseBook extends FireBaseModel {
     public static DatabaseReference getBook(String bookName) {
         return myRef.child("books").child(bookName);
     }
-    public static void showBorrowedBooks(Activity activity,ListView bookList){
+    public static void showBorrowedBooks(Activity activity,ListView bookList,String key){
 //        the key is the name of a book and the value is a list of the users who borrowed it
         HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
 
@@ -84,7 +92,8 @@ public class FireBaseBook extends FireBaseModel {
 //                add all the books that borrowed by a user
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Book book=snapshot.getValue(Book.class);
-                    if(borrowed.containsKey(book.getName())){
+                    if(borrowed.containsKey(book.getName()) &&
+                            book.getName().toLowerCase().startsWith(key.toLowerCase())){
                         books.add(book);
                     }
                 }
@@ -99,7 +108,7 @@ public class FireBaseBook extends FireBaseModel {
         });
     }
 
-    public static void showAvailableBooks(Activity activity,ListView bookList){
+    public static void showAvailableBooks(Activity activity,ListView bookList,String key){
         ArrayList<Book> books = new ArrayList<>();
         //Fill ListView in the given activity with the available books
         FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -107,7 +116,7 @@ public class FireBaseBook extends FireBaseModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Book book = snapshot.getValue(Book.class);
-                    if(book.getAmount()==0){
+                    if(book.getAmount()==0 || !book.getName().toLowerCase().startsWith(key.toLowerCase())){
                         continue;
                     }
                     books.add(snapshot.getValue(Book.class));

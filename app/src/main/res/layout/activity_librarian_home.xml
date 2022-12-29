@@ -76,6 +76,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="openEditLibInfo"
         android:text="Edit Library Information" />
 
     <ImageButton

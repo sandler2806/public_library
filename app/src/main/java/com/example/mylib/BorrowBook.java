@@ -20,6 +20,8 @@ import java.util.ArrayList;
 //2) book_list_detail: contain the design of each item on the list
 public class BorrowBook extends AppCompatActivity {
 
+
+
     ListView bookList;
     public void goBack(View view){
         startActivity(new Intent(this, ClientHomeActivity.class));
@@ -29,9 +31,14 @@ public class BorrowBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_book);
-        bookList = (ListView) findViewById(R.id.bookList);
+        bookList = findViewById(R.id.bookList);
         //Fill the ListView with the available books
-        FireBaseBook.showAvailableBooks(this,bookList);
+        FireBaseBook.showAvailableBooks(this,bookList,"");
+    }
+    public void search(View view){
+        TextView bookNameText = findViewById(R.id.bookName);
+        String bookName=bookNameText.getText().toString();
+        FireBaseBook.showAvailableBooks(this,bookList,bookName);
     }
 
     public void borrow(View view){
