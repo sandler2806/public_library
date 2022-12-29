@@ -66,7 +66,7 @@ public class FireBaseBook extends FireBaseModel {
                         if(!borrowed.containsKey(book.getName())){
                             borrowed.put(book.getName(),new ArrayList<>());
                         }
-                        borrowed.get(book).add(user.getUsername());
+                        borrowed.get(book.getName()).add(user.getUsername());
                     }
                 }
             }

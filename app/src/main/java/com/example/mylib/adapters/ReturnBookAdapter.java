@@ -44,7 +44,7 @@ public class ReturnBookAdapter extends BaseAdapter {
         View v = mInflater.inflate(R.layout.return_book_list,null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         bookNameTextView.setText(books.get(i).getName());
-        TextView returnDate = (TextView) v.findViewById(R.id.ReturnDateTview);
+        TextView returnDate = (TextView) v.findViewById(R.id.ReturnDateView);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate date = LocalDate.parse(books.get(i).getBorrow_date(), formatter);
