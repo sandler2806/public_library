@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_back"
+    tools:context=".EditLibInfo">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="Edit library information"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/libraryName"
+        android:layout_below="@id/title"
+        android:background="#30ffffff"
+        android:hint="library name"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/phoneNumber"
+        android:layout_below="@id/libraryName"
+        android:background="#30ffffff"
+        android:hint="library phone number"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mailContact"
+        android:layout_below="@id/phoneNumber"
+        android:background="#30ffffff"
+        android:hint="library mail for contact"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sundayOpeningHours"
+        android:layout_below="@id/mailContact"
+        android:background="#30ffffff"
+        android:hint="sunday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mondayOpeningHours"
+        android:layout_below="@id/sundayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="monday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tuesdayOpeningHours"
+        android:layout_below="@id/mondayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="Tuesday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wednesdayOpeningHours"
+        android:layout_below="@id/tuesdayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="Wednesday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/thursdayOpeningHours"
+        android:layout_below="@id/wednesdayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="Thursday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fridayOpeningHours"
+        android:layout_below="@id/thursdayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="Friday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/saturdayOpeningHours"
+        android:layout_below="@id/fridayOpeningHours"
+        android:background="#30ffffff"
+        android:hint="Saturday opening hours"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:drawablePadding="20dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updatebtn"
+        android:layout_below="@id/saturdayOpeningHours"
+        android:text="update"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:layout_centerHorizontal="true"
+        android:onClick="update"
+        android:layout_margin="20dp"
+        />
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="goBack"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+</RelativeLayout>

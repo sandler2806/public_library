@@ -24,4 +24,7 @@ public class LibrarianHomeActivity extends AppCompatActivity {
     public void openBookTracking(View view){
         startActivity(new Intent(this, BookTrackingActivity.class));
     }
+    public void openEditLibInfo(View view){
+        startActivity(new Intent(this, EditLibInfo.class));
+    }
 }
