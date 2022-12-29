@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.mylib.BorrowBook;
 import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.BorrowedBook;
@@ -24,9 +23,9 @@ import java.util.Objects;
 
 public class FireBaseUser extends FireBaseModel {
 
-    static void searchBooks(ArrayList<String> books, String key){
+    static void searchBooks(ArrayList<BorrowedBook> books, String key){
         for (int i = books.size()-1; i >=0 ; i--) {
-            if (!books.get(i).toLowerCase().startsWith(key.toLowerCase())){
+            if (!books.get(i).getName().toLowerCase().startsWith(key.toLowerCase())){
                 books.remove(i);
             }
         }
@@ -99,7 +98,7 @@ public class FireBaseUser extends FireBaseModel {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
-                    ArrayList<String> books = user.getBooks();
+                    ArrayList<BorrowedBook> books = user.getBooks();
                     searchBooks(books,key);
 
                     ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
