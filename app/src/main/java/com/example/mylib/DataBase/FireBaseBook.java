@@ -26,7 +26,7 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue()!=null){
-                    Toast.makeText(activity,"Book already exist",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,"Added copies of books successfully",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Book book = new Book(name, author, genre, publishYear, amount);

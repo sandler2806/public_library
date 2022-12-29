@@ -1,12 +1,23 @@
 package com.example.mylib;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.DataBase.FireBaseModel;
+import com.example.mylib.Objects.Book;
+import com.example.mylib.adapters.BookAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class AddBookLibrarian extends AppCompatActivity {
     @Override
@@ -37,8 +48,34 @@ public class AddBookLibrarian extends AppCompatActivity {
         String genre=genreText.getText().toString();
         int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
-        //add the book with the given fields
-        FireBaseBook.addBook(bookName,author,genre,amount,publishingYear,this);
+        //Now will check if book exits already, if so will just add the amount to the existing book.
+        ArrayList<Book> books = new ArrayList<>();
+        Activity current_activity= this;
+        FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean flag = false;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    if(book.getName().equals(bookName) && book.getAuthor().equals(author)
+                            && book.getGenre().equals(genre) && book.getPublishingYear().equals(publishingYear)) {
+                        flag = true;
+                        //found this book exists increment its amount in the fire base.
+                        book.setAmount(book.getAmount() + amount);
+                        FireBaseModel.myRef.child("books").child(book.getName()).setValue(book);
+                        break;
+                    }
+                }
+                if(!flag)
+                    FireBaseBook.addBook(bookName,author,genre,amount,publishingYear,current_activity);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
 
 
     }
