@@ -29,7 +29,6 @@ public class ReturnBook extends AppCompatActivity {
 
 
     public void returnBook(View view){
-
 //        get data from text views
         View parentView = (View)view.getParent();
         TextView bookNameView = parentView.findViewById(R.id.bookNameTextView);
