@@ -11,6 +11,8 @@ import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
+import com.example.mylib.Utils.Base64String;
+import com.example.mylib.Utils.Hash;
 import com.example.mylib.adapters.BookListProfileAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +46,9 @@ public class FireBaseUser extends FireBaseModel {
                 }
                 else{
 //                    create new user in the database
-                    User user=new User(username,password,name,phone);
+                    byte[] hash_array = Hash.encrypt(password);
+                    String encoded_password = Base64String.encode(hash_array);
+                    User user=new User(username,encoded_password,name,phone);
                     myRef.child("users").child(username).setValue(user);
                     Toast.makeText(activity,"sign up successfully",Toast.LENGTH_SHORT).show();
                     activity.startActivity(new Intent(activity, ClientHomeActivity.class));
@@ -73,7 +77,9 @@ public class FireBaseUser extends FireBaseModel {
                 //check if the passwords match
                 else{
                     User user = dataSnapshot.getValue(User.class);
-                    if(user!=null && !user.getPassword().equals(password)){
+                    String password_string_hash = user.getPassword();
+                    byte[] password_bytes_hash = Base64String.decode(password_string_hash);
+                    if(!Hash.verifyPassword(password, password_bytes_hash)){
                         Toast.makeText(activity,"wrong password",Toast.LENGTH_SHORT).show();
                     }
                     //Save the user's data
