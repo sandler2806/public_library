@@ -9,9 +9,11 @@ import androidx.annotation.NonNull;
 
 import com.example.mylib.ClientHomeActivity;
 import com.example.mylib.GlobalUserInfo;
+import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
 import com.example.mylib.adapters.BookListProfileAdapter;
+import com.example.mylib.adapters.BookTrackAdapter;
 import com.example.mylib.adapters.ReturnBookAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,13 +25,7 @@ import java.util.Objects;
 
 public class FireBaseUser extends FireBaseModel {
 
-    static void searchBooks(ArrayList<BorrowedBook> books, String key){
-        for (int i = books.size()-1; i >=0 ; i--) {
-            if (!books.get(i).getName().toLowerCase().startsWith(key.toLowerCase())){
-                books.remove(i);
-            }
-        }
-    }
+
     public static void addUser(Activity activity,String username, String password, String verifyPassword,String name, String phone){
         FireBaseUser.getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -92,46 +88,90 @@ public class FireBaseUser extends FireBaseModel {
 
     }
 
-    public static void createBookListForReturn(ListView bookList, Activity activity,String key){
+    public static void createBookListForReturn(ListView bookList, Activity activity,String searchKey){
+        ArrayList<BorrowedBook> borrowedBooks=new ArrayList<>();
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
-                    ArrayList<BorrowedBook> books = user.getBooks();
-                    searchBooks(books,key);
-
-                    ReturnBookAdapter adapter = new ReturnBookAdapter(activity, books);
-                    bookList.setAdapter(adapter);
-                    if (books.isEmpty()) {
-                        Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
-                    }
+                    borrowedBooks.addAll(user.getBooks());
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        DatabaseReference booksRef = FireBaseBook.getAllBook();
+        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Book> books = new ArrayList<>();
+//                add all the books that borrowed by a user
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Book book=snapshot.getValue(Book.class);
+                    for (BorrowedBook borrowedBook :borrowedBooks){
+                        if (borrowedBook.getKey().equals(snapshot.getKey()) && book.getName().toLowerCase().startsWith(searchKey.toLowerCase())){
+                            books.add(book);
+                        }
+                    }
+                }
+                ReturnBookAdapter adapter = new ReturnBookAdapter(activity,borrowedBooks,books);
+                bookList.setAdapter(adapter);
+                if (books.isEmpty()) {
+                    Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
     public static void createBookListForProfileClient(ListView bookList, Activity activity){
+        ArrayList<BorrowedBook> borrowedBooks=new ArrayList<>();
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
                 if(user!=null) {
-                    ArrayList<BorrowedBook> books = user.getBooks();
-                    if (!books.isEmpty()) {
-                        BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books);
-                        bookList.setAdapter(adapter);
-                    } else {
-                        Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
-                    }
+                    borrowedBooks.addAll(user.getBooks());
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
+        });
+
+        DatabaseReference booksRef = FireBaseBook.getAllBook();
+        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Book> books = new ArrayList<>();
+//                add all the books that borrowed by a user
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Book book=snapshot.getValue(Book.class);
+                    for (BorrowedBook borrowedBook :borrowedBooks){
+                        if (borrowedBook.getKey().equals(snapshot.getKey())){
+                            books.add(book);
+                        }
+                    }
+                }
+                if (!books.isEmpty()) {
+                    BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books);
+                    bookList.setAdapter(adapter);
+                } else {
+                    Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
         });
     }
 
@@ -139,35 +179,24 @@ public class FireBaseUser extends FireBaseModel {
         return myRef.child("users");
     }
 
-    public static void addToBorrowed(String bookName,int amount, Activity activity){
+
+
+    public static void addToBorrowed(String bookId,int amount, Activity activity){
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 ArrayList<BorrowedBook> books = user.getBooks();
-                boolean contain = false;
-                for(BorrowedBook book: books)
-                {
-                    if(Objects.equals(book.getName(), bookName))
-                    {
-                        contain = true;
-                        break;
-                    }
-                }
-                if (!contain) {
-                    BorrowedBook borrowedBook = new BorrowedBook(bookName);
-                    books.add(borrowedBook);
-                    FireBaseBook.getBook(bookName).child("amount").setValue(amount - 1);
-                    Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
-                    activity.finish();
-                    activity.overridePendingTransition(0, 0);
-                    activity.startActivity(activity.getIntent());
-                    activity.overridePendingTransition(0, 0);
-
-                } else {
-                    Toast.makeText(activity, "Already borrowed", Toast.LENGTH_SHORT).show();
-                }
+                BorrowedBook borrowedBook = new BorrowedBook(bookId);
+                books.add(borrowedBook);
+                FireBaseBook.getBook(bookId).child("amount").setValue(amount - 1);
+                Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
+                activity.finish();
+                activity.overridePendingTransition(0, 0);
+                activity.startActivity(activity.getIntent());
+                activity.overridePendingTransition(0, 0);
                 getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
+                Toast.makeText(activity, "book borrowed successfully", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -177,7 +206,7 @@ public class FireBaseUser extends FireBaseModel {
         });
     }
 
-    public static void removeFromBorrowed(String bookName){
+    public static void removeFromBorrowed(String bookId){
 
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -187,7 +216,7 @@ public class FireBaseUser extends FireBaseModel {
 //                remove the book from the list
                 if(books!=null) {
                     for(BorrowedBook borrowedBook : books) {
-                        if(borrowedBook.getName().equals(bookName)) {
+                        if(borrowedBook.getKey().equals(bookId)) {
                             books.remove(borrowedBook);
                             break;
                         }

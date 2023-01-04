@@ -17,9 +17,11 @@ public class BookTrackAdapter extends BaseAdapter {
     //a collection of borrowed books within a ListView
     LayoutInflater mInflater;
     ArrayList<Book> books;
+    ArrayList<String> ids;
     HashMap<String,ArrayList<String>> borrowed;
-    public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String,ArrayList<String>> borrowed)
+    public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String,ArrayList<String>> borrowed,ArrayList<String> ids)
     {
+        this.ids=ids;
         this.books = books;
         this.borrowed=borrowed;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,14 +52,15 @@ public class BookTrackAdapter extends BaseAdapter {
         TextView borrowedByTextView = (TextView) v.findViewById(R.id.borrowedByTextView);
 
         StringBuilder borrowedBy= new StringBuilder("\n");
-        for(String name :borrowed.get(books.get(i).getName())){
+        System.out.println(borrowed);
+        for(String name :borrowed.get(ids.get(i))){
             borrowedBy.append(name).append("\n");
         }
         //set the text of each field
         bookNameTextView.setText(books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfAvailableCopiesTextView.setText("Number of available copies: " + books.get(i).getAmount());
-        noOfBorrowedCopiesTextView.setText("Number of borrowed copies: " + borrowed.get(books.get(i).getName()).size());
+        noOfBorrowedCopiesTextView.setText("Number of borrowed copies: " + borrowed.get(ids.get(i)).size());
         borrowedByTextView.setText("Borrowed by: " + borrowedBy);
 
         return v;

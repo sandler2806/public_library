@@ -49,32 +49,7 @@ public class AddBookLibrarian extends AppCompatActivity {
         int amount=Integer.parseInt(amountText.getText().toString());
         String publishingYear=publishingYearText.getText().toString();
         //Now will check if book exits already, if so will just add the amount to the existing book.
-        ArrayList<Book> books = new ArrayList<>();
-        Activity current_activity= this;
-        FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean flag = false;
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Book book = snapshot.getValue(Book.class);
-                    if(book.getName().equals(bookName) && book.getAuthor().equals(author)
-                            && book.getGenre().equals(genre) && book.getPublishingYear().equals(publishingYear)) {
-                        flag = true;
-                        //found this book exists increment its amount in the fire base.
-                        book.setAmount(book.getAmount() + amount);
-                        FireBaseModel.myRef.child("books").child(book.getName()).setValue(book);
-                        break;
-                    }
-                }
-                if(!flag)
-                    FireBaseBook.addBook(bookName,author,genre,amount,publishingYear,current_activity);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
+        FireBaseBook.addBook(bookName,author,genre,amount,publishingYear,this);
 
 
 

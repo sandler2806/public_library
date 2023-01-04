@@ -30,7 +30,7 @@
         android:layout_below="@id/LibrarianWelcomeSentence"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/design_default_color_secondary"
@@ -38,10 +38,23 @@
         android:onClick="GoToAddBookLibrarian"/>
 
     <Button
-        android:id="@+id/RemoveBookButton"
+        android:id="@+id/AddCopiesButton"
         android:layout_width="157dp"
         android:layout_height="78dp"
         android:layout_below="@id/AddBookButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="Add Copies"
+        android:onClick="openAddCopies"/>
+    <Button
+        android:id="@+id/RemoveBookButton"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/AddCopiesButton"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="-6dp"
@@ -78,6 +91,20 @@
         android:backgroundTint="@color/design_default_color_secondary"
         android:onClick="openEditLibInfo"
         android:text="Edit Library Information" />
+
+    <Button
+        android:id="@+id/SearchCustomer"
+        android:layout_width="157dp"
+        android:layout_height="78dp"
+        android:layout_below="@id/EditLibraryInformationButton2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:onClick="openSearchCustomer"
+        android:text="search customer information" />
 
     <ImageButton
         android:id="@+id/imageButton4"

@@ -27,4 +27,14 @@ public class LibrarianHomeActivity extends AppCompatActivity {
     public void openEditLibInfo(View view){
         startActivity(new Intent(this, EditLibInfo.class));
     }
+
+    public void openSearchCustomer(View view){
+        startActivity(new Intent(this, EditLibInfo.class));
+    }
+    public void openAddCopies(View view){
+        startActivity(new Intent(this, AddCopiesActivity.class));
+    }
+
+
+
 }

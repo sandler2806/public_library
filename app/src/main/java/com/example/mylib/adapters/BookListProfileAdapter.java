@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.R;
 
@@ -16,8 +17,8 @@ public class BookListProfileAdapter extends BaseAdapter {
     //This adapter is used in BorrowBook, to list
     //a collection of books within a ListView
     LayoutInflater mInflater;
-    ArrayList<BorrowedBook> books;
-    public BookListProfileAdapter(Context c, ArrayList<BorrowedBook> books)
+    ArrayList<Book> books;
+    public BookListProfileAdapter(Context c, ArrayList<Book> books)
     {
         this.books = books;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

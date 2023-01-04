@@ -1,14 +1,18 @@
 package com.example.mylib.DataBase;
 
+import static com.example.mylib.DataBase.FireBaseUser.getUser;
+
 import android.app.Activity;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
+import com.example.mylib.adapters.AddCopiesAdapter;
 import com.example.mylib.adapters.BookAdapter;
 import com.example.mylib.adapters.BookTrackAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -18,34 +22,37 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.function.BiPredicate;
 
 public class FireBaseBook extends FireBaseModel {
 
-    static void searchBooks(ArrayList<Book> books,String key){
-        for (int i = books.size()-1; i >0 ; i--) {
-            if (!books.get(i).getName().startsWith(key)){
-                books.remove(i);
-            }
-        }
-    }
-
-    public static void addBook(String name, String author, String genre, int amount, String publishYear,
+    public static void addBook(String bookName, String author, String genre, int amount, String publishingYear,
                                Activity activity) {
-        getBook(name).addListenerForSingleValueEvent(new ValueEventListener() {
+        getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()!=null){
-                    Toast.makeText(activity,"Added copies of books successfully",Toast.LENGTH_SHORT).show();
+                boolean flag = false;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    assert book != null;
+                    if(book.getName().equals(bookName) && book.getAuthor().equals(author)) {
+                        flag = true;
+                        //found this book exists increment its amount in the fire base.
+                        Toast.makeText(activity,"Book already exist",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                 }
-                else{
-                    Book book = new Book(name, author, genre, publishYear, amount);
-                    getBook(name).setValue(book);
+                if(!flag)
+                {
+                    Book book = new Book(bookName, author, genre, publishingYear, amount);
+                    DatabaseReference bookRef = myRef.child("books").push();
+                    bookRef.setValue(book);
                     Toast.makeText(activity,"Added book successfully",Toast.LENGTH_SHORT).show();
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                     activity.startActivity(activity.getIntent());
                     activity. overridePendingTransition(0, 0);
-
                 }
             }
             @Override
@@ -54,12 +61,37 @@ public class FireBaseBook extends FireBaseModel {
         });
 
     }
+
+    public static void addCopies(String bookId,int amount, Activity activity){
+        getBook(bookId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(amount<0){
+                    Toast.makeText(activity,"invalid input",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Book book = dataSnapshot.getValue(Book.class);
+                    book.setAmount(book.getAmount() + amount);
+                    FireBaseModel.myRef.child("books").child(bookId).setValue(book);
+                    Toast.makeText(activity,"Added copies of books successfully",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     public static DatabaseReference getBook(String bookName) {
         return myRef.child("books").child(bookName);
     }
-    public static void showBorrowedBooks(Activity activity,ListView bookList,String key){
+    public static void showBorrowedBooks(Activity activity,ListView bookList,String searchKey){
 //        the key is the name of a book and the value is a list of the users who borrowed it
         HashMap<String,ArrayList<String>> borrowed=new HashMap<>();
+        ArrayList<String> ids=new ArrayList<>();
+
 
         DatabaseReference usersRef = FireBaseUser.getAllUsers();
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,10 +103,10 @@ public class FireBaseBook extends FireBaseModel {
                     User user= snapshot.getValue(User.class);
                     assert user != null;
                     for(BorrowedBook book: user.getBooks()){
-                        if(!borrowed.containsKey(book.getName())){
-                            borrowed.put(book.getName(),new ArrayList<>());
+                        if(!borrowed.containsKey(book.getKey())){
+                            borrowed.put(book.getKey(),new ArrayList<>());
                         }
-                        borrowed.get(book.getName()).add(user.getUsername());
+                        borrowed.get(book.getKey()).add(user.getUsername());
                     }
                 }
             }
@@ -93,12 +125,15 @@ public class FireBaseBook extends FireBaseModel {
 //                add all the books that borrowed by a user
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Book book=snapshot.getValue(Book.class);
-                    if(borrowed.containsKey(book.getName()) &&
-                            book.getName().toLowerCase().startsWith(key.toLowerCase())){
-                        books.add(book);
+                    if(borrowed.containsKey(snapshot.getKey())) {
+                        assert book != null;
+                        if (book.getName().toLowerCase().startsWith(searchKey.toLowerCase())) {
+                            books.add(book);
+                            ids.add(snapshot.getKey());
+                        }
                     }
                 }
-                BookTrackAdapter adapter = new BookTrackAdapter(activity, books,borrowed);
+                BookTrackAdapter adapter = new BookTrackAdapter(activity, books,borrowed,ids);
                 bookList.setAdapter(adapter);
             }
             @Override
@@ -109,20 +144,23 @@ public class FireBaseBook extends FireBaseModel {
         });
     }
 
-    public static void showAvailableBooks(Activity activity,ListView bookList,String key){
+
+    public static void showExistBooks(Activity activity,ListView bookList,String key){
         ArrayList<Book> books = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         //Fill ListView in the given activity with the available books
         FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Book book = snapshot.getValue(Book.class);
-                    if(book.getAmount()==0 || !book.getName().toLowerCase().startsWith(key.toLowerCase())){
+                    if(!book.getName().toLowerCase().startsWith(key.toLowerCase())){
                         continue;
                     }
                     books.add(snapshot.getValue(Book.class));
+                    ids.add(snapshot.getKey());
                 }
-                BookAdapter adapter = new BookAdapter(activity, books);
+                AddCopiesAdapter adapter = new AddCopiesAdapter(activity, books,ids);
                 bookList.setAdapter(adapter);
             }
             @Override
@@ -133,39 +171,94 @@ public class FireBaseBook extends FireBaseModel {
         });
 
     }
-    public static void removeBook(Activity activity,String bookName, int amount){
+    public static void showAvailableBooks(Activity activity,ListView bookList,String key){
+        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
+        ArrayList<String> borrowedBooksKey = new ArrayList<>();
 
-        getBook(bookName).addListenerForSingleValueEvent(new ValueEventListener() {
+//        get all borrowed books from the user
+        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Book book = snapshot.getValue(Book.class);
-                int bookAmount = 0;
-                // get the amount of the book in order to prevent multiple getAmount calls
-                if(book!=null){
-                    bookAmount = book.getAmount();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                assert user != null;
+                for(BorrowedBook book :user.getBooks()){
+                    borrowedBooksKey.add(book.getKey());
                 }
-                // check for valid input, if the wanted amount is bigger
-                // than the current then remove all.
-                if(book!=null && bookAmount>0 && book.getAmount()<amount && amount>0 ){
-                    book.setAmount(0);
-                    getBook(bookName).setValue(book);
-                    String deletedAmountAns = amount +" books deleted";
-                    Toast.makeText(activity,deletedAmountAns,Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //Fill ListView in the given activity with the available books
+        FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Book book = snapshot.getValue(Book.class);
+                    if(book.getAmount()==0 || borrowedBooksKey.contains(snapshot.getKey()) || !book.getName().toLowerCase().startsWith(key.toLowerCase())){
+                        continue;
+                    }
+                    books.add(snapshot.getValue(Book.class));
+                    ids.add(snapshot.getKey());
                 }
-                //if the amount is smaller than the current so remove the wanted amount
-                else if(book != null && bookAmount>0 && amount > 0) {
-                    book.setAmount(bookAmount-amount);
-                    getBook(bookName).setValue(book);
-                    String deletedAmountAns = amount +" books deleted";
-                    Toast.makeText(activity,deletedAmountAns,Toast.LENGTH_SHORT).show();
+                    BookAdapter adapter = new BookAdapter(activity, books,ids);
+                bookList.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+    }
+    public static void removeBook(Activity activity,Book bookToDelete){
+
+        getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Book book=new Book();
+                String key="";
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    book=snapshot.getValue(Book.class);
+                    if (book.getName().equals(bookToDelete.getName()) && book.getAuthor().equals(bookToDelete.getAuthor())
+                            && book.getGenre().equals(bookToDelete.getGenre()) && book.getPublishingYear().equals(bookToDelete.getPublishingYear())){
+                        key=snapshot.getKey();
+                        break;
+                    }
                 }
-                // for zero book available
-                else if(book != null && bookAmount==0) {
-                    Toast.makeText(activity,"No books to delete", Toast.LENGTH_SHORT).show();
+                if(!key.equals("")){
+                    int amount=bookToDelete.getAmount();
+                    // get the amount of the book in order to prevent multiple getAmount calls
+                    int bookAmount =book.getAmount();
+                    // check for valid input, if the wanted amount is bigger
+                    // than the current then remove all.
+                    if(bookAmount > 0 && bookAmount < amount){
+//                        book.setAmount(0);
+//                        getBook(key).setValue(book);
+//                        String deletedAmountAns = amount +" books deleted";
+                        Toast.makeText(activity,"can't delete "+amount+" books, there are only "
+                                +bookAmount+" books",Toast.LENGTH_LONG).show();
+                    }
+                    //if the amount is smaller than the current so remove the wanted amount
+                    else if(bookAmount > 0 && amount > 0) {
+                        book.setAmount(bookAmount-amount);
+                        getBook(key).setValue(book);
+                        String deletedAmountAns = amount +" books deleted";
+                        Toast.makeText(activity,deletedAmountAns,Toast.LENGTH_SHORT).show();
+                    }
+                    // for zero book available
+                    else if(bookAmount == 0) {
+                        Toast.makeText(activity,"No books to delete", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(activity,"Invalid input",Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(activity,"Invalid input",Toast.LENGTH_SHORT).show();
-                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -174,15 +267,15 @@ public class FireBaseBook extends FireBaseModel {
         });
     }
 
-    public static void returnBook(String bookName, Activity activity){
-        getBook(bookName).addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void returnBook(String bookId, Activity activity){
+        getBook(bookId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
 //                increase the amount of the book by 1
                 if(book!=null) {
                     int amount = book.getAmount();
-                    getBook(bookName).child("amount").setValue(amount + 1);
+                    getBook(bookId).child("amount").setValue(amount + 1);
 //                    refresh the activity
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
