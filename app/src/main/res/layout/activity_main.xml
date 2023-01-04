@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="@drawable/lib2"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="50dp"
+        android:alpha="0.67"
+        android:background="#ffffff"
+        android:elevation="4dp"
         android:gravity="center"
-        android:text="welcome to the public library"
-        android:textColor="@color/white"
+        android:padding="20dp"
+        android:text="Wellcome to the public library"
+        android:textColor="#000000"
         android:textSize="35sp"
         android:textStyle="bold" />
 
@@ -28,31 +32,28 @@
         android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="324dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="20sp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#00aadd"
+        android:alpha="0.9"
         android:onClick="openSignInLibrarian"
-        android:text="librarian" />
-
+        android:text="librarian"
+        android:textSize="20sp" />
+s
     <com.google.android.material.button.MaterialButton
         android:id="@+id/customer"
         android:layout_width="166dp"
         android:layout_height="89dp"
-        android:layout_below="@id/librarian"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="20sp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:alpha="0.9"
+        android:layout_marginBottom="188dp"
+        android:backgroundTint="#00aadd"
         android:onClick="openSignInCustomer"
-        android:text="Customer" />
-
-
-
+        android:text="Customer"
+        android:textSize="20sp"/>
 
 
 </RelativeLayout>
