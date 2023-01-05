@@ -4,9 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lib2"
+    android:background="@drawable/lib4"
     tools:context=".SignInCustomer">
-
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="50dp"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:padding="20dp"
+        android:fontFamily="@font/kaushan"
+        android:text="Sign in"
+        android:textColor="#ffffff"
+        android:textSize="35sp"
+        android:textStyle="bold" />
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
@@ -44,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="309dp"
+        android:layout_marginBottom="245dp"
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
@@ -52,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="#00aadd"
             android:alpha="0.9"
+            android:backgroundTint="#00aadd"
             android:onClick="openClientHome"
             android:text="LOGIN" />
 
@@ -62,8 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:backgroundTint="#00aadd"
             android:alpha="0.9"
+            android:backgroundTint="#00aadd"
             android:onClick="openSignUp"
             android:text="sign up" />
     </LinearLayout>
@@ -72,6 +87,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.7"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 </RelativeLayout>
