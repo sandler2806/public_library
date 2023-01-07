@@ -65,7 +65,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="270dp"
-        android:backgroundTint="#00aadd"
+        android:backgroundTint="#72a6b4"
         android:onClick="openLibrarianHomeActivity"
         android:text="SIGN IN" />
 
@@ -73,6 +73,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:alpha="0.7"
+        android:backgroundTint="#008485"
         android:layout_height="wrap_content" android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 </RelativeLayout>

@@ -76,6 +76,7 @@
         android:onClick="add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.688"
+        android:backgroundTint="#72a6b4"
         app:layout_constraintStart_toEndOf="@+id/noOfCopiesTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
