@@ -29,7 +29,7 @@ public class LibrarianHomeActivity extends AppCompatActivity {
     }
 
     public void openSearchCustomer(View view){
-        startActivity(new Intent(this, EditLibInfo.class));
+        startActivity(new Intent(this, SearchCustomerActivity.class));
     }
     public void openAddCopies(View view){
         startActivity(new Intent(this, AddCopiesActivity.class));

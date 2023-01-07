@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.mylib.DataBase.FireBaseUser;
 public class SignUpActivity extends AppCompatActivity {
     @Override
@@ -24,11 +26,18 @@ public class SignUpActivity extends AppCompatActivity {
         String verifyPassword=verifyPasswordText.getText().toString();
         String name=nameText.getText().toString();
         String phone=phoneText.getText().toString();
-//        Save the user's data
-        GlobalUserInfo.global_user_name = username;
-        GlobalUserInfo.global_name = name;
+
+        if(username.equals("") ||password.equals("") ||verifyPassword.equals("") ||name.equals("") ||phone.equals("")){
+            Toast.makeText(this,"must fill all the form fields!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            //        Save the user's data
+            GlobalUserInfo.global_user_name = username;
+            GlobalUserInfo.global_name = name;
 //        add user to the database
-        FireBaseUser.addUser(this,username,password,verifyPassword,name,phone);
+            FireBaseUser.addUser(this,username,password,verifyPassword,name,phone);
+        }
+
 
     }
     public void goBack(View view){

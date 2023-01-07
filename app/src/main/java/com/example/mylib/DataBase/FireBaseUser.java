@@ -3,6 +3,7 @@ package com.example.mylib.DataBase;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import com.example.mylib.GlobalUserInfo;
 import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
+import com.example.mylib.ProfileClient;
 import com.example.mylib.Utils.Base64String;
 import com.example.mylib.Utils.Hash;
 import com.example.mylib.adapters.BookListProfileAdapter;
@@ -137,9 +139,9 @@ public class FireBaseUser extends FireBaseModel {
         });
     }
 
-    public static void createBookListForProfileClient(ListView bookList, Activity activity){
+    public static void createBookListForProfileClient(ListView bookList, Activity activity,String username){
         ArrayList<BorrowedBook> borrowedBooks=new ArrayList<>();
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
+        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user=dataSnapshot.getValue(User.class);
@@ -160,7 +162,9 @@ public class FireBaseUser extends FireBaseModel {
 //                add all the books that borrowed by a user
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Book book=snapshot.getValue(Book.class);
+                    System.out.println(snapshot);
                     for (BorrowedBook borrowedBook :borrowedBooks){
+                        System.out.println(borrowedBook);
                         if (borrowedBook.getKey().equals(snapshot.getKey())){
                             books.add(book);
                         }
@@ -186,7 +190,32 @@ public class FireBaseUser extends FireBaseModel {
     }
 
 
+    public static void showUser(String username, TextView usernameText,TextView nameText,TextView phoneText,Activity activity,ListView bookList){
+        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if(user==null){
+                    usernameText.setText("");
+                    nameText.setText("");
+                    phoneText.setText("");
+                    Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    usernameText.setText("username: "+username);
+                    nameText.setText("name: "+user.getName());
+                    phoneText.setText("phone: "+user.getPhone());
+                    FireBaseUser.createBookListForProfileClient(bookList, activity,username);
 
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     public static void addToBorrowed(String bookId,int amount, Activity activity){
         getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

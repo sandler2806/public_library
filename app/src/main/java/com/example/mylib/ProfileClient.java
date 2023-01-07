@@ -38,7 +38,7 @@ public class ProfileClient extends AppCompatActivity {
         textViewToChange3.setText(PhoneNumber);
         //        show all the user's books
         bookList = (ListView) findViewById(R.id.bookListProfileClient);
-        FireBaseUser.createBookListForProfileClient(bookList,ProfileClient.this);
+        FireBaseUser.createBookListForProfileClient(bookList,ProfileClient.this,GlobalUserInfo.global_user_name);
     }
 //    public void returnBook(View view){
 //
