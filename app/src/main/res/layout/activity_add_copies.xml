@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="#006e6d"
     tools:context=".AddCopiesActivity">
 
 
@@ -36,7 +36,7 @@
             android:layout_width="123dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:backgroundTint="@color/design_default_color_secondary"
+            android:backgroundTint="#72a6b4"
             android:onClick="search"
             android:text="search" />
     </LinearLayout>
@@ -58,8 +58,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:background="#006e6d"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert"
         tools:ignore="Missing" />
