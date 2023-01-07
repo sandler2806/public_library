@@ -19,11 +19,12 @@ public class EditLibInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_lib_info);
     }
-    public void goBack(View view){
+
+    public void goBack(View view) {
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
 
-    public void update(View view){
+    public void update(View view) {
 //        get data from text views
         TextView libraryNameText = findViewById(R.id.libraryName);
         TextView phoneNumberText = findViewById(R.id.phoneNumber);
@@ -43,23 +44,23 @@ public class EditLibInfo extends AppCompatActivity {
         String monday = mondayText.getText().toString();
         String tuesday = tuesdayText.getText().toString();
         String wednesday = wednesdayText.getText().toString();
-        String thursday= thursdayText.getText().toString();
-        String friday=fridayText.getText().toString();
+        String thursday = thursdayText.getText().toString();
+        String friday = fridayText.getText().toString();
         String saturday = saturdayText.getText().toString();
-        String openingHours="\nsunday:" +sunday+
-                "\nmonday:" +monday+
-                "\ntuesday:" +tuesday+
-                "\nwednesday:" +wednesday+
-                "\nthursday:" +thursday+
-                "\nfriday:" +friday+
-                "\nsaturday:"+saturday;
-        HashMap<String,String> map =new HashMap<>();
-        map.put("libraryName",libraryName);
-        map.put("phoneNumber",phoneNumber);
-        map.put("mailContact",mailContact);
-        map.put("openingHours",openingHours);
+        String openingHours = "\nsunday:" + sunday +
+                "\nmonday:" + monday +
+                "\ntuesday:" + tuesday +
+                "\nwednesday:" + wednesday +
+                "\nthursday:" + thursday +
+                "\nfriday:" + friday +
+                "\nsaturday:" + saturday;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("libraryName", libraryName);
+        map.put("phoneNumber", phoneNumber);
+        map.put("mailContact", mailContact);
+        map.put("openingHours", openingHours);
         FireBaseModel.myRef.child("LibInfo").setValue(map);
-        Toast.makeText(this,"information updated successfully",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "information updated successfully", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, LibrarianHomeActivity.class));
 
 

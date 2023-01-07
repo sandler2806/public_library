@@ -1,4 +1,5 @@
 package com.example.mylib.adapters;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,15 @@ public class BookTrackAdapter extends BaseAdapter {
     LayoutInflater mInflater;
     ArrayList<Book> books;
     ArrayList<String> ids;
-    HashMap<String,ArrayList<String>> borrowed;
-    public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String,ArrayList<String>> borrowed,ArrayList<String> ids)
-    {
-        this.ids=ids;
+    HashMap<String, ArrayList<String>> borrowed;
+
+    public BookTrackAdapter(Context c, ArrayList<Book> books, HashMap<String, ArrayList<String>> borrowed, ArrayList<String> ids) {
+        this.ids = ids;
         this.books = books;
-        this.borrowed=borrowed;
+        this.borrowed = borrowed;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return books.size();
@@ -44,16 +46,15 @@ public class BookTrackAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         //Get handle for the text views
-        View v = mInflater.inflate(R.layout.book_tracking,null);
+        View v = mInflater.inflate(R.layout.book_tracking, null);
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
         TextView authorTextView = (TextView) v.findViewById(R.id.authorTextView);
         TextView noOfAvailableCopiesTextView = (TextView) v.findViewById(R.id.noOfAvailableCopiesTextView);
         TextView noOfBorrowedCopiesTextView = (TextView) v.findViewById(R.id.noOfBorrowedCopiesTextView);
         TextView borrowedByTextView = (TextView) v.findViewById(R.id.borrowedByTextView);
 
-        StringBuilder borrowedBy= new StringBuilder("\n");
-        System.out.println(borrowed);
-        for(String name :borrowed.get(ids.get(i))){
+        StringBuilder borrowedBy = new StringBuilder("\n");
+        for (String name : borrowed.get(ids.get(i))) {
             borrowedBy.append(name).append("\n");
         }
         //set the text of each field

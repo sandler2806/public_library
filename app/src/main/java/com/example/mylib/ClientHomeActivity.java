@@ -17,10 +17,12 @@ public class ClientHomeActivity extends AppCompatActivity {
         final TextView textViewToChange = (TextView) findViewById(R.id.titleClientName);
         textViewToChange.setText(username_entry);
     }
-    public void goBack(View view){
+
+    public void goBack(View view) {
 
         startActivity(new Intent(this, SignInCustomer.class));
     }
+
     public void goToBorrow(View view) {
 
         startActivity(new Intent(this, BorrowBook.class));

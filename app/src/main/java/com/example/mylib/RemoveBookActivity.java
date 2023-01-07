@@ -1,9 +1,12 @@
 package com.example.mylib;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.Objects.Book;
 
@@ -16,10 +19,11 @@ public class RemoveBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_remove_book);
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         startActivity(new Intent(this, LibrarianHomeActivity.class));
     }
-    public void removeBook(View view){
+
+    public void removeBook(View view) {
 
 //        get data from text views
         TextView bookNameText = findViewById(R.id.BookNameInsert);
@@ -27,14 +31,14 @@ public class RemoveBookActivity extends AppCompatActivity {
         TextView bookAuthorText = findViewById(R.id.BookAuthor);
         TextView bookYearPublishedText = findViewById(R.id.BookYearPublished);
         TextView bookGenreText = findViewById(R.id.BookGenre);
-        String bookName=bookNameText.getText().toString();
-        String bookAuthor=bookAuthorText.getText().toString();
-        String bookYearPublished=bookYearPublishedText.getText().toString();
-        String bookGenre=bookGenreText.getText().toString();
+        String bookName = bookNameText.getText().toString();
+        String bookAuthor = bookAuthorText.getText().toString();
+        String bookYearPublished = bookYearPublishedText.getText().toString();
+        String bookGenre = bookGenreText.getText().toString();
 
-        int amount=Integer.parseInt(amountText.getText().toString());
+        int amount = Integer.parseInt(amountText.getText().toString());
 //        remove book from database
-        Book book=new Book(bookName,bookAuthor,bookGenre,bookYearPublished,amount);
-        FireBaseBook.removeBook(RemoveBookActivity.this,book);
+        Book book = new Book(bookName, bookAuthor, bookGenre, bookYearPublished, amount);
+        FireBaseBook.removeBook(RemoveBookActivity.this, book);
     }
 }

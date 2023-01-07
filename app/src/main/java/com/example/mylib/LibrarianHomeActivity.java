@@ -1,6 +1,7 @@
 package com.example.mylib;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,29 +13,34 @@ public class LibrarianHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_librarian_home);
     }
-    public void GoToAddBookLibrarian(View view){
+
+    public void GoToAddBookLibrarian(View view) {
         startActivity(new Intent(this, AddBookLibrarian.class));
     }
-    public void GoToRemoveBookLibrarian(View view){
+
+    public void GoToRemoveBookLibrarian(View view) {
         startActivity(new Intent(this, RemoveBookActivity.class));
     }
-    public void goBack(View view){
+
+    public void goBack(View view) {
         startActivity(new Intent(this, SignInLibrarian.class));
     }
-    public void openBookTracking(View view){
+
+    public void openBookTracking(View view) {
         startActivity(new Intent(this, BookTrackingActivity.class));
     }
-    public void openEditLibInfo(View view){
+
+    public void openEditLibInfo(View view) {
         startActivity(new Intent(this, EditLibInfo.class));
     }
 
-    public void openSearchCustomer(View view){
+    public void openSearchCustomer(View view) {
         startActivity(new Intent(this, SearchCustomerActivity.class));
     }
-    public void openAddCopies(View view){
+
+    public void openAddCopies(View view) {
         startActivity(new Intent(this, AddCopiesActivity.class));
     }
-
 
 
 }

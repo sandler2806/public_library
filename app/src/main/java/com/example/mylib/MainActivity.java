@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void openSignInLibrarian(View view){
+
+    public void openSignInLibrarian(View view) {
         startActivity(new Intent(this, SignInLibrarian.class));
     }
-    public void openSignInCustomer(View view){
+
+    public void openSignInCustomer(View view) {
         startActivity(new Intent(this, SignInCustomer.class));
     }
 

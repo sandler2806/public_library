@@ -19,27 +19,23 @@ public class SignInCustomer extends AppCompatActivity {
     }
 
 
-
-
-    public void openSignUp(View view){
+    public void openSignUp(View view) {
 
         startActivity(new Intent(this, SignUpActivity.class));
     }
-    public void goBack(View view){
+
+    public void goBack(View view) {
 
         startActivity(new Intent(this, MainActivity.class));
     }
-    public void openClientHome(View view){
+
+    public void openClientHome(View view) {
 //        get data from text views
         TextView usernameText = findViewById(R.id.username);
         TextView passwordText = findViewById(R.id.password);
-        String username=usernameText.getText().toString();
-        String password=passwordText.getText().toString();
+        String username = usernameText.getText().toString();
+        String password = passwordText.getText().toString();
 
         FireBaseUser.signInCustomer(username, password, SignInCustomer.this);
-    }
-
-    public void openHomePage(View view) {
-        startActivity(new Intent(this, ClientHomeActivity.class));
     }
 }

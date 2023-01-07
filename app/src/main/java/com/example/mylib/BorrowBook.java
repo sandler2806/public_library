@@ -1,18 +1,16 @@
 package com.example.mylib;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
-import com.example.mylib.adapters.BookAdapter;
 
-import java.util.ArrayList;
 
 //This class represents the Borrowing act
 //The class using 2 layouts file to represent the data to the use
@@ -21,9 +19,9 @@ import java.util.ArrayList;
 public class BorrowBook extends AppCompatActivity {
 
 
-
     ListView bookList;
-    public void goBack(View view){
+
+    public void goBack(View view) {
         startActivity(new Intent(this, ClientHomeActivity.class));
     }
 
@@ -33,21 +31,22 @@ public class BorrowBook extends AppCompatActivity {
         setContentView(R.layout.activity_borrow_book);
         bookList = findViewById(R.id.bookList);
         //Fill the ListView with the available books
-        FireBaseBook.showAvailableBooks(this,bookList,"");
-    }
-    public void search(View view){
-        TextView bookNameText = findViewById(R.id.bookName);
-        String bookName=bookNameText.getText().toString();
-        FireBaseBook.showAvailableBooks(this,bookList,bookName);
+        FireBaseBook.showAvailableBooks(this, bookList, "");
     }
 
-    public void borrow(View view){
-        View parentView = (View)view.getParent();
+    public void search(View view) {
+        TextView bookNameText = findViewById(R.id.bookName);
+        String bookName = bookNameText.getText().toString();
+        FireBaseBook.showAvailableBooks(this, bookList, bookName);
+    }
+
+    public void borrow(View view) {
+        View parentView = (View) view.getParent();
         // Access the data associated with the list item, such as the book name and author
         TextView bookIdView = parentView.findViewById(R.id.bookId);
         TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
         String bookId = bookIdView.getText().toString();
-        int amount=Integer.parseInt(amountText.getText().toString().substring(18));
-        FireBaseUser.addToBorrowed(bookId,amount,BorrowBook.this);
+        int amount = Integer.parseInt(amountText.getText().toString().substring(18));
+        FireBaseUser.addToBorrowed(bookId, amount, BorrowBook.this);
     }
 }
