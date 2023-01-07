@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="#006e6d"
     tools:context=".LibInfoClient">
 
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="361dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
+        android:fontFamily="@font/kaushan"
         android:gravity="center"
         android:text="welcome to our library"
         android:textColor="@color/white"
@@ -67,7 +68,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#006e6d"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert"
         tools:ignore="MissingConstraints" />

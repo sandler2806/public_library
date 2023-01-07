@@ -34,6 +34,7 @@
         android:layout_marginTop="50dp"
         android:onClick="returnBook"
         android:text="return"
+        android:backgroundTint="#72a6b4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.775"
         app:layout_constraintStart_toEndOf="@+id/bookNameTextView"
