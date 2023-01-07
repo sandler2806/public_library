@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="@drawable/lib5"
     tools:context=".LibrarianHomeActivity">
 
     <TextView
@@ -19,6 +19,7 @@
         android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="Welcome Librarian"
+        android:fontFamily="@font/kaushan"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold" />
@@ -29,11 +30,12 @@
         android:layout_height="78dp"
         android:layout_below="@id/LibrarianWelcomeSentence"
         android:layout_centerHorizontal="true"
+        android:alpha="0.9"
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#72a6b4"
         android:text="Add Book"
         android:onClick="GoToAddBookLibrarian"/>
 
@@ -44,10 +46,11 @@
         android:layout_below="@id/AddBookButton"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
+        android:alpha="0.9"
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#72a6b4"
         android:text="Add Copies"
         android:onClick="openAddCopies"/>
     <Button
@@ -57,11 +60,12 @@
         android:layout_below="@id/AddCopiesButton"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
+        android:alpha="0.9"
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:onClick="GoToRemoveBookLibrarian"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#72a6b4"
         android:text="Remove Book" />
 
     <Button
@@ -71,11 +75,12 @@
         android:layout_below="@id/RemoveBookButton"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
+        android:alpha="0.9"
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:onClick="openBookTracking"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#72a6b4"
         android:text="View Burrowed List" />
 
     <Button
@@ -87,8 +92,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
+        android:alpha="0.9"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#72a6b4"
         android:onClick="openEditLibInfo"
         android:text="Edit Library Information" />
 
@@ -102,7 +108,8 @@
         android:layout_marginTop="-6dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:alpha="0.9"
+        android:backgroundTint="#72a6b4"
         android:onClick="openSearchCustomer"
         android:text="search customer information" />
 
@@ -110,7 +117,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#007272"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 

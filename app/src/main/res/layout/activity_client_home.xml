@@ -91,7 +91,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#72a6b4"
+        android:backgroundTint="#007272"
         android:alpha="0.7"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert"

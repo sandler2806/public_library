@@ -58,7 +58,7 @@
         android:id="@+id/GoBackButtonReturnBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#72a6b4"
+        android:background="#006e6d"
         android:onClick="goBack"
         android:alpha="0.7"
         app:srcCompat="@android:drawable/ic_menu_revert"
