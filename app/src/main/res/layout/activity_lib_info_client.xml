@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#006e6d"
+    android:background="@drawable/leaves23"
     tools:context=".LibInfoClient">
 
 
@@ -31,7 +31,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
         android:text="library name"
+        android:fontFamily="@font/quicksand"
+        android:alpha="0.9"
+        android:background="#ffffff"
+        android:textColor="#000000"
         android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="18sp"
         android:layout_below="@+id/title" />
 
     <TextView
@@ -40,8 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
+        android:fontFamily="@font/quicksand"
         android:text="opening hours"
         android:textStyle="bold"
+        android:alpha="0.9"
+        android:background="#ffffff"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
         android:layout_below="@+id/libraryName" />
 
     <TextView
@@ -51,7 +63,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
         android:text="phone number"
+        android:fontFamily="@font/quicksand"
         android:textStyle="bold"
+        android:alpha="0.9"
+        android:background="#ffffff"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+
         android:layout_below="@+id/openingHours" />
 
     <TextView
@@ -62,6 +81,12 @@
         android:layout_marginTop="18dp"
         android:text="mail for contact"
         android:textStyle="bold"
+        android:fontFamily="@font/quicksand"
+        android:alpha="0.9"
+        android:background="#ffffff"
+        android:textColor="#000000"
+        android:padding="10dp"
+        android:textSize="18sp"
         android:layout_below="@+id/phoneNumber" />
 
     <ImageButton
