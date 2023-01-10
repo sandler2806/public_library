@@ -99,7 +99,7 @@ public class FireBaseUser extends FireBaseModel {
                     else if (!password.equals(verifyPassword)) {
                         Toast.makeText(activity, "verify password does not match to password", Toast.LENGTH_SHORT).show();
                     } else {
-                    //create new user in the database
+                        //create new user in the database
                         byte[] hash_array = Hash.encrypt(password);
                         String encoded_password = Base64String.encode(hash_array);
                         User newUser = new User(username, encoded_password, name, phone);
@@ -175,9 +175,10 @@ public class FireBaseUser extends FireBaseModel {
                 });
     }
 
-    public static void createBookListForProfileClient(ListView bookList, Activity activity) {
+    public static void createBookListForProfileClient(ListView bookList, Activity activity, String userName) {
+
         ArrayList<BorrowedBook> borrowedBooks = new ArrayList<>();
-        getUser(GlobalUserInfo.global_user_name,
+        getUser(userName,
                 response -> {
                     User user = response.body();
                     if (user != null) {
@@ -199,7 +200,7 @@ public class FireBaseUser extends FireBaseModel {
                                 }
                             }
                             if (!books.isEmpty()) {
-                                BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books);
+                                BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books, borrowedBooks);
                                 bookList.setAdapter(adapter);
                             } else {
                                 Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
@@ -212,7 +213,6 @@ public class FireBaseUser extends FireBaseModel {
                         }
 
                     });
-
                 });
     }
 
@@ -236,55 +236,25 @@ public class FireBaseUser extends FireBaseModel {
                     getUserRef(GlobalUserInfo.global_user_name).child("books").setValue(books);
                     Toast.makeText(activity, "Book borrowed successfully", Toast.LENGTH_SHORT).show();
                 });
-    public static void showUser(String username, TextView usernameText, TextView nameText, TextView phoneText, Activity activity, ListView bookList) {
-        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null) {
-                    usernameText.setText("");
-                    nameText.setText("");
-                    phoneText.setText("");
-                    Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
-                } else {
-                    usernameText.setText("username: " + username);
-                    nameText.setText("name: " + user.getName());
-                    phoneText.setText("phone: " + user.getPhone());
-                    FireBaseUser.createBookListForProfileClient(bookList, activity, username);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
-    public static void addToBorrowed(String bookId, int amount, Activity activity) {
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                ArrayList<BorrowedBook> books = user.getBooks();
-                BorrowedBook borrowedBook = new BorrowedBook(bookId);
-                books.add(borrowedBook);
-                FireBaseBook.getBook(bookId).child("amount").setValue(amount - 1);
-                Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
-                activity.finish();
-                activity.overridePendingTransition(0, 0);
-                activity.startActivity(activity.getIntent());
-                activity.overridePendingTransition(0, 0);
-                getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
-                Toast.makeText(activity, "book borrowed successfully", Toast.LENGTH_SHORT).show();
-            }
+    public static void showUser(String username, TextView usernameText, TextView nameText, TextView phoneText, Activity activity, ListView bookList) {
+        getUser(username,
+                response -> {
+                    User user = response.body();
+                    if (user == null) {
+                        usernameText.setText("");
+                        nameText.setText("");
+                        phoneText.setText("");
+                        Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        usernameText.setText("username: " + username);
+                        nameText.setText("name: " + user.getName());
+                        phoneText.setText("phone: " + user.getPhone());
+                        FireBaseUser.createBookListForProfileClient(bookList, activity, username);
+                    }
+                });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     public static void removeFromBorrowed(String bookId) {
