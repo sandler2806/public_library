@@ -81,6 +81,7 @@ public class FireBaseUser extends FireBaseModel {
                     else {
                         GlobalUserInfo.global_name = user.getName();
                         GlobalUserInfo.global_user_name = username;
+                        GlobalUserInfo.global_phone_number=user.getPhone();
                         Toast.makeText(activity, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
                         activity.startActivity(new Intent(activity, ClientHomeActivity.class));
                     }
