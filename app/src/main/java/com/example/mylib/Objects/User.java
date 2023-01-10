@@ -13,7 +13,7 @@ public class User {
     private String phone;
     private ArrayList<BorrowedBook> books = new ArrayList<>();
 
-    public User(){
+    public User() {
         // Default constructor for DataSnapshot.getValue(User.class)
     }
 
@@ -37,20 +37,19 @@ public class User {
         return password;
     }
 
-    public void setBooks(ArrayList<BorrowedBook> books){
+    public void setBooks(ArrayList<BorrowedBook> books) {
         this.books = books;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-//    public void addBook(Book book){
-//        books.add(book.getName());
-//    }
 
-    public void removeBook(Book book){
+    public void removeBook(Book book) {
         books.remove(book);
     }
+
 
     public String getName() {
         return name;

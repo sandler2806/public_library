@@ -47,6 +47,7 @@ public class ClientHomeActivity extends AppCompatActivity {
         alertDialog.show();
 
     }
+
     public void goToBorrow(View view) {
 
         startActivity(new Intent(this, BorrowBook.class));

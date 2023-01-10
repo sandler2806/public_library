@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="@drawable/clean"
     tools:context=".EditLibInfo">
 
 
@@ -12,10 +12,14 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="Edit library information"
         android:textColor="@color/white"
+        android:fontFamily="@font/kaushan"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -96,17 +100,20 @@
         android:drawablePadding="20dp"/>
 
     <EditText
+        android:id="@+id/wednesdayOpeningHours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wednesdayOpeningHours"
         android:layout_below="@id/tuesdayOpeningHours"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:background="#30ffffff"
+        android:drawablePadding="20dp"
         android:hint="Wednesday opening hours"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_margin="5dp"
         android:padding="10dp"
-        android:drawablePadding="20dp"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:layout_width="match_parent"
@@ -149,21 +156,23 @@
         android:drawablePadding="20dp"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/updatebtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/updatebtn"
         android:layout_below="@id/saturdayOpeningHours"
-        android:text="update"
-        android:backgroundTint="@color/design_default_color_secondary"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#72a6b4"
         android:onClick="update"
-        android:layout_margin="20dp"
-        />
+        android:text="update" />
     <ImageButton
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#008485"
         android:onClick="goBack"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 

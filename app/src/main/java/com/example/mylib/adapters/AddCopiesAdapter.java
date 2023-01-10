@@ -18,12 +18,13 @@ public class AddCopiesAdapter extends BaseAdapter {
     LayoutInflater mInflater;
     ArrayList<Book> books;
     ArrayList<String> booksKey;
-    public AddCopiesAdapter(Context c, ArrayList<Book> books, ArrayList<String> booksKey)
-    {
+
+    public AddCopiesAdapter(Context c, ArrayList<Book> books, ArrayList<String> booksKey) {
         this.books = books;
-        this.booksKey=booksKey;
+        this.booksKey = booksKey;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return books.size();
@@ -39,10 +40,11 @@ public class AddCopiesAdapter extends BaseAdapter {
         return i;
     }
 
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {//called for each items
         //Get handle for the text views
-        View v = mInflater.inflate(R.layout.add_copies_detail,null);
+        View v = mInflater.inflate(R.layout.add_copies_detail, null);
         TextView idTextView = (TextView) v.findViewById(R.id.bookId);
         idTextView.setText(booksKey.get(i));
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextView);
@@ -50,7 +52,7 @@ public class AddCopiesAdapter extends BaseAdapter {
         TextView noOfCopiesTextView = (TextView) v.findViewById(R.id.noOfCopiesTextView);
 
         //set the text of each field
-        bookNameTextView.setText("Book name: "+books.get(i).getName());
+        bookNameTextView.setText("Book name: " + books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfCopiesTextView.setText("Number of copies: " + books.get(i).getAmount());
 

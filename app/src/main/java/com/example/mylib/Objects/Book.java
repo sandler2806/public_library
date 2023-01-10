@@ -9,11 +9,12 @@ public class Book {
     private String genre;
     private String publishingYear;
 
-    public Book(){
+    public Book() {
         // Default constructor for DataSnapshot.getValue(User.class)
     }
-    public Book(String name, String author, String genre, String publishingYear,int amount) {
-        this.amount=amount;
+
+    public Book(String name, String author, String genre, String publishingYear, int amount) {
+        this.amount = amount;
         this.name = name;
         this.author = author;
         this.genre = genre;

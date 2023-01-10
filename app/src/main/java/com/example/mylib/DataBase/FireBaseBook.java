@@ -23,8 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.function.BiPredicate;
+
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -251,9 +250,6 @@ public class FireBaseBook extends FireBaseModel {
                     // check for valid input, if the wanted amount is bigger
                     // than the current then remove all.
                     if (bookAmount > 0 && bookAmount < amount) {
-//                        book.setAmount(0);
-//                        getBook(key).setValue(book);
-//                        String deletedAmountAns = amount +" books deleted";
                         Toast.makeText(activity, "can't delete " + amount + " books, there are only "
                                 + bookAmount + " books", Toast.LENGTH_LONG).show();
                     }

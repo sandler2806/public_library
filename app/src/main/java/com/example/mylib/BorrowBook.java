@@ -16,8 +16,10 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
+import com.example.mylib.adapters.BookAdapter;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -30,9 +32,9 @@ import java.util.TimeZone;
 public class BorrowBook extends AppCompatActivity {
 
 
-    ListView bookList;
 
-    public void goBack(View view) {
+    ListView bookList;
+    public void goBack(View view){
         startActivity(new Intent(this, ClientHomeActivity.class));
     }
 
@@ -42,7 +44,7 @@ public class BorrowBook extends AppCompatActivity {
         setContentView(R.layout.activity_borrow_book);
         bookList = findViewById(R.id.bookList);
         //Fill the ListView with the available books
-        FireBaseBook.showAvailableBooks(this, bookList, "");
+        FireBaseBook.showAvailableBooks(this,bookList,"");
     }
 
     public void search(View view) {
