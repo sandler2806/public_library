@@ -54,11 +54,12 @@ public class BookTrackAdapter extends BaseAdapter {
         TextView borrowedByTextView = (TextView) v.findViewById(R.id.borrowedByTextView);
 
         StringBuilder borrowedBy = new StringBuilder("\n");
+        System.out.println(borrowed);
         for (String name : borrowed.get(ids.get(i))) {
-            borrowedBy.append(name).append("\n");
+            borrowedBy.append("UserName:  " + name).append("\n");
         }
         //set the text of each field
-        bookNameTextView.setText(books.get(i).getName());
+        bookNameTextView.setText("Name: " + books.get(i).getName());
         authorTextView.setText("Author: " + books.get(i).getAuthor());
         noOfAvailableCopiesTextView.setText("Number of available copies: " + books.get(i).getAmount());
         noOfBorrowedCopiesTextView.setText("Number of borrowed copies: " + borrowed.get(ids.get(i)).size());

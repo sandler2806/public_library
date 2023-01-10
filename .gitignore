@@ -16,3 +16,5 @@ local.properties
 ./idea
 /app/google-services.json
 .idea/vcs.xml
+/Server/node_modules/*
+./Server/node_modules

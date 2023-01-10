@@ -1,6 +1,7 @@
 package com.example.mylib.DataBase;
 
 import static com.example.mylib.DataBase.FireBaseUser.getUser;
+import static com.example.mylib.DataBase.FireBaseUser.getUserRef;
 
 import android.app.Activity;
 import android.widget.ListView;
@@ -24,7 +25,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class FireBaseBook extends FireBaseModel {
+
+    private static String base_url = "http://10.0.2.2:3000/";
+
+    // Retrofit builder
+    private static Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(base_url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+
+    private static UserApiCall myAPICall = retrofit.create(UserApiCall.class);
+
 
     public static void addBook(String bookName, String author, String genre, int amount, String publishingYear,
                                Activity activity) {
@@ -179,47 +195,37 @@ public class FireBaseBook extends FireBaseModel {
         ArrayList<Book> books = new ArrayList<>();
         ArrayList<String> ids = new ArrayList<>();
         ArrayList<String> borrowedBooksKey = new ArrayList<>();
-
-//        get all borrowed books from the user
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                assert user != null;
-                for (BorrowedBook book : user.getBooks()) {
-                    borrowedBooksKey.add(book.getKey());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //Fill ListView in the given activity with the available books
-        FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Book book = snapshot.getValue(Book.class);
-                    if (book.getAmount() == 0 || borrowedBooksKey.contains(snapshot.getKey()) || !book.getName().toLowerCase().startsWith(key.toLowerCase())) {
-                        continue;
+        getUser(GlobalUserInfo.global_user_name,
+                response -> {
+                    User user = response.body();
+                    assert user != null;
+                    for (BorrowedBook book : user.getBooks()) {
+                        borrowedBooksKey.add(book.getKey());
                     }
-                    books.add(snapshot.getValue(Book.class));
-                    ids.add(snapshot.getKey());
-                }
-                BookAdapter adapter = new BookAdapter(activity, books, ids);
-                bookList.setAdapter(adapter);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Book book = snapshot.getValue(Book.class);
+                                if (book.getAmount() == 0 || borrowedBooksKey.contains(snapshot.getKey()) || !book.getName().toLowerCase().startsWith(key.toLowerCase())) {
+                                    continue;
+                                }
+                                books.add(snapshot.getValue(Book.class));
+                                ids.add(snapshot.getKey());
+                            }
+                            BookAdapter adapter = new BookAdapter(activity, books, ids);
+                            bookList.setAdapter(adapter);
+                        }
 
-            }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-        });
+                        }
 
+                    });
+
+                });
     }
 
     public static void removeBook(Activity activity, Book bookToDelete) {

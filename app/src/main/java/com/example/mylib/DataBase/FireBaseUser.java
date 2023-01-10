@@ -2,6 +2,7 @@ package com.example.mylib.DataBase;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,167 +24,196 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.function.Consumer;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FireBaseUser extends FireBaseModel {
 
+    private static String base_url = "http://10.0.2.2:3000/";
 
-    public static void addUser(Activity activity, String username, String password, String verifyPassword, String name, String phone) {
-        FireBaseUser.getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                check if the username already exist
-                if (dataSnapshot.getValue() != null) {
-                    Toast.makeText(activity, "username already exist", Toast.LENGTH_SHORT).show();
-                }
-//                check if the passwords match
-                else if (!password.equals(verifyPassword)) {
-                    Toast.makeText(activity, "verify password does not match to password", Toast.LENGTH_SHORT).show();
-                } else {
-//                    create new user in the database
-                    byte[] hash_array = Hash.encrypt(password);
-                    String encoded_password = Base64String.encode(hash_array);
-                    User user = new User(username, encoded_password, name, phone);
-                    myRef.child("users").child(username).setValue(user);
-                    Toast.makeText(activity, "sign up successfully", Toast.LENGTH_SHORT).show();
-                    activity.startActivity(new Intent(activity, ClientHomeActivity.class));
-                }
-            }
+    // Retrofit builder
+    private static Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(base_url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+
+    private static UserApiCall myAPICall = retrofit.create(UserApiCall.class);
+
+    public static void getUser(String userName, Callback callback) {
+
+        Call<User> call = myAPICall.getUser(userName);
+        call.enqueue(callback);
 
     }
 
-    public static DatabaseReference getUser(String userName) {
+    public static void getUser(String userName, Consumer<Response<User>> onResponse) {
+
+        try {
+            Call<User> call = myAPICall.getUser(userName);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.code() != 200) {
+                        System.out.println("Failure in recieve data");
+                        return;
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        onResponse.accept(response);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    System.out.println("Error occurred in get user");
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Error in get user");
+        }
+
+
+    }
+
+
+    public static DatabaseReference getUserRef(String userName) {
         return myRef.child("users").child(userName);
     }
 
-    //function to sign in customer
-    public static void signInCustomer(String username, String password, Activity activity) {
-        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //check if the user exists
-                if (dataSnapshot.getValue() == null) {
-                    Toast.makeText(activity, "username does not exist", Toast.LENGTH_SHORT).show();
-                }
-                //check if the passwords match
-                else {
-                    User user = dataSnapshot.getValue(User.class);
-                    String password_string_hash = user.getPassword();
-                    byte[] password_bytes_hash = Base64String.decode(password_string_hash);
-                    if (!Hash.verifyPassword(password, password_bytes_hash)) {
-                        Toast.makeText(activity, "wrong password", Toast.LENGTH_SHORT).show();
+    public static void addUser(Activity activity, String username, String password, String verifyPassword, String name, String phone) {
+
+        getUser(username,
+                response -> {
+                    User user = response.body();
+                    if (user != null) {
+                        Toast.makeText(activity, "username already exist", Toast.LENGTH_SHORT).show();
                     }
-                    //Save the user's data
-                    else {
-                        GlobalUserInfo.global_name = user.getName();
-                        GlobalUserInfo.global_user_name = username;
-                        GlobalUserInfo.global_phone_number=user.getPhone();
-                        Toast.makeText(activity, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                    //check if the passwords match
+                    else if (!password.equals(verifyPassword)) {
+                        Toast.makeText(activity, "verify password does not match to password", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //create new user in the database
+                        byte[] hash_array = Hash.encrypt(password);
+                        String encoded_password = Base64String.encode(hash_array);
+                        User newUser = new User(username, encoded_password, name, phone);
+                        myRef.child("users").child(username).setValue(newUser);
+                        Toast.makeText(activity, "sign up successfully", Toast.LENGTH_SHORT).show();
                         activity.startActivity(new Intent(activity, ClientHomeActivity.class));
                     }
-                }
-            }
+                });
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
+    //function to sign in customer
+    public static void signInCustomer(String username, String password, Activity activity) {
+        getUser(username,
+                response -> {
+                    User user = response.body();
+                    if (user == null) {
+                        Toast.makeText(activity, "username does not exist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String password_string_hash = user.getPassword();
+                        byte[] password_bytes_hash = Base64String.decode(password_string_hash);
+                        if (!Hash.verifyPassword(password, password_bytes_hash)) {
+                            Toast.makeText(activity, "wrong password", Toast.LENGTH_SHORT).show();
+                        }
+                        //Save the user's data
+                        else {
+                            GlobalUserInfo.global_name = user.getName();
+                            GlobalUserInfo.global_user_name = username;
+                            GlobalUserInfo.global_phone_number = user.getPhone();
+                            Toast.makeText(activity, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                            activity.startActivity(new Intent(activity, ClientHomeActivity.class));
+                        }
+                    }
+                });
     }
 
     public static void createBookListForReturn(ListView bookList, Activity activity, String searchKey) {
         ArrayList<BorrowedBook> borrowedBooks = new ArrayList<>();
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    borrowedBooks.addAll(user.getBooks());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-        DatabaseReference booksRef = FireBaseBook.getAllBook();
-        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Book> books = new ArrayList<>();
-//                add all the books that borrowed by a user
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Book book = snapshot.getValue(Book.class);
-                    for (BorrowedBook borrowedBook : borrowedBooks) {
-                        if (borrowedBook.getKey().equals(snapshot.getKey()) && book.getName().toLowerCase().startsWith(searchKey.toLowerCase())) {
-                            books.add(book);
-                        }
+        getUser(GlobalUserInfo.global_user_name,
+                response -> {
+                    User user = response.body();
+                    if (user != null) {
+                        borrowedBooks.addAll(user.getBooks());
                     }
-                }
-                ReturnBookAdapter adapter = new ReturnBookAdapter(activity, borrowedBooks, books);
-                bookList.setAdapter(adapter);
-                if (books.isEmpty()) {
-                    Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
-                }
-            }
+                    DatabaseReference booksRef = FireBaseBook.getAllBook();
+                    booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            ArrayList<Book> books = new ArrayList<>();
+                            System.out.println(borrowedBooks);
+                            //add all the books that borrowed by a user
+                            for (BorrowedBook borrowedBook : borrowedBooks) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Book book = snapshot.getValue(Book.class);
+                                    if (borrowedBook.getKey().equals(snapshot.getKey()) && book.getName().toLowerCase().startsWith(searchKey.toLowerCase())) {
+                                        books.add(book);
+                                        System.out.println("here and added book: " + book.getName());
+                                    }
+                                }
+                            }
+                            ReturnBookAdapter adapter = new ReturnBookAdapter(activity, borrowedBooks, books);
+                            bookList.setAdapter(adapter);
+                            if (books.isEmpty()) {
+                                Toast.makeText(activity, "No books to return", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-
-        });
+                        }
+                    });
+                });
     }
 
-    public static void createBookListForProfileClient(ListView bookList, Activity activity, String username) {
+    public static void createBookListForProfileClient(ListView bookList, Activity activity, String userName) {
+
         ArrayList<BorrowedBook> borrowedBooks = new ArrayList<>();
-        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    borrowedBooks.addAll(user.getBooks());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-        DatabaseReference booksRef = FireBaseBook.getAllBook();
-        booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Book> books = new ArrayList<>();
-//                add all the books that borrowed by a user
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Book book = snapshot.getValue(Book.class);
-                    for (BorrowedBook borrowedBook : borrowedBooks) {
-                        if (borrowedBook.getKey().equals(snapshot.getKey())) {
-                            books.add(book);
-                        }
+        getUser(userName,
+                response -> {
+                    User user = response.body();
+                    if (user != null) {
+                        borrowedBooks.addAll(user.getBooks());
                     }
-                }
-                if (!books.isEmpty()) {
-                    BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books, borrowedBooks);
-                    bookList.setAdapter(adapter);
-                } else {
-                    Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    DatabaseReference booksRef = FireBaseBook.getAllBook();
+                    booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            ArrayList<Book> books = new ArrayList<>();
+                            //add all the books that borrowed by a user
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Book book = snapshot.getValue(Book.class);
+                                for (BorrowedBook borrowedBook : borrowedBooks) {
+                                    if (borrowedBook.getKey().equals(snapshot.getKey())) {
+                                        books.add(book);
+                                    }
+                                }
+                            }
+                            if (!books.isEmpty()) {
+                                BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books, borrowedBooks);
+                                bookList.setAdapter(adapter);
+                            } else {
+                                Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-            }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-        });
+                        }
+
+                    });
+                });
     }
 
     public static DatabaseReference getAllUsers() {
@@ -191,83 +221,58 @@ public class FireBaseUser extends FireBaseModel {
     }
 
 
-    public static void showUser(String username, TextView usernameText, TextView nameText, TextView phoneText, Activity activity, ListView bookList) {
-        getUser(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null) {
-                    usernameText.setText("");
-                    nameText.setText("");
-                    phoneText.setText("");
-                    Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
-                } else {
-                    usernameText.setText("username: " + username);
-                    nameText.setText("name: " + user.getName());
-                    phoneText.setText("phone: " + user.getPhone());
-                    FireBaseUser.createBookListForProfileClient(bookList, activity, username);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    public static void addToBorrowed(String bookId, int amount, Activity activity) {
+        getUser(GlobalUserInfo.global_user_name,
+                response -> {
+                    User user = response.body();
+                    ArrayList<BorrowedBook> books = user.getBooks();
+                    BorrowedBook borrowedBook = new BorrowedBook(bookId);
+                    books.add(borrowedBook);
+                    FireBaseBook.getBook(bookId).child("amount").setValue(amount - 1);
+                    activity.finish();
+                    activity.overridePendingTransition(0, 0);
+                    activity.startActivity(activity.getIntent());
+                    activity.overridePendingTransition(0, 0);
+                    getUserRef(GlobalUserInfo.global_user_name).child("books").setValue(books);
+                    Toast.makeText(activity, "Book borrowed successfully", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    public static void addToBorrowed(String bookId, int amount, Activity activity) {
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                ArrayList<BorrowedBook> books = user.getBooks();
-                BorrowedBook borrowedBook = new BorrowedBook(bookId);
-                books.add(borrowedBook);
-                FireBaseBook.getBook(bookId).child("amount").setValue(amount - 1);
-                Toast.makeText(activity, "Borrowed", Toast.LENGTH_SHORT).show();
-                activity.finish();
-                activity.overridePendingTransition(0, 0);
-                activity.startActivity(activity.getIntent());
-                activity.overridePendingTransition(0, 0);
-                getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
-                Toast.makeText(activity, "book borrowed successfully", Toast.LENGTH_SHORT).show();
-            }
+    public static void showUser(String username, TextView usernameText, TextView nameText, TextView phoneText, Activity activity, ListView bookList) {
+        getUser(username,
+                response -> {
+                    User user = response.body();
+                    if (user == null) {
+                        usernameText.setText("");
+                        nameText.setText("");
+                        phoneText.setText("");
+                        Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
+                    } else {
+                        usernameText.setText("username: " + username);
+                        nameText.setText("name: " + user.getName());
+                        phoneText.setText("phone: " + user.getPhone());
+                        FireBaseUser.createBookListForProfileClient(bookList, activity, username);
+                    }
+                });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     public static void removeFromBorrowed(String bookId) {
-
-        getUser(GlobalUserInfo.global_user_name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                ArrayList<BorrowedBook> books = user.getBooks();
-//                remove the book from the list
-                if (books != null) {
-                    for (BorrowedBook borrowedBook : books) {
-                        if (borrowedBook.getKey().equals(bookId)) {
-                            books.remove(borrowedBook);
-                            break;
+        getUser(GlobalUserInfo.global_user_name,
+                response -> {
+                    User user = response.body();
+                    ArrayList<BorrowedBook> books = user.getBooks();
+                    //remove the book from the list
+                    if (books != null) {
+                        for (BorrowedBook borrowedBook : books) {
+                            if (borrowedBook.getKey().equals(bookId)) {
+                                books.remove(borrowedBook);
+                                break;
+                            }
                         }
                     }
-                }
-//                update the user's books list
-                getUser(GlobalUserInfo.global_user_name).child("books").setValue(books);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
+                    //update the user's books list
+                    getUserRef(GlobalUserInfo.global_user_name).child("books").setValue(books);
+                });
     }
 }
