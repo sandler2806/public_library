@@ -1,13 +1,16 @@
 package com.example.mylib.Objects;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class User {
     private String username;
     private String password;
     private String name;
     private String phone;
-    private ArrayList<Book> favorites = new ArrayList<>();
     private ArrayList<BorrowedBook> books = new ArrayList<>();
 
     public User(){
@@ -48,12 +51,6 @@ public class User {
     public void removeBook(Book book){
         books.remove(book);
     }
-    public void addFavorite(Book book){
-        favorites.add(book);
-    }
-    public void removeFavorite(Book book){
-        favorites.remove(book);
-    }
 
     public String getName() {
         return name;
@@ -71,9 +68,6 @@ public class User {
         this.phone = phone;
     }
 
-    public ArrayList<Book> getFavorites() {
-        return favorites;
-    }
     public ArrayList<BorrowedBook> getBooks() {
         return books;
     }

@@ -8,6 +8,8 @@
     <string name="author">Author:</string>
     <string name="number_of_copies">Number of copies:</string>
     <string name="borrow">Borrow</string>
+    <string name="genre">Genre:</string>
+    <string name="publish_year">Publish Year:</string>
 
     <string-array name="books">
         <item>Harry Hotter and the Philosophers stone</item>
