@@ -1,6 +1,7 @@
 package com.example.mylib.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,8 @@ public class BookListProfileAdapter extends BaseAdapter {
 
         String show = "Book name: " + books.get(i).getName();
         if (days > 14) {
-            show += "\nReturning the book is " + (days - 14) + " days late";
+            show += "\nThe book is " + (days - 14) + " days late";
+            bookNameTextView.setTextColor(Color.RED);
         }
         bookNameTextView.setText(show);
 
