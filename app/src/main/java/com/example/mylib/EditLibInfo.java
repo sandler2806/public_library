@@ -47,13 +47,13 @@ public class EditLibInfo extends AppCompatActivity {
         String thursday = thursdayText.getText().toString();
         String friday = fridayText.getText().toString();
         String saturday = saturdayText.getText().toString();
-        String openingHours = "\nsunday:" + sunday +
-                "\nmonday:" + monday +
-                "\ntuesday:" + tuesday +
-                "\nwednesday:" + wednesday +
-                "\nthursday:" + thursday +
-                "\nfriday:" + friday +
-                "\nsaturday:" + saturday;
+        String openingHours = "\nSunday:" + sunday +
+                "\n\nMonday:" + monday +
+                "\n\nTuesday:" + tuesday +
+                "\n\nWednesday:" + wednesday +
+                "\n\nThursday:" + thursday +
+                "\n\nFriday:" + friday +
+                "\n\nSaturday:" + saturday;
         HashMap<String, String> map = new HashMap<>();
         map.put("libraryName", libraryName);
         map.put("phoneNumber", phoneNumber);

@@ -57,6 +57,7 @@ public class BorrowBook extends AppCompatActivity {
         View parentView = (View) view.getParent();
         // Access the data associated with the list item, such as the book name and author
         TextView bookIdView = parentView.findViewById(R.id.bookId);
+        TextView bookNameText = parentView.findViewById(R.id.bookNameTextView);
         TextView amountText = parentView.findViewById(R.id.noOfCopiesTextView);
         String bookId = bookIdView.getText().toString();
         int amount = Integer.parseInt(amountText.getText().toString());
@@ -74,7 +75,7 @@ public class BorrowBook extends AppCompatActivity {
         // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
 
-            addBorrowEvent();
+            addBorrowEvent(bookNameText.getText().toString());
 
             FireBaseUser.addToBorrowed(bookId, amount, BorrowBook.this);
         });
@@ -111,7 +112,7 @@ public class BorrowBook extends AppCompatActivity {
         }
     }
 
-    public void addBorrowEvent() {
+    public void addBorrowEvent(String bookName) {
 
         // When the user click yes button then app will close
         LocalDateTime now = null;
@@ -128,8 +129,8 @@ public class BorrowBook extends AppCompatActivity {
             LocalDateTime endDateTime = LocalDateTime.now().plusWeeks(2);
             long endTime = endDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             values.put(CalendarContract.Events.DTEND, endTime);
-            values.put(CalendarContract.Events.TITLE, "Book borrow");
-            values.put(CalendarContract.Events.DESCRIPTION, "Has to return the book to the library" + " at the end date");
+            values.put(CalendarContract.Events.TITLE, "Return "+bookName.substring(11)+" book");
+            values.put(CalendarContract.Events.DESCRIPTION, "Has to return "+bookName.substring(11)+" to the library at the end date");
             values.put(CalendarContract.Events.CALENDAR_ID, 3);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 

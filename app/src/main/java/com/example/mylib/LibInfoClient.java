@@ -38,10 +38,10 @@ public class LibInfoClient extends AppCompatActivity {
                 TextView openingHoursTextView = findViewById(R.id.openingHours);
                 TextView phoneNumberTextView = findViewById(R.id.phoneNumber);
                 TextView mailContactTextView = findViewById(R.id.mailContact);
-                libraryNameTextView.setText("library name: " + libraryName);
-                openingHoursTextView.setText("opening hours: " + openingHours);
-                phoneNumberTextView.setText("phone number: " + phoneNumber);
-                mailContactTextView.setText("mail for contact: " + mailContact);
+                libraryNameTextView.setText("Library Name: " + libraryName);
+                openingHoursTextView.setText("Opening Hours: " + openingHours);
+                phoneNumberTextView.setText("Phone Number: " + phoneNumber);
+                mailContactTextView.setText("Mail For Contact: " + mailContact);
             }
 
             @Override
