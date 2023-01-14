@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignInLibrarian extends AppCompatActivity {
+import com.example.mylib.R;
+
+public class SignInLibrarianActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,20 +19,19 @@ public class SignInLibrarian extends AppCompatActivity {
     }
 
     public void openLibrarianHomeActivity(View view) {
-
-//        get data from text views
+        //get data from text views
         TextView usernameText = findViewById(R.id.username);
         TextView passwordText = findViewById(R.id.password);
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
 
-//        Allows access only to admin
+        //Allows access only to admin
         if (!username.equals("admin")) {
-            Toast.makeText(SignInLibrarian.this, "wrong username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInLibrarianActivity.this, "wrong username", Toast.LENGTH_SHORT).show();
         } else if (!password.equals("admin")) {
-            Toast.makeText(SignInLibrarian.this, "wrong password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInLibrarianActivity.this, "wrong password", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(SignInLibrarian.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInLibrarianActivity.this, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LibrarianHomeActivity.class));
         }
     }

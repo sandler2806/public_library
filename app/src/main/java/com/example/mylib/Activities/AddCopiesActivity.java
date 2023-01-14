@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.R;
 
 public class AddCopiesActivity extends AppCompatActivity {
 
@@ -41,7 +42,6 @@ public class AddCopiesActivity extends AppCompatActivity {
         TextView amountText = parentView.findViewById(R.id.amount);
         TextView numberOfCopiesText = parentView.findViewById(R.id.noOfCopiesTextView);
         int numberOfCopies = Integer.parseInt(numberOfCopiesText.getText().toString().substring(18));
-
         String bookId = bookIdView.getText().toString();
         try {
             int amount = Integer.parseInt(amountText.getText().toString());

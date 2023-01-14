@@ -1,10 +1,7 @@
 package com.example.mylib.Objects;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class User {
     private String username;

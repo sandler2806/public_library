@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mylib.DataBase.FireBaseBook;
+import com.example.mylib.R;
 
 public class BookTrackingActivity extends AppCompatActivity {
 

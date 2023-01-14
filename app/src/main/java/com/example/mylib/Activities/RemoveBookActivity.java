@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.Objects.Book;
+import com.example.mylib.R;
 
 
 public class RemoveBookActivity extends AppCompatActivity {
@@ -24,8 +25,7 @@ public class RemoveBookActivity extends AppCompatActivity {
     }
 
     public void removeBook(View view) {
-
-//        get data from text views
+        //get data from text views
         TextView bookNameText = findViewById(R.id.BookNameInsert);
         TextView amountText = findViewById(R.id.BookAmountsInsert);
         TextView bookAuthorText = findViewById(R.id.BookAuthor);
@@ -35,9 +35,8 @@ public class RemoveBookActivity extends AppCompatActivity {
         String bookAuthor = bookAuthorText.getText().toString();
         String bookYearPublished = bookYearPublishedText.getText().toString();
         String bookGenre = bookGenreText.getText().toString();
-
         int amount = Integer.parseInt(amountText.getText().toString());
-//        remove book from database
+        //remove book from database
         Book book = new Book(bookName, bookAuthor, bookGenre, bookYearPublished, amount);
         FireBaseBook.removeBook(RemoveBookActivity.this, book);
     }

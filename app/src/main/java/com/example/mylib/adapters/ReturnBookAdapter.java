@@ -56,7 +56,7 @@ public class ReturnBookAdapter extends BaseAdapter {
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.parse(borrowedBooks.get(i).getBorrow_date(), formatter);
+        LocalDate date = LocalDate.parse(borrowedBooks.get(i).getBorrowDate(), formatter);
 
         // Add 14 days to the date
         LocalDate newDate = null;

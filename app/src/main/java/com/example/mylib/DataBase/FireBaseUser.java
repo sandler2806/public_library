@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.mylib.ClientHomeActivity;
-import com.example.mylib.GlobalUserInfo;
+import com.example.mylib.Activities.ClientHomeActivity;
+import com.example.mylib.Activities.GlobalUserInfoActivity;
 import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
@@ -24,8 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import retrofit2.Call;
@@ -36,11 +34,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FireBaseUser extends FireBaseModel {
 
-    private static String base_url = "http://10.0.2.2:3000/";
+    private static String baseUrl = "http://10.0.2.2:3000/";
 
     // Retrofit builder
     private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(base_url)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -87,7 +85,8 @@ public class FireBaseUser extends FireBaseModel {
         return myRef.child("users").child(userName);
     }
 
-    public static void addUser(Activity activity, String username, String password, String verifyPassword, String name, String phone) {
+    public static void addUser(Activity activity, String username, String password,
+                               String verifyPassword, String name, String phone) {
 
         getUser(username,
                 response -> {
@@ -97,7 +96,8 @@ public class FireBaseUser extends FireBaseModel {
                     }
                     //check if the passwords match
                     else if (!password.equals(verifyPassword)) {
-                        Toast.makeText(activity, "verify password does not match to password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "verify password does not match to password",
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         //create new user in the database
                         byte[] hash_array = Hash.encrypt(password);
@@ -126,9 +126,9 @@ public class FireBaseUser extends FireBaseModel {
                         }
                         //Save the user's data
                         else {
-                            GlobalUserInfo.global_name = user.getName();
-                            GlobalUserInfo.global_user_name = username;
-                            GlobalUserInfo.global_phone_number = user.getPhone();
+                            GlobalUserInfoActivity.globalName = user.getName();
+                            GlobalUserInfoActivity.globalUserName = username;
+                            GlobalUserInfoActivity.globalPhoneNumber = user.getPhone();
                             Toast.makeText(activity, "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show();
                             activity.startActivity(new Intent(activity, ClientHomeActivity.class));
                         }
@@ -138,7 +138,7 @@ public class FireBaseUser extends FireBaseModel {
 
     public static void createBookListForReturn(ListView bookList, Activity activity, String searchKey) {
         ArrayList<BorrowedBook> borrowedBooks = new ArrayList<>();
-        getUser(GlobalUserInfo.global_user_name,
+        getUser(GlobalUserInfoActivity.globalUserName,
                 response -> {
                     User user = response.body();
                     if (user != null) {
@@ -154,7 +154,8 @@ public class FireBaseUser extends FireBaseModel {
                             for (BorrowedBook borrowedBook : borrowedBooks) {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Book book = snapshot.getValue(Book.class);
-                                    if (borrowedBook.getKey().equals(snapshot.getKey()) && book.getName().toLowerCase().startsWith(searchKey.toLowerCase())) {
+                                    if (borrowedBook.getKey().equals(snapshot.getKey()) &&
+                                            book.getName().toLowerCase().startsWith(searchKey.toLowerCase())) {
                                         books.add(book);
                                         System.out.println("here and added book: " + book.getName());
                                     }
@@ -200,10 +201,12 @@ public class FireBaseUser extends FireBaseModel {
                                 }
                             }
                             if (!books.isEmpty()) {
-                                BookListProfileAdapter adapter = new BookListProfileAdapter(activity, books, borrowedBooks);
+                                BookListProfileAdapter adapter = new BookListProfileAdapter(activity,
+                                        books, borrowedBooks);
                                 bookList.setAdapter(adapter);
                             } else {
-                                Toast.makeText(activity, "No books burrowed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "No books burrowed",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -222,7 +225,7 @@ public class FireBaseUser extends FireBaseModel {
 
 
     public static void addToBorrowed(String bookId, int amount, Activity activity) {
-        getUser(GlobalUserInfo.global_user_name,
+        getUser(GlobalUserInfoActivity.globalUserName,
                 response -> {
                     User user = response.body();
                     ArrayList<BorrowedBook> books = user.getBooks();
@@ -233,12 +236,14 @@ public class FireBaseUser extends FireBaseModel {
                     activity.overridePendingTransition(0, 0);
                     activity.startActivity(activity.getIntent());
                     activity.overridePendingTransition(0, 0);
-                    getUserRef(GlobalUserInfo.global_user_name).child("books").setValue(books);
-                    Toast.makeText(activity, "Book borrowed successfully", Toast.LENGTH_SHORT).show();
+                    getUserRef(GlobalUserInfoActivity.globalUserName).child("books").setValue(books);
+                    Toast.makeText(activity, "Book borrowed successfully",
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 
-    public static void showUser(String username, TextView usernameText, TextView nameText, TextView phoneText, Activity activity, ListView bookList) {
+    public static void showUser(String username, TextView usernameText, TextView nameText,
+                                TextView phoneText, Activity activity, ListView bookList) {
         getUser(username,
                 response -> {
                     User user = response.body();
@@ -246,7 +251,8 @@ public class FireBaseUser extends FireBaseModel {
                         usernameText.setText("");
                         nameText.setText("");
                         phoneText.setText("");
-                        Toast.makeText(activity, "user does not exist", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "user does not exist",
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         usernameText.setText("username: " + username);
                         nameText.setText("name: " + user.getName());
@@ -258,9 +264,10 @@ public class FireBaseUser extends FireBaseModel {
     }
 
     public static void removeFromBorrowed(String bookId) {
-        getUser(GlobalUserInfo.global_user_name,
+        getUser(GlobalUserInfoActivity.globalUserName,
                 response -> {
                     User user = response.body();
+                    assert user != null;
                     ArrayList<BorrowedBook> books = user.getBooks();
                     //remove the book from the list
                     if (books != null) {
@@ -272,7 +279,7 @@ public class FireBaseUser extends FireBaseModel {
                         }
                     }
                     //update the user's books list
-                    getUserRef(GlobalUserInfo.global_user_name).child("books").setValue(books);
+                    getUserRef(GlobalUserInfoActivity.globalUserName).child("books").setValue(books);
                 });
     }
 }

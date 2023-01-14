@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,10 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mylib.DataBase.FireBaseModel;
+import com.example.mylib.R;
 
 import java.util.HashMap;
 
-public class EditLibInfo extends AppCompatActivity {
+public class EditLibInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class EditLibInfo extends AppCompatActivity {
     }
 
     public void update(View view) {
-//        get data from text views
+        //get data from text views
         TextView libraryNameText = findViewById(R.id.libraryName);
         TextView phoneNumberText = findViewById(R.id.phoneNumber);
         TextView mailContactText = findViewById(R.id.mailContact);

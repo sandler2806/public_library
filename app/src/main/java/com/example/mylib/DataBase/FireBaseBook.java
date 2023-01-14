@@ -1,7 +1,6 @@
 package com.example.mylib.DataBase;
 
 import static com.example.mylib.DataBase.FireBaseUser.getUser;
-import static com.example.mylib.DataBase.FireBaseUser.getUserRef;
 
 import android.app.Activity;
 import android.widget.ListView;
@@ -9,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.mylib.GlobalUserInfo;
+import com.example.mylib.Activities.GlobalUserInfoActivity;
 import com.example.mylib.Objects.Book;
 import com.example.mylib.Objects.BorrowedBook;
 import com.example.mylib.Objects.User;
@@ -24,23 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class FireBaseBook extends FireBaseModel {
-
-    private static String base_url = "http://10.0.2.2:3000/";
-
-    // Retrofit builder
-    private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(base_url)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-
-    private static UserApiCall myAPICall = retrofit.create(UserApiCall.class);
-
 
     public static void addBook(String bookName, String author, String genre, int amount, String publishingYear,
                                Activity activity) {
@@ -104,17 +87,15 @@ public class FireBaseBook extends FireBaseModel {
     }
 
     public static void showBorrowedBooks(Activity activity, ListView bookList, String searchKey) {
-//        the key is the name of a book and the value is a list of the users who borrowed it
+        //the key is the name of a book and the value is a list of the users who borrowed it
         HashMap<String, ArrayList<String>> borrowed = new HashMap<>();
         ArrayList<String> ids = new ArrayList<>();
-
-
         DatabaseReference usersRef = FireBaseUser.getAllUsers();
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                iterate all the users in the database and create hashmap
-//                so each book has a list of the users that borrowed it
+                //iterate all the users in the database and create hashmap
+                //so each book has a list of the users that borrowed it
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     assert user != null;
@@ -139,7 +120,7 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Book> books = new ArrayList<>();
-//                add all the books that borrowed by a user
+                //add all the books that borrowed by a user
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Book book = snapshot.getValue(Book.class);
                     if (borrowed.containsKey(snapshot.getKey())) {
@@ -167,7 +148,7 @@ public class FireBaseBook extends FireBaseModel {
         ArrayList<Book> books = new ArrayList<>();
         ArrayList<String> ids = new ArrayList<>();
         //Fill ListView in the given activity with the available books
-        FireBaseBook.getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
+        getAllBook().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -193,9 +174,9 @@ public class FireBaseBook extends FireBaseModel {
 
     public static void showAvailableBooks(Activity activity, ListView bookList, String key) {
         ArrayList<Book> books = new ArrayList<>();
-        ArrayList<String> ids = new ArrayList<>();
+        ArrayList<String> idOfBorrowed = new ArrayList<>();
         ArrayList<String> borrowedBooksKey = new ArrayList<>();
-        getUser(GlobalUserInfo.global_user_name,
+        getUser(GlobalUserInfoActivity.globalUserName,
                 response -> {
                     User user = response.body();
                     assert user != null;
@@ -212,9 +193,9 @@ public class FireBaseBook extends FireBaseModel {
                                     continue;
                                 }
                                 books.add(snapshot.getValue(Book.class));
-                                ids.add(snapshot.getKey());
+                                idOfBorrowed.add(snapshot.getKey());
                             }
-                            BookAdapter adapter = new BookAdapter(activity, books, ids);
+                            BookAdapter adapter = new BookAdapter(activity, books, idOfBorrowed);
                             bookList.setAdapter(adapter);
                         }
 
@@ -282,11 +263,11 @@ public class FireBaseBook extends FireBaseModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Book book = dataSnapshot.getValue(Book.class);
-//                increase the amount of the book by 1
+                //increase the amount of the book by 1
                 if (book != null) {
                     int amount = book.getAmount();
                     getBook(bookId).child("amount").setValue(amount + 1);
-//                    refresh the activity
+                    //refresh the activity
                     activity.finish();
                     activity.overridePendingTransition(0, 0);
                     activity.startActivity(activity.getIntent());

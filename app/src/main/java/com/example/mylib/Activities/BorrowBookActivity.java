@@ -1,4 +1,4 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +16,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.mylib.Objects.Book;
 import com.example.mylib.DataBase.FireBaseBook;
 import com.example.mylib.DataBase.FireBaseUser;
-import com.example.mylib.adapters.BookAdapter;
+import com.example.mylib.R;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,7 +28,7 @@ import java.util.TimeZone;
 //The class using 2 layouts file to represent the data to the use
 //1) activity_borrow_book: contain a single ListView each represent a book
 //2) book_list_detail: contain the design of each item on the list
-public class BorrowBook extends AppCompatActivity {
+public class BorrowBookActivity extends AppCompatActivity {
 
 
 
@@ -77,13 +76,13 @@ public class BorrowBook extends AppCompatActivity {
 
             addBorrowEvent(bookNameText.getText().toString());
 
-            FireBaseUser.addToBorrowed(bookId, amount, BorrowBook.this);
+            FireBaseUser.addToBorrowed(bookId, amount, BorrowBookActivity.this);
         });
 
         // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
-            FireBaseUser.addToBorrowed(bookId, amount, BorrowBook.this);
+            FireBaseUser.addToBorrowed(bookId, amount, BorrowBookActivity.this);
 
             dialog.cancel();
         });

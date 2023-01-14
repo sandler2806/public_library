@@ -1,28 +1,26 @@
-package com.example.mylib;
+package com.example.mylib.Activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import androidx.appcompat.app.AlertDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-public class LibrarianHomeActivity extends AppCompatActivity {
+import com.example.mylib.R;
+
+public class ClientHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_librarian_home);
-    }
-
-    public void GoToAddBookLibrarian(View view) {
-        startActivity(new Intent(this, AddBookLibrarian.class));
-    }
-
-    public void GoToRemoveBookLibrarian(View view) {
-        startActivity(new Intent(this, RemoveBookActivity.class));
+        setContentView(R.layout.activity_client_home);
+        String username_entry = "Welcome " + GlobalUserInfoActivity.globalName;
+        final TextView textViewToChange = (TextView) findViewById(R.id.titleClientName);
+        textViewToChange.setText(username_entry);
     }
     public void goBack(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -35,8 +33,8 @@ public class LibrarianHomeActivity extends AppCompatActivity {
 
         // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-            // When the admin click yes button then app will close
-            startActivity(new Intent(this, SignInLibrarian.class));
+            // When the user click yes button then app will close
+            startActivity(new Intent(this, SignInCustomerActivity.class));
         });
 
         // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
@@ -49,24 +47,25 @@ public class LibrarianHomeActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         // Show the Alert Dialog box
         alertDialog.show();
+
     }
 
-    public void openBookTracking(View view) {
-        startActivity(new Intent(this, BookTrackingActivity.class));
+    public void goToBorrow(View view) {
+
+        startActivity(new Intent(this, BorrowBookActivity.class));
     }
 
-    public void openEditLibInfo(View view) {
-        startActivity(new Intent(this, EditLibInfo.class));
+    public void goToReturn(View view) {
+
+        startActivity(new Intent(this, ReturnBookActivity.class));
     }
 
-    public void openSearchCustomer(View view) {
-        startActivity(new Intent(this, SearchCustomerActivity.class));
+    public void gotToProfile(View view) {
+
+        startActivity(new Intent(this, ProfileClientActivity.class));
     }
 
-    public void openAddCopies(View view) {
-        startActivity(new Intent(this, AddCopiesActivity.class));
+    public void goToLibInfo(View view) {
+        startActivity(new Intent(this, LibInfoClientActivity.class));
     }
-
-
-
 }

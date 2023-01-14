@@ -52,7 +52,7 @@ public class BookListProfileAdapter extends BaseAdapter {
         TextView bookNameTextView = (TextView) v.findViewById(R.id.bookNameTextViewProfileClient);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.parse(borrowedBooks.get(i).getBorrow_date(), formatter);
+        LocalDate date = LocalDate.parse(borrowedBooks.get(i).getBorrowDate(), formatter);
 
         // Get the current date
         LocalDate currentDate = LocalDate.now();
