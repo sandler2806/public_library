@@ -6,7 +6,7 @@ import java.util.Date;
 public class BorrowedBook {
 
     private String key;
-    private String borrowDate;
+    private String borrow_date;
 
     public BorrowedBook() {
         // Default constructor for DataSnapshot.getValue
@@ -18,18 +18,18 @@ public class BorrowedBook {
         // Get the current date
         Date currentDate = new Date();
         // Format the date using the SimpleDateFormat object
-        this.borrowDate = sdf.format(currentDate);
+        this.borrow_date = sdf.format(currentDate);
     }
 
     public String getKey() {
         return key;
     }
 
-    public String getBorrowDate() {
-        return borrowDate;
+    public String getBorrow_date() {
+        return borrow_date;
     }
 
-    public void setBorrowDate(String borrowDate) {
-        this.borrowDate = borrowDate;
+    public void setBorrow_date(String borrow_date) {
+        this.borrow_date = borrow_date;
     }
 }
