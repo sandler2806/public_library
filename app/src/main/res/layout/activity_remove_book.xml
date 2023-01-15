@@ -7,144 +7,59 @@
     android:background="#006e6d"
     tools:context=".Activities.RemoveBookActivity">
 
-    <TextView
-        android:id="@+id/AddBookHeaderText"
-        android:layout_width="351dp"
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="454dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:fontFamily="@font/kaushan"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:text="Please enter book details"
-        android:textColor="@color/white"
-        android:textSize="28dp"
-        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/bookName"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:background="#30ffffff"
+            android:drawablePadding="20dp"
+            android:hint="book name"
+            android:padding="20dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_btn"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="#72a6b4"
+            android:onClick="search"
+            android:text="search" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/bookList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttons"
+        android:layout_marginTop="0dp"
+        android:background="#CFD8DC"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
-        android:id="@+id/BookNameInsert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/AddBookHeaderText"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff"
-        android:drawablePadding="20dp"
-        android:hint="Book Name"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:alpha="0.7"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="159dp" />
-
-    <EditText
-        android:id="@+id/BookAuthor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/BookNameInsert"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff"
-        android:drawablePadding="20dp"
-        android:hint="Book Author"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:alpha="0.7"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="355dp" />
-
-    <EditText
-        android:id="@+id/BookGenre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/BookAuthor"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff"
-        android:drawablePadding="20dp"
-        android:hint="Book Genre"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:alpha="0.7"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="355dp" />
-
-    <EditText
-        android:id="@+id/BookYearPublished"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/BookGenre"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff"
-        android:drawablePadding="20dp"
-        android:hint="Year Published"
-        android:inputType="number"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:alpha="0.7"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="355dp" />
-
-
-    <EditText
-        android:id="@+id/BookAmountsInsert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/BookYearPublished"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#ffffff"
-        android:drawablePadding="20dp"
-        android:hint="Amount"
-        android:inputType="number"
-        android:padding="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:alpha="0.7"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="355dp" />
-
-    <Button
-        android:id="@+id/RemoveBookButton"
-        android:layout_width="157dp"
-        android:layout_height="78dp"
-        android:layout_below="@id/BookAmountsInsert"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:alpha="0.9"
-        android:onClick="removeBook"
-        android:backgroundTint="#72a6b4"
-        android:text="remove book" />
     <ImageButton
         android:id="@+id/imageButton4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#006e6d"
+        android:background="#006e6d"
         android:onClick="goBack"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        tools:ignore="Missing" />
+
 
 </RelativeLayout>
